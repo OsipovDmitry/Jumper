@@ -7,6 +7,8 @@ class GameObjectPlayer : public GameObject
 {
 public:
 protected:
+	void update(uint32_t dt);
+
 private:
 	GameObjectPlayer(GameAbstractScene *pScene);
 	~GameObjectPlayer();

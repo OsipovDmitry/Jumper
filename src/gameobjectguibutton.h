@@ -13,7 +13,7 @@ public:
 
 protected:
 private:
-	GameObjectGuiButton(GameAbstractScene *pScene);
+	GameObjectGuiButton(GameAbstractScene *pScene, GuiButtonId id);
 	~GameObjectGuiButton();
 
 	GraphicsObject *m_pGraphicsObject;

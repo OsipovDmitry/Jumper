@@ -9,21 +9,31 @@ class GameAbstractScene;
 class PhysicsBody;
 class PhysicsGeometry;
 class GraphicsObject;
+class GameObjectAbstractModifier;
 
 struct Transform;
 
 class GameObject
 {
 public:
-	typedef std::list<GraphicsObject*> GraphicsObjectsList;
-	typedef std::list<PhysicsBody*> PhysicsBodiesList;
-	typedef std::list<PhysicsGeometry*> PhysicsGeometriesList;
+	using GraphicsObjectsList = std::list<GraphicsObject*> ;
+	using PhysicsBodiesList = std::list<PhysicsBody*>;
+	using PhysicsGeometriesList = std::list<PhysicsGeometry*>;
+	using ObjectModifiers = std::list<GameObjectAbstractModifier*>;
 
 	GameAbstractScene *scene() const;
 	Transform *transform() const;
 	const GraphicsObjectsList& graphicsObjects() const;
 	const PhysicsBodiesList& physicsBodies() const;
 	const PhysicsGeometriesList& physicsGeometries() const;
+
+	template <typename ModType, typename... Ts>
+	ModType *addModifier(Ts&&... params) {
+		ModType *pMod = new ModType(this, std::forward<Ts>(params)...);
+		m_modifiers.push_back(static_cast<GameObjectAbstractModifier*>(pMod));
+		return pMod;
+	}
+	void delModifier(GameObjectAbstractModifier *pModifier);
 
 protected:
 	GameAbstractScene *m_pScene;
@@ -36,6 +46,11 @@ protected:
 	virtual ~GameObject();
 
 	virtual void update(uint32_t dt) {}
+
+private:
+	void updateObject(uint32_t dt);
+
+	ObjectModifiers m_modifiers;
 
 	friend class GameAbstractScene;
 };

@@ -14,7 +14,7 @@ public:
 
 protected:
 private:
-	GameObjectBackground(GameAbstractScene *pScene);
+	GameObjectBackground(GameAbstractScene *pScene, BackgroundId id);
 	~GameObjectBackground();
 
 	GraphicsObject *m_pGraphicsObject;

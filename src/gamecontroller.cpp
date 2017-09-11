@@ -43,7 +43,7 @@ void GameController::update(uint64_t time, uint32_t dt)
 		Core::getController<GraphicsController>()->setCurrentScene(pLevel->graphicsScene());
 		Core::getController<PhysicsController>()->setCurrentScene(pLevel->physicsScene());
 	}
-	pLevel->update(time, dt);
+	pLevel->updateScene(time, dt);
 }
 
 void GameController::mouseClick(int32_t x, int32_t y)

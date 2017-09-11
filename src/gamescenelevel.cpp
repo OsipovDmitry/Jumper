@@ -12,12 +12,11 @@
 #include "gameobjectguibutton.h"
 #include "gameobjectgun.h"
 #include "gamescenelevel.h"
-
+#include "gameobjectmodifierrotate.h"
+#include "gameobjectmodifieroffset.h"
 
 void GameSceneLevel::update(uint64_t time, uint32_t dt)
 {
-	GameAbstractScene::update(time, dt);
-
 	if (Core::getController()->renderWidget()->testKey(RenderWidget::KeyCode_Left))
 		m_pPlayer->transform()->pos.x -= 0.05f;
 	if (Core::getController()->renderWidget()->testKey(RenderWidget::KeyCode_Right))
@@ -52,21 +51,26 @@ GameSceneLevel::GameSceneLevel() :
 		if (i == 0) {
 			pBrick->transform()->pos.y = -0.7f;
 		}
+
+		if ((i % 4 == 1) && (i != 1))
+			pBrick->addModifier<GameObjectModifierRotate>(3.14f / 4.0f);
+		if (i % 4 == 2)
+			pBrick->addModifier<GameObjectModifierOffset>(glm::vec2(0.0f, 1.0f), 0.5f);
+		if (i % 4 == 3)
+			pBrick->addModifier<GameObjectModifierOffset>(glm::vec2(1.0f, 0.0f), 0.5f);
 	}
 
 	m_pPlayer = createGameObject<GameObjectPlayer>();
 	m_pPlayer->transform()->pos = glm::vec2(0.0f, 0.7f);
 
 	GameObjectGun *pGun = createGameObject<GameObjectGun>();
-	pGun->transform()->pos = glm::vec2(5.0f, -0.2f);
+	pGun->transform()->pos = glm::vec2(5.5f, 0.05f);
 
-	m_pButtonStart = createGameObject<GameObjectGuiButton>();
+	m_pButtonStart = createGameObject<GameObjectGuiButton>(GuiButtonId_Start);
 	m_pButtonStart->transform()->pos = glm::vec2(-1.2f, 0.8f);
-	m_pButtonStart->setButtonId(GuiButtonId_Start);
 
-	m_pButtonExit = createGameObject<GameObjectGuiButton>();
+	m_pButtonExit = createGameObject<GameObjectGuiButton>(GuiButtonId_Exit);
 	m_pButtonExit->transform()->pos = glm::vec2(+1.2f, 0.8f);
-	m_pButtonExit->setButtonId(GuiButtonId_Exit);
 }
 
 GameSceneLevel::~GameSceneLevel()

@@ -28,17 +28,20 @@ protected:
 
 	void delObject(GameObject *pObject);
 
-	template <typename ObjectType>
-	ObjectType *createGameObject() {
-		ObjectType *pObject = new ObjectType(this);
+	template <typename ObjectType, typename... Ts>
+	ObjectType *createGameObject(Ts&&... params) {
+		ObjectType *pObject = new ObjectType(this, std::forward<Ts>(params)...);
 		m_objects.push_back(static_cast<GameObject*>(pObject));
 		return pObject;
 	}
 
-	virtual void update(uint64_t time, uint32_t dt);
+	virtual void update(uint64_t, uint32_t) {}
 	virtual void mouseClick(int32_t x, int32_t y);
 
 	ObjectsList selectObjects(int32_t x, int32_t y);
+
+private:
+	void updateScene(uint64_t time, uint32_t dt);
 
 	friend class GameController;
 };

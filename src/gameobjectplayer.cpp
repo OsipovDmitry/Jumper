@@ -6,6 +6,17 @@
 #include "gameabstractscene.h"
 #include "gameobjectplayer.h"
 
+void GameObjectPlayer::update(uint32_t dt)
+{
+//	static const float  coef = 0.5f;
+//	PhysicsBody *pBody = m_physicsBodies.front();
+//	glm::vec2 vel = pBody->velocity();
+//	float len = glm::length(vel);
+//	vel = (len > 0.0001f) ? vel /= len : glm::vec2();
+//	len -= coef * dt * 0.001f;
+//	pBody->setVelocity(vel * len);
+}
+
 GameObjectPlayer::GameObjectPlayer(GameAbstractScene* pScene) :
 	GameObject(pScene)
 {

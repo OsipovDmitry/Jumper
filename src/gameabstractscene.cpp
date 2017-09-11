@@ -29,7 +29,7 @@ GameAbstractScene::GameAbstractScene() :
 	m_pGraphicsScene(Core::getController<GraphicsController>()->addScene()),
 	m_pPhysicsScene(Core::getController<PhysicsController>()->addScene())
 {
-	m_pObjectBackground = createGameObject<GameObjectBackground>();
+	m_pObjectBackground = createGameObject<GameObjectBackground>(BackgroundId_0);
 }
 
 GameAbstractScene::~GameAbstractScene()
@@ -64,13 +64,6 @@ void GameAbstractScene::delObject(GameObject* pObject)
 	delete pObject;
 }
 
-void GameAbstractScene::update(uint64_t time, uint32_t dt)
-{
-	std::for_each(m_objects.begin(), m_objects.end(), [&time, &dt](GameObject *p) {
-		p->update(dt);
-	});
-}
-
 void GameAbstractScene::mouseClick(int32_t x, int32_t y)
 {
 	(void)x;
@@ -97,4 +90,12 @@ GameAbstractScene::ObjectsList GameAbstractScene::selectObjects(int32_t x, int32
 	}
 
 	return std::move(result);
+}
+
+void GameAbstractScene::updateScene(uint64_t time, uint32_t dt)
+{
+	for (auto p: m_objects)
+		p->updateObject(dt);
+
+	update(time, dt);
 }

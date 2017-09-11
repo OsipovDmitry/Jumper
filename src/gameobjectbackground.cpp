@@ -13,7 +13,7 @@ BackgroundId GameObjectBackground::backgrounId() const
 	return static_cast<BackgroundId>(m_pGraphicsObject->texture());
 }
 
-GameObjectBackground::GameObjectBackground(GameAbstractScene *pScene) :
+GameObjectBackground::GameObjectBackground(GameAbstractScene *pScene, BackgroundId id) :
 	GameObject(pScene)
 {
 	m_pGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
@@ -21,7 +21,7 @@ GameObjectBackground::GameObjectBackground(GameAbstractScene *pScene) :
 	m_pGraphicsObject->setSize(glm::vec2(2.0f, 2.0f));
 	m_graphicsObjects.push_back(m_pGraphicsObject);
 
-	setBackgroundId(BackgroundId_0);
+	setBackgroundId(id);
 }
 
 GameObjectBackground::~GameObjectBackground()

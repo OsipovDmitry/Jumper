@@ -26,7 +26,10 @@ SOURCES += \
     src/gameobjectplayer.cpp \
     src/gameobjectguibutton.cpp \
     src/gameobjectbackground.cpp \
-    src/gameobjectgun.cpp
+    src/gameobjectgun.cpp \
+    src/gameobjectabstractmodifier.cpp \
+    src/gameobjectmodifierrotate.cpp \
+    src/gameobjectmodifieroffset.cpp
 
 HEADERS += \
     src/renderwidget.h \
@@ -50,7 +53,10 @@ HEADERS += \
     src/gameobjectplayer.h \
     src/gameobjectguibutton.h \
     src/gameobjectbackground.h \
-    src/gameobjectgun.h
+    src/gameobjectgun.h \
+    src/gameobjectabstractmodifier.h \
+    src/gameobjectmodifierrotate.h \
+    src/gameobjectmodifieroffset.h
 
 LIBS += -lGLESv2
 

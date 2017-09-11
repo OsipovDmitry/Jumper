@@ -8,7 +8,7 @@ void GameObjectGuiButton::setButtonId(GuiButtonId id)
 	m_pGraphicsObject->setTexture(static_cast<TextureId>(id));
 }
 
-GameObjectGuiButton::GameObjectGuiButton(GameAbstractScene *pScene) :
+GameObjectGuiButton::GameObjectGuiButton(GameAbstractScene *pScene, GuiButtonId id) :
 	GameObject(pScene)
 {
 	static const float height = 0.25f;
@@ -19,7 +19,7 @@ GameObjectGuiButton::GameObjectGuiButton(GameAbstractScene *pScene) :
 	m_pGraphicsObject->setSize(glm::vec2(width, height));
 	m_graphicsObjects.push_back(m_pGraphicsObject);
 
-	setButtonId(GuiButtonId_Start);
+	setButtonId(id);
 }
 
 GameObjectGuiButton::~GameObjectGuiButton()
