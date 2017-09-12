@@ -29,7 +29,8 @@ SOURCES += \
     src/gameobjectgun.cpp \
     src/gameobjectabstractmodifier.cpp \
     src/gameobjectmodifierrotate.cpp \
-    src/gameobjectmodifieroffset.cpp
+    src/gameobjectmodifieroffset.cpp \
+    src/gameobjectmodifiertrain.cpp
 
 HEADERS += \
     src/renderwidget.h \
@@ -56,7 +57,8 @@ HEADERS += \
     src/gameobjectgun.h \
     src/gameobjectabstractmodifier.h \
     src/gameobjectmodifierrotate.h \
-    src/gameobjectmodifieroffset.h
+    src/gameobjectmodifieroffset.h \
+    src/gameobjectmodifiertrain.h
 
 LIBS += -lGLESv2
 

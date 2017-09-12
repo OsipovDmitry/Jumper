@@ -14,6 +14,7 @@
 #include "gamescenelevel.h"
 #include "gameobjectmodifierrotate.h"
 #include "gameobjectmodifieroffset.h"
+#include "gameobjectmodifiertrain.h"
 
 void GameSceneLevel::update(uint64_t time, uint32_t dt)
 {
@@ -50,6 +51,12 @@ GameSceneLevel::GameSceneLevel() :
 		pBrick->transform()->pos = glm::vec2(1.375f * i, ((float)rand()/(float)RAND_MAX*2 - 1) * 0.4f - 0.5f);
 		if (i == 0) {
 			pBrick->transform()->pos.y = -0.7f;
+			auto pMod = pBrick->addModifier<GameObjectModifierTrain>();
+			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, -0.7f), 0.0f), 0.0f);
+			pMod->keyFramesList().emplace_back(Transform(glm::vec2(0.5f, -0.7f), 0.0f), 2.0f);
+			pMod->keyFramesList().emplace_back(Transform(glm::vec2(0.5f, 0.3f), 0.0f), 2.0f);
+			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, 0.3f), 0.0f), 2.0f);
+			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, -0.7f), 0.0f), 2.0f);
 		}
 
 		if ((i % 4 == 1) && (i != 1))
@@ -61,7 +68,7 @@ GameSceneLevel::GameSceneLevel() :
 	}
 
 	m_pPlayer = createGameObject<GameObjectPlayer>();
-	m_pPlayer->transform()->pos = glm::vec2(0.0f, 0.7f);
+	m_pPlayer->transform()->pos = glm::vec2(-0.5f, 0.7f);
 
 	GameObjectGun *pGun = createGameObject<GameObjectGun>();
 	pGun->transform()->pos = glm::vec2(5.5f, 0.05f);
