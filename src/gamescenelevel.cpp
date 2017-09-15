@@ -8,6 +8,7 @@
 #include "physicsscene.h"
 #include "physicsbody.h"
 #include "gameobjectbrick.h"
+#include "gameobjectbrokenbrick.h"
 #include "gameobjectplayer.h"
 #include "gameobjectguibutton.h"
 #include "gameobjectgun.h"
@@ -18,12 +19,14 @@
 
 void GameSceneLevel::update(uint64_t time, uint32_t dt)
 {
+	Transform transform = m_pPlayer->transform();
 	if (Core::getController()->renderWidget()->testKey(RenderWidget::KeyCode_Left))
-		m_pPlayer->transform()->pos.x -= 0.05f;
+		transform.pos.x -= 0.05f;
 	if (Core::getController()->renderWidget()->testKey(RenderWidget::KeyCode_Right))
-		m_pPlayer->transform()->pos.x += 0.05f;
+		transform.pos.x += 0.05f;
+	m_pPlayer->setTransform(transform);
 
-	graphicsScene()->camera()->transform()->pos.x = m_pPlayer->transform()->pos.x;
+	graphicsScene()->camera()->transform()->pos.x = transform.pos.x;
 }
 
 void GameSceneLevel::mouseClick(int32_t x, int32_t y)
@@ -31,8 +34,8 @@ void GameSceneLevel::mouseClick(int32_t x, int32_t y)
 	ObjectsList list = selectObjects(x, y);
 
 	if (std::find(list.cbegin(), list.cend(), m_pButtonStart) != list.cend()) {
-		m_pPlayer->transform()->pos = glm::vec2(0.0f, 0.7f);
-		m_pPlayer->physicsBodies().front()->setVelocity(glm::vec2(0.0f, 0.0f));
+		m_pPlayer->setTransform(Transform(glm::vec2(0.0f, 0.7f), 0.0f));
+		m_pPlayerBody->setVelocity(glm::vec2(0.0f, 0.0f));
 	}
 
 	if (std::find(list.cbegin(), list.cend(), m_pButtonExit) != list.cend()) {
@@ -47,16 +50,17 @@ GameSceneLevel::GameSceneLevel() :
 
 	const int N = 20;
 	for (int i = 0; i < N; ++i) {
-		auto *pBrick = createGameObject<GameObjectBrick>();
-		pBrick->transform()->pos = glm::vec2(1.375f * i, ((float)rand()/(float)RAND_MAX*2 - 1) * 0.4f - 0.5f);
+		auto pBrick = createGameObject<GameObjectBrick>();
+		pBrick->setTransform(Transform(glm::vec2(1.375f * i, ((float)rand()/(float)RAND_MAX*2 - 1) * 0.4f - 0.5f), 0.0f));
 		if (i == 0) {
-			pBrick->transform()->pos.y = -0.7f;
-			auto pMod = pBrick->addModifier<GameObjectModifierTrain>();
-			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, -0.7f), 0.0f), 0.0f);
-			pMod->keyFramesList().emplace_back(Transform(glm::vec2(0.5f, -0.7f), 0.0f), 2.0f);
-			pMod->keyFramesList().emplace_back(Transform(glm::vec2(0.5f, 0.3f), 0.0f), 2.0f);
-			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, 0.3f), 0.0f), 2.0f);
-			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, -0.7f), 0.0f), 2.0f);
+			pBrick->setTransform(Transform(glm::vec2(0.0f, -0.7f), 0.0f));
+//			auto pMod = pBrick->addModifier<GameObjectModifierTrain>();
+//			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, -0.7f), 0.0f), 0.0f);
+//			pMod->keyFramesList().emplace_back(Transform(glm::vec2(0.5f, -0.7f), 0.0f), 2.0f);
+//			pMod->keyFramesList().emplace_back(Transform(glm::vec2(0.5f, 0.3f), 0.0f), 2.0f);
+//			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, 0.3f), 0.0f), 2.0f);
+//			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, -0.7f), 0.0f), 2.0f);
+//			pMod->setLoop(true);
 		}
 
 		if ((i % 4 == 1) && (i != 1))
@@ -67,17 +71,24 @@ GameSceneLevel::GameSceneLevel() :
 			pBrick->addModifier<GameObjectModifierOffset>(glm::vec2(1.0f, 0.0f), 0.5f);
 	}
 
+	for (int i = 0; i < 10; ++i) {
+		auto pBrick = createGameObject<GameObjectBrokenBrick>();
+		pBrick->setTransform(Transform(glm::vec2(2 + 2.5f * i, 0.5f), 0.0f));
+	}
+
+
 	m_pPlayer = createGameObject<GameObjectPlayer>();
-	m_pPlayer->transform()->pos = glm::vec2(-0.5f, 0.7f);
+	m_pPlayer->setTransform(Transform(glm::vec2(0.0f, 0.7f), 0.0f));
+	m_pPlayerBody = m_pPlayer->physicsBody();
 
 	GameObjectGun *pGun = createGameObject<GameObjectGun>();
-	pGun->transform()->pos = glm::vec2(5.5f, 0.05f);
+	pGun->setTransform(Transform(glm::vec2(5.5f, 0.05f), 0.0f));
 
 	m_pButtonStart = createGameObject<GameObjectGuiButton>(GuiButtonId_Start);
-	m_pButtonStart->transform()->pos = glm::vec2(-1.2f, 0.8f);
+	m_pButtonStart->setTransform(Transform(glm::vec2(-1.2f, 0.8f)));
 
 	m_pButtonExit = createGameObject<GameObjectGuiButton>(GuiButtonId_Exit);
-	m_pButtonExit->transform()->pos = glm::vec2(+1.2f, 0.8f);
+	m_pButtonExit->setTransform(Transform(glm::vec2(+1.2f, 0.8f)));
 }
 
 GameSceneLevel::~GameSceneLevel()

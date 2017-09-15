@@ -74,11 +74,10 @@ GameAbstractScene::ObjectsList GameAbstractScene::selectObjects(int32_t x, int32
 {
 	ObjectsList result;
 	for (auto pObject: m_objects) {
-		Transform *pObjectTransform = pObject->transform();
 		for (auto pGraphicsObject: pObject->m_graphicsObjects) {
 			glm::vec2 worldNewPos = glm::vec2(
-				glm::rotate(glm::mat4x4(), -pObjectTransform->angle, glm::vec3(0.0f,0.0f,1.0f)) *
-				glm::translate(glm::mat4x4(), glm::vec3(-pObjectTransform->pos, 0.0f)) *
+				glm::rotate(glm::mat4x4(), -pObject->m_pTransform->angle, glm::vec3(0.0f,0.0f,1.0f)) *
+				glm::translate(glm::mat4x4(), glm::vec3(-pObject->m_pTransform->pos, 0.0f)) *
 				glm::vec4(Core::getController()->renderWidget()->renderer()->windowToWorldSpace(glm::ivec2(x, y), pGraphicsObject->layer()), 0.0f, 1.0f)
 			);
 			glm::vec2 size = pGraphicsObject->size();

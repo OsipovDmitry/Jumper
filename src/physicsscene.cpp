@@ -2,9 +2,11 @@
 
 #include "glm/geometric.hpp"
 #include "types.h"
+#include "core.h"
 #include "physicsscene.h"
 #include "physicsbody.h"
 #include "physicsgeometry.h"
+#include "gamecontroller.h"
 
 void PhysicsScene::setGravity(const glm::vec2& value)
 {
@@ -78,7 +80,6 @@ PhysicsScene::PhysicsScene() :
 	m_bodies(),
 	m_geoms()
 {
-
 }
 
 PhysicsScene::~PhysicsScene()
@@ -128,5 +129,7 @@ void PhysicsScene::simulationStep(uint32_t dt)
 				(*it2)->m_pBody->m_pTransform->pos += normal * depth;
 				(*it2)->m_pBody->m_vel = glm::reflect((*it2)->m_pBody->m_vel, -normal) * dampVel;
 			}
+
+			Core::getController<GameController>()->sendMessage(new GameObjectsCollisionMessage(*it1, *it2));
 		}
 }

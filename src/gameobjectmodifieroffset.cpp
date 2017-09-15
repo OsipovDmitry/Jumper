@@ -32,5 +32,7 @@ void GameObjectModifierOffset::update(uint32_t dt)
 		m_offsetCur = 0.0f - m_offsetCur;
 		m_sign *= -1;
 	}
-	m_pGameObject->transform()->pos += m_offsetNorm * delta;
+	Transform transform = m_pGameObject->transform();
+	transform.pos += m_offsetNorm * delta;
+	m_pGameObject->setTransform(transform);
 }

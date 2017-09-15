@@ -22,10 +22,13 @@ public:
 	using ObjectModifiers = std::list<GameObjectAbstractModifier*>;
 
 	GameAbstractScene *scene() const;
-	Transform *transform() const;
-	const GraphicsObjectsList& graphicsObjects() const;
-	const PhysicsBodiesList& physicsBodies() const;
-	const PhysicsGeometriesList& physicsGeometries() const;
+
+	virtual const Transform& transform() const;
+	virtual void setTransform(const Transform& value);
+
+//	const GraphicsObjectsList& graphicsObjects() const;
+//	const PhysicsBodiesList& physicsBodies() const;
+//	const PhysicsGeometriesList& physicsGeometries() const;
 
 	template <typename ModType, typename... Ts>
 	ModType *addModifier(Ts&&... params) {

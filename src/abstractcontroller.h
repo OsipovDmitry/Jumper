@@ -26,6 +26,7 @@ enum ControllerMessageType {
 
 	CMT_GameMouseClick,
 	CMT_GameOver,
+	CMT_GameObjectsCollision,
 };
 
 class AbstractControllerMessage {

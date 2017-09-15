@@ -30,7 +30,8 @@ SOURCES += \
     src/gameobjectabstractmodifier.cpp \
     src/gameobjectmodifierrotate.cpp \
     src/gameobjectmodifieroffset.cpp \
-    src/gameobjectmodifiertrain.cpp
+    src/gameobjectmodifiertrain.cpp \
+    src/gameobjectbrokenbrick.cpp
 
 HEADERS += \
     src/renderwidget.h \
@@ -58,7 +59,8 @@ HEADERS += \
     src/gameobjectabstractmodifier.h \
     src/gameobjectmodifierrotate.h \
     src/gameobjectmodifieroffset.h \
-    src/gameobjectmodifiertrain.h
+    src/gameobjectmodifiertrain.h \
+    src/gameobjectbrokenbrick.h
 
 LIBS += -lGLESv2
 

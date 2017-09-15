@@ -14,7 +14,12 @@ void GameObjectPlayer::update(uint32_t dt)
 //	float len = glm::length(vel);
 //	vel = (len > 0.0001f) ? vel /= len : glm::vec2();
 //	len -= coef * dt * 0.001f;
-//	pBody->setVelocity(vel * len);
+	//	pBody->setVelocity(vel * len);
+}
+
+PhysicsBody *GameObjectPlayer::physicsBody() const
+{
+	return m_physicsBodies.front();
 }
 
 GameObjectPlayer::GameObjectPlayer(GameAbstractScene* pScene) :

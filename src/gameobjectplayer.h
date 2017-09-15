@@ -3,9 +3,13 @@
 
 #include "gameobject.h"
 
+class PhysicsBody;
+
 class GameObjectPlayer : public GameObject
 {
 public:
+	PhysicsBody *physicsBody() const;
+
 protected:
 	void update(uint32_t dt);
 

@@ -8,18 +8,24 @@ bool GameController::process(AbstractControllerMessage* pMessage)
 {
 	switch (pMessage->type()) {
 	case CMT_ControllerUpdate: {
-		auto *pMsg = msg_cast<ControllerUpdateMessage>(pMessage);
+		auto pMsg = msg_cast<ControllerUpdateMessage>(pMessage);
 		if (pMsg)
 			update(pMsg->time, pMsg->dt);
 		break;
 	}
 	case CMT_GameMouseClick: {
-		auto *pMsg = msg_cast<GameMouseClickMessage>(pMessage);
+		auto pMsg = msg_cast<GameMouseClickMessage>(pMessage);
 		if (pMsg)
 			mouseClick(pMsg->x, pMsg->y);
 		break;
 	}
 	case CMT_GameOver: {
+		break;
+	}
+	case CMT_GameObjectsCollision: {
+		auto pMsg = msg_cast<GameObjectsCollisionMessage>(pMessage);
+		if (pMsg)
+			;
 		break;
 	}
 	default: break;

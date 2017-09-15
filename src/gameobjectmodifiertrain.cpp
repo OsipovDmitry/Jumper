@@ -42,7 +42,7 @@ void GameObjectModifierTrain::update(uint32_t dt)
 	assert(!m_keyFrames.empty());
 
 	if (m_keyFrames.size() == 1) {
-		*(m_pGameObject->transform()) = m_keyFrames.front().transform;
+		m_pGameObject->setTransform(m_keyFrames.front().transform);
 		return;
 	}
 
@@ -54,11 +54,11 @@ void GameObjectModifierTrain::update(uint32_t dt)
 
 	if (!m_isLoop) {
 		if (m_currTime <= m_keyFrames.front().dtime) {
-			*(m_pGameObject->transform()) = m_keyFrames.front().transform;
+			m_pGameObject->setTransform(m_keyFrames.front().transform);
 			return;
 		}
 		else if (m_currTime >= fullTime) {
-			*(m_pGameObject->transform()) = m_keyFrames.back().transform;
+			m_pGameObject->setTransform(m_keyFrames.back().transform);
 			return;
 		}
 	}
@@ -74,8 +74,8 @@ void GameObjectModifierTrain::update(uint32_t dt)
 			continue;
 		}
 		tempTime /= (it+1)->dtime;
-		m_pGameObject->transform()->pos = glm::mix(it->transform.pos, (it+1)->transform.pos, tempTime);
-		m_pGameObject->transform()->angle = glm::mix(it->transform.angle, (it+1)->transform.angle, tempTime);
+		m_pGameObject->setTransform(Transform(glm::mix(it->transform.pos, (it+1)->transform.pos, tempTime),
+											  glm::mix(it->transform.angle, (it+1)->transform.angle, tempTime)));
 		break;
 	}
 }

@@ -27,7 +27,6 @@ private:
 	~PhysicsController();
 
 	void update(uint32_t dt);
-
 	ScenesList m_scenes;
 	PhysicsScene *m_pCurrentScene;
 

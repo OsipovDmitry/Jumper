@@ -71,15 +71,15 @@ const int Renderer::s_textureIndexes[TextureId_Count] = {
 	1, // TextureId_Background0
 };
 const std::pair<glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureId_Count] = {
-	std::make_pair(glm::ivec2(1,1), glm::ivec2(30,30)), // TextureId_None,
-	std::make_pair(glm::ivec2(33,1), glm::ivec2(94,30)), // TextureId_Brick,
-	std::make_pair(glm::ivec2(129,1), glm::ivec2(30,30)), // TextureId_Circle,
-	std::make_pair(glm::ivec2(161,1), glm::ivec2(30,30)), // TextureId_Rect,
-	std::make_pair(glm::ivec2(1,33), glm::ivec2(126, 62)), // TextureId_ButtonStart,
-	std::make_pair(glm::ivec2(129,33), glm::ivec2(126, 62)), // TextureId_ButtonExit,
-	std::make_pair(glm::ivec2(257,33), glm::ivec2(126, 62)), // TextureId_ButtonEmpty,
-	std::make_pair(glm::ivec2(1,97), glm::ivec2(126, 62)), // TextureId_Gun,
-	std::make_pair(glm::ivec2(0,1), glm::ivec2(1024,126)), // TextureId_Background0,
+	std::make_pair(glm::ivec2(0+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_None,
+	std::make_pair(glm::ivec2(32+1,0+1), glm::ivec2(96-2,32-2)), // TextureId_Brick,
+	std::make_pair(glm::ivec2(128+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_Circle,
+	std::make_pair(glm::ivec2(160+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_Rect,
+	std::make_pair(glm::ivec2(0+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonStart,
+	std::make_pair(glm::ivec2(128+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonExit,
+	std::make_pair(glm::ivec2(256+132+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonEmpty,
+	std::make_pair(glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
+	std::make_pair(glm::ivec2(0,0+1), glm::ivec2(1024,128-2)), // TextureId_Background0,
 };
 std::vector<glm::ivec2> Renderer::s_textureSizes;
 std::vector<GLuint> Renderer::s_textureIds;

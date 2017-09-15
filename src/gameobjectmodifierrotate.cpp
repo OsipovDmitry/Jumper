@@ -24,5 +24,7 @@ GameObjectModifierRotate::~GameObjectModifierRotate()
 
 void GameObjectModifierRotate::update(uint32_t dt)
 {
-	m_pGameObject->transform()->angle += m_rotateVel * dt * 0.001f;
+	Transform transform = m_pGameObject->transform();
+	transform.angle += m_rotateVel * dt * 0.001f;
+	m_pGameObject->setTransform(transform);
 }

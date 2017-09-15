@@ -3,6 +3,7 @@
 
 #include "abstractcontroller.h"
 
+class PhysicsGeometry;
 class GameSceneLevel;
 
 class GameController : public AbstractController
@@ -31,6 +32,14 @@ public:
 	static ControllerMessageType typeOfClass() { return CMT_GameMouseClick; }
 
 	int32_t x, y;
+};
+
+class GameObjectsCollisionMessage : public AbstractControllerMessage {
+public:
+	GameObjectsCollisionMessage(PhysicsGeometry *p1, PhysicsGeometry *p2) : AbstractControllerMessage(CMT_GameObjectsCollision), pGeom1(p1), pGeom2(p2) {}
+	static ControllerMessageType typeOfClass() { return CMT_GameObjectsCollision; }
+
+	PhysicsGeometry *pGeom1, *pGeom2;
 };
 
 DECLARE_SIMPLE_MESSAGE(GameOverMessage, CMT_GameOver)

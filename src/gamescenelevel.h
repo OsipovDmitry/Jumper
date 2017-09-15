@@ -3,6 +3,7 @@
 
 #include "gameabstractscene.h"
 
+class PhysicsBody;
 class GameObjectPlayer;
 class GameObjectGuiButton;
 
@@ -19,6 +20,7 @@ private:
 	~GameSceneLevel();
 
 	GameObjectPlayer *m_pPlayer;
+	PhysicsBody *m_pPlayerBody;
 	GameObjectGuiButton *m_pButtonStart, *m_pButtonExit;
 
 	friend class GameController;
