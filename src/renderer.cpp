@@ -47,7 +47,9 @@ const char Renderer::s_fragmentShaderString[] =
 	"varying vec2 tex_coord;\n"
 	"void main()\n"
 	"{\n"
-	"	gl_FragColor = texture2D(texture, tex_coord);\n"
+	"	vec4 outColor = texture2D(texture, tex_coord);\n"
+	"	if (outColor.a < 0.01) discard;\n"
+	"	gl_FragColor = outColor;\n"
 	"}\n";
 GLuint Renderer::s_program, Renderer::s_vertexShader, Renderer::s_fragmentShader;
 GLint Renderer::s_attribPosLoc, Renderer::s_attribTexCoordLoc;
@@ -65,7 +67,7 @@ const int Renderer::s_textureIndexes[TextureId_Count] = {
 	0, // TextureId_ButtonStart
 	0, // TextureId_ButtonExit
 	0, // TextureId_ButtonEmpty
-	0, // TextureId_ButtonGun
+	0, // TextureId_Gun
 	1, // TextureId_Background0
 };
 const std::pair<glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureId_Count] = {
@@ -76,7 +78,7 @@ const std::pair<glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureId_Coun
 	std::make_pair(glm::ivec2(1,33), glm::ivec2(126, 62)), // TextureId_ButtonStart,
 	std::make_pair(glm::ivec2(129,33), glm::ivec2(126, 62)), // TextureId_ButtonExit,
 	std::make_pair(glm::ivec2(257,33), glm::ivec2(126, 62)), // TextureId_ButtonEmpty,
-	std::make_pair(glm::ivec2(0,96), glm::ivec2(126, 62)), // TextureId_ButtonGun,
+	std::make_pair(glm::ivec2(1,97), glm::ivec2(126, 62)), // TextureId_Gun,
 	std::make_pair(glm::ivec2(0,1), glm::ivec2(1024,126)), // TextureId_Background0,
 };
 std::vector<glm::ivec2> Renderer::s_textureSizes;
@@ -148,8 +150,6 @@ void Renderer::render() const
 		if ((*it)->visible)
 			lists[(*it)->layerId].push_back(*it);
 
-	glUseProgram(s_program);
-
 	glBindBuffer(GL_ARRAY_BUFFER, s_vertexBuffer);
 	glVertexAttribPointer(s_attribPosLoc, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (const void*)(0*sizeof(float)));
 	glEnableVertexAttribArray(s_attribPosLoc);
@@ -157,6 +157,7 @@ void Renderer::render() const
 	glEnableVertexAttribArray(s_attribTexCoordLoc);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_indexBuffer);
 
+	glUseProgram(s_program);
 	glUniform1i(s_uniformTextureLoc, 0);
 
 	for (int layerId = 0; layerId < LayerId_Count; ++layerId) {
@@ -291,6 +292,7 @@ void Renderer::renderBackground(const Renderer::SpriteList& list) const
 
 void Renderer::renderObjects(const Renderer::SpriteList& list) const
 {
+	glEnable(GL_ALPHA);
 	for (SpriteList::const_iterator it = list.cbegin(); it != list.cend(); ++it) {
 		Sprite *p = *it;
 
