@@ -4,8 +4,7 @@
 #include "gameobject.h"
 
 class GraphicsObject;
-class PhysicsObject;
-class PhysicsGeometry;
+class PhysicsBody;
 
 class GameObjectBrokenBrick : public GameObject
 {
@@ -16,7 +15,18 @@ protected:
 	GameObjectBrokenBrick(GameAbstractScene *pScene);
 	~GameObjectBrokenBrick();
 
+	void update(uint32_t dt);
+	void use();
+
 private:
+	struct Part {
+		Transform *pTransform;
+		GraphicsObject *pGraphicsObject;
+		PhysicsBody *pPhysicsBody;
+	};
+	using PartsList = std::list<Part*>;
+
+	PartsList m_parts;
 	bool m_isWhole;
 
 	friend class GameAbstractScene;

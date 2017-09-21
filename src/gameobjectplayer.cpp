@@ -8,6 +8,7 @@
 
 void GameObjectPlayer::update(uint32_t dt)
 {
+	(void)dt;
 //	static const float  coef = 0.5f;
 //	PhysicsBody *pBody = m_physicsBodies.front();
 //	glm::vec2 vel = pBody->velocity();

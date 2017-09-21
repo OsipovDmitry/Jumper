@@ -1,8 +1,10 @@
 #include "core.h"
 #include "graphicscontroller.h"
 #include "physicscontroller.h"
-#include "gamescenelevel.h"
 #include "gamecontroller.h"
+#include "gameobject.h"
+
+#include "gamescenelevel.h"
 
 bool GameController::process(AbstractControllerMessage* pMessage)
 {
@@ -11,25 +13,26 @@ bool GameController::process(AbstractControllerMessage* pMessage)
 		auto pMsg = msg_cast<ControllerUpdateMessage>(pMessage);
 		if (pMsg)
 			update(pMsg->time, pMsg->dt);
-		break;
+		return true;
 	}
 	case CMT_GameMouseClick: {
 		auto pMsg = msg_cast<GameMouseClickMessage>(pMessage);
 		if (pMsg)
 			mouseClick(pMsg->x, pMsg->y);
-		break;
+		return true;
 	}
 	case CMT_GameOver: {
-		break;
+		return true;
 	}
-	case CMT_GameObjectsCollision: {
-		auto pMsg = msg_cast<GameObjectsCollisionMessage>(pMessage);
+	case CMT_GameObjectUse: {
+		auto pMsg = msg_cast<GameObjectUse>(pMessage);
 		if (pMsg)
-			;
-		break;
+			pMsg->pGameObject->use();
+		return true;
 	}
 	default: break;
 	}
+	return false;
 }
 
 GameController::GameController() :

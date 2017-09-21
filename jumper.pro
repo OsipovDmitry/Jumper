@@ -60,7 +60,8 @@ HEADERS += \
     src/gameobjectmodifierrotate.h \
     src/gameobjectmodifieroffset.h \
     src/gameobjectmodifiertrain.h \
-    src/gameobjectbrokenbrick.h
+    src/gameobjectbrokenbrick.h \
+    src/mathutils.h
 
 LIBS += -lGLESv2
 

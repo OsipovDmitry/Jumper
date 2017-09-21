@@ -8,11 +8,13 @@
 class GameObjectGun : public GameObject
 {
 public:
-	void setShotTime(uint32_t value);
-	uint32_t shotTime() const;
+	void setShotTime(float value);
+	float shotTime() const;
 
 	void setLeftOrient(bool value);
 	bool isLeftOrient() const;
+
+	void setTransform(const Transform& value);
 
 protected:
 	void update(uint32_t dt);
@@ -24,7 +26,7 @@ private:
 		PhysicsBody *pPhysicsBody;
 		PhysicsGeometry *pPhysicsGeom;
 	};
-	using BullletsList = std::list<Bullet*>;
+	using BulletsList = std::list<Bullet*>;
 
 	GameObjectGun(GameAbstractScene *pScene);
 	~GameObjectGun();
@@ -32,9 +34,10 @@ private:
 	Bullet *createNewShot();
 	void delBullet(Bullet *pBullet);
 
-	BullletsList m_bullets;
+	BulletsList m_bullets;
+	Transform m_restTransform;
 	int32_t m_nextShotTime;
-	uint32_t m_shotTime;
+	float m_shotTime;
 
 	bool m_isLeftOrient;
 

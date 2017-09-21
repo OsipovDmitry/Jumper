@@ -26,7 +26,7 @@ enum ControllerMessageType {
 
 	CMT_GameMouseClick,
 	CMT_GameOver,
-	CMT_GameObjectsCollision,
+	CMT_GameObjectUse,
 };
 
 class AbstractControllerMessage {
@@ -70,7 +70,7 @@ protected:
 
 class ControllerUpdateMessage : public AbstractControllerMessage {
 public:
-	ControllerUpdateMessage(uint64_t timeVal, uint32_t dtVal) : AbstractControllerMessage(CMT_ControllerUpdate), time(dtVal), dt(dtVal) {}
+	ControllerUpdateMessage(uint64_t timeVal, uint32_t dtVal) : AbstractControllerMessage(CMT_ControllerUpdate), time(timeVal), dt(dtVal) {}
 	static ControllerMessageType typeOfClass() { return CMT_ControllerUpdate; }
 
 	uint64_t time;

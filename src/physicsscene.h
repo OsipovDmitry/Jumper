@@ -30,6 +30,9 @@ public:
 
 	void delGeometry(PhysicsGeometry *pGeom);
 
+	using CollisionDetectionCallback = void(*)(void*, PhysicsGeometry*, PhysicsGeometry*);
+	void setCollisionDetectionCallback(CollisionDetectionCallback func, void *pData);
+
 private:
 	PhysicsScene();
 	~PhysicsScene();
@@ -41,6 +44,9 @@ private:
 	BodiesList m_bodies;
 	GeometriesList m_geoms;
 	glm::vec2 m_gravity;
+
+	CollisionDetectionCallback m_cdCallback;
+	void *m_cdData;
 
 	friend class PhysicsController;
 };

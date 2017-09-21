@@ -30,6 +30,8 @@ enum TextureId {
 	TextureId_Brick,
 	TextureId_Circle,
 	TextureId_Rect,
+	TextureId_BrokenBrick,
+	TextureId_BrockenBrickPart,
 
 	TextureId_GuiButtonStart,
 	TextureId_GuiButtonExit,
@@ -52,5 +54,7 @@ enum GuiButtonId {
 	GuiButtonId_Start = TextureId_GuiButtonStart,
 	GuiButtonId_Exit = TextureId_GuiButtonExit,
 };
+
+const float GLOBAL_DOWN = -500.0f;
 
 #endif // TYPES_H

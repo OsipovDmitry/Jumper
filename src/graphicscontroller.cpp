@@ -45,10 +45,11 @@ bool GraphicsController::process(AbstractControllerMessage* pMessage)
 		ControllerUpdateMessage *pMsg = msg_cast<ControllerUpdateMessage>(pMessage);
 		if (pMsg)
 			update(pMsg->dt);
-		break;
+		return true;
 	}
 	default: break;
 	}
+	return false;
 }
 
 GraphicsController::GraphicsController() :
@@ -67,5 +68,5 @@ GraphicsController::~GraphicsController()
 
 void GraphicsController::update(uint32_t dt)
 {
-	dt;
+	(void)dt;
 }

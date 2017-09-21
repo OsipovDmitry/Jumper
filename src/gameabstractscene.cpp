@@ -10,8 +10,10 @@
 #include "graphicsobject.h"
 #include "physicscontroller.h"
 #include "physicsscene.h"
-#include "gameobjectbackground.h"
+#include "physicsgeometry.h"
+#include "gamecontroller.h"
 #include "gameabstractscene.h"
+#include "gameobjectbackground.h"
 
 GraphicsScene *GameAbstractScene::graphicsScene() const
 {
@@ -29,6 +31,8 @@ GameAbstractScene::GameAbstractScene() :
 	m_pGraphicsScene(Core::getController<GraphicsController>()->addScene()),
 	m_pPhysicsScene(Core::getController<PhysicsController>()->addScene())
 {
+	m_pPhysicsScene->setCollisionDetectionCallback(collisionDetection, static_cast<void*>(this));
+
 	m_pObjectBackground = createGameObject<GameObjectBackground>(BackgroundId_0);
 }
 
@@ -97,4 +101,20 @@ void GameAbstractScene::updateScene(uint64_t time, uint32_t dt)
 		p->updateObject(dt);
 
 	update(time, dt);
+}
+
+void GameAbstractScene::collisionDetection(PhysicsGeometry* p1, PhysicsGeometry* p2)
+{
+	auto pGameObject = static_cast<GameObject*>(p1->data());
+	if (pGameObject)
+		Core::getController<GameController>()->sendMessage(new GameObjectUse(pGameObject));
+
+	pGameObject = static_cast<GameObject*>(p2->data());
+	if (pGameObject)
+		Core::getController<GameController>()->sendMessage(new GameObjectUse(pGameObject));
+}
+
+void GameAbstractScene::collisionDetection(void *pSceneData, PhysicsGeometry* p1, PhysicsGeometry* p2)
+{
+	static_cast<GameAbstractScene*>(pSceneData)->collisionDetection(p1, p2);
 }

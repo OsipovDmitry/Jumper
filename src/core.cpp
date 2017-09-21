@@ -39,20 +39,21 @@ bool Core::process(AbstractControllerMessage* pMessage)
 	}
 	case CMT_CoreInit: {
 		init();
-		break;
+		return true;
 	}
 	case CMT_CoreUpdate: {
 		CoreUpdateMessage *pMsg = msg_cast<CoreUpdateMessage>(pMessage);
 		if (pMsg)
 			update(pMsg->time, pMsg->dt);
-		break;
+		return true;
 	}
 	case CMT_CoreMouseClick: {
 		CoreMouseClickMessage *pMsg = msg_cast<CoreMouseClickMessage>(pMessage);
 		if (pMsg)
 			mouseClick(pMsg->x, pMsg->y);
-		break;
+		return true;
 	}
+	default: break;
 	}
 	return false;
 }

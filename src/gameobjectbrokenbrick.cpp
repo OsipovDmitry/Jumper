@@ -7,6 +7,7 @@
 #include "physicsbody.h"
 #include "gameabstractscene.h"
 #include "gameobjectbrokenbrick.h"
+#include "mathutils.h"
 
 namespace {
 	static const float s_brickHeight = 0.15f;
@@ -36,38 +37,78 @@ void GameObjectBrokenBrick::breakDown()
 		m_pScene->physicsScene()->delGeometry(p);
 	}
 
-	const int numParts = 4;
+	const int numParts = 3 + rand() % 3;
+	const float partsStartVel = 1.8f;
 	for (int i = 0; i < numParts; ++i) {
-		Transform *pTransform = new Transform(m_pTransform->pos, 0.0f);
+		Part *pPart = new Part;
 
-		auto pGraphicsObject = m_pScene->graphicsScene()->addObject(pTransform);
-		pGraphicsObject->setLayer(LayerId_Objects);
-		pGraphicsObject->setSize(glm::vec2(s_brickHeight, s_brickHeight));
-		pGraphicsObject->setTexture(TextureId_Brick);
-		m_graphicsObjects.push_back(pGraphicsObject);
+		pPart->pTransform = new Transform(
+								toWorldSpace(m_pTransform, glm::vec2(s_brickWidth*((float)i/(float)(numParts-1)-0.5f), 0.0f)),
+								rand(0.0f, glm::two_pi<float>())
+								);
 
-		auto pPhysicsBody = m_pScene->physicsScene()->addBody(pTransform);
-		pPhysicsBody->setVelocity(glm::vec2(glm::rotate(glm::mat4x4(), glm::pi<float>() * (1.0f + (float)i/(float)(numParts-1)), glm::vec3(0.0f,0.0f,1.0f))*glm::vec4(1.0f,0.0f,0.0f,1.0f)));
+		pPart->pGraphicsObject = m_pScene->graphicsScene()->addObject(pPart->pTransform);
+		pPart->pGraphicsObject->setLayer(LayerId_Objects);
+		pPart->pGraphicsObject->setSize(glm::vec2(s_brickHeight, s_brickHeight));
+		pPart->pGraphicsObject->setTexture(TextureId_BrockenBrickPart);
+
+		pPart->pPhysicsBody = m_pScene->physicsScene()->addBody(pPart->pTransform);
+		pPart->pPhysicsBody->setVelocity(partsStartVel * glm::vec2(glm::rotate(glm::mat4x4(), glm::pi<float>() * (1.0f + (float)i/(float)(numParts-1)), glm::vec3(0.0f,0.0f,1.0f))*glm::vec4(1.0f,0.0f,0.0f,1.0f)));
+
+		m_parts.push_back(pPart);
 	}
 
-	m_isWhole = true;
+	m_isWhole = false;
 }
 
 GameObjectBrokenBrick::GameObjectBrokenBrick(GameAbstractScene *pScene) :
 	GameObject(pScene),
+	m_parts(),
 	m_isWhole(true)
 {
-	GraphicsObject *pGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
+	auto pGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
 	pGraphicsObject->setLayer(LayerId_Objects);
 	pGraphicsObject->setSize(glm::vec2(s_brickWidth, s_brickHeight));
-	pGraphicsObject->setTexture(TextureId_Brick);
+	pGraphicsObject->setTexture(TextureId_BrokenBrick);
 	m_graphicsObjects.push_back(pGraphicsObject);
 
-	PhysicsGeometry *pPhysicsGeom = pScene->physicsScene()->addStaticBox(m_pTransform, s_brickWidth, s_brickHeight);
+	auto pPhysicsGeom = pScene->physicsScene()->addStaticBox(m_pTransform, s_brickWidth, s_brickHeight);
+	pPhysicsGeom->setData(static_cast<void*>(this));
 	m_physicsGeoms.push_back(pPhysicsGeom);
 }
 
 GameObjectBrokenBrick::~GameObjectBrokenBrick()
 {
+	for (auto pPart: m_parts) {
+		m_pScene->graphicsScene()->delObject(pPart->pGraphicsObject);
+		m_pScene->physicsScene()->delBody(pPart->pPhysicsBody);
+		delete pPart->pTransform;
+		delete pPart;
+	}
+	m_parts.clear();
+}
 
+void GameObjectBrokenBrick::update(uint32_t dt)
+{
+	(void)dt;
+	if (m_isWhole)
+		return;
+
+	PartsList fallenParts;
+	for (auto pPart: m_parts) {
+		if (pPart->pTransform->pos.y < GLOBAL_DOWN)
+			fallenParts.push_back(pPart);
+	}
+	for (auto pPart: fallenParts) {
+		m_pScene->graphicsScene()->delObject(pPart->pGraphicsObject);
+		m_pScene->physicsScene()->delBody(pPart->pPhysicsBody);
+		delete pPart->pTransform;
+		m_parts.remove(pPart);
+		delete pPart;
+	}
+}
+
+void GameObjectBrokenBrick::use()
+{
+	breakDown();
 }

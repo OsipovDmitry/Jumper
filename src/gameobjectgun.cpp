@@ -1,5 +1,6 @@
 #include <algorithm>
 
+#include "mathutils.h"
 #include "graphicsscene.h"
 #include "graphicsobject.h"
 #include "physicsscene.h"
@@ -11,12 +12,12 @@
 const float GameObjectGun::s_gunHeight = 0.3f;
 const float GameObjectGun::s_gunWidth = 2 * GameObjectGun::s_gunHeight;
 
-void GameObjectGun::setShotTime(uint32_t value)
+void GameObjectGun::setShotTime(float value)
 {
 	m_shotTime = value;
 }
 
-uint32_t GameObjectGun::shotTime() const
+float GameObjectGun::shotTime() const
 {
 	return m_shotTime;
 }
@@ -31,20 +32,39 @@ bool GameObjectGun::isLeftOrient() const
 	return m_isLeftOrient;
 }
 
+void GameObjectGun::setTransform(const Transform& value)
+{
+	m_restTransform = value;
+}
+
 void GameObjectGun::update(uint32_t dt)
 {
-	m_nextShotTime -= dt;
-	if (m_nextShotTime <= 0) {
+	BulletsList fallenBullets;
+	for (auto p: m_bullets) {
+		if (p->pTransform->pos.y < GLOBAL_DOWN)
+			fallenBullets.push_back(p);
+	}
+	for (auto p: fallenBullets)
+		delBullet(p);
 
-		BullletsList fallenBullets;
-		for (auto p: m_bullets) {
-			if (p->pTransform->pos.y < -500.0f)
-				fallenBullets.push_back(p);
-		}
-		for (auto p: fallenBullets)
-			delBullet(p);
+	m_nextShotTime += dt;
 
-		m_nextShotTime = m_shotTime;
+	static const float s_kickTime = 0.05f;
+	static const float s_returnTime = 2.0f;
+	static const float s_kickDist = s_gunWidth * 0.3f;
+
+	*m_pTransform = m_restTransform;
+	if (m_shotTime >= s_kickTime + s_returnTime) {
+		float coef = 0.0f;
+		if (m_nextShotTime < 1000 * s_kickTime)
+			coef = 0.001f * m_nextShotTime / s_kickTime;
+		else if (m_nextShotTime < 1000 * (s_kickTime+s_returnTime))
+			coef = (s_kickTime+s_returnTime - m_nextShotTime*0.001f) / s_returnTime;
+		m_pTransform->pos += toWorldSpace(m_pTransform, glm::vec2((m_isLeftOrient ? +1.0f : -1.0f) * coef * s_kickDist, 0.0f), true);
+	}
+
+	if (m_nextShotTime >= 1000 * m_shotTime) {
+		m_nextShotTime -= 1000 * m_shotTime;
 		createNewShot();
 	}
 }
@@ -52,8 +72,9 @@ void GameObjectGun::update(uint32_t dt)
 GameObjectGun::GameObjectGun(GameAbstractScene* pScene) :
 	GameObject(pScene),
 	m_bullets(),
+	m_restTransform(*m_pTransform),
 	m_nextShotTime(0),
-	m_shotTime(2500),
+	m_shotTime(2.5f),
 	m_isLeftOrient(true)
 {
 	auto pGunGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
@@ -82,9 +103,9 @@ GameObjectGun::Bullet *GameObjectGun::createNewShot()
 	auto pBullet = new Bullet;
 
 	auto gunHalfSize = 0.5f * glm::vec2(s_gunWidth, s_gunHeight);
-	auto bulletStartPos = m_pTransform->pos +
-						  glm::vec2((m_isLeftOrient ? -1 : +1) * gunHalfSize.x, gunHalfSize.y) +
-						  1.0f * glm::vec2((m_isLeftOrient ? -1 : +1) * bulletRadius, bulletRadius);
+	auto bulletStartPos = toWorldSpace(m_pTransform,
+									   glm::vec2((m_isLeftOrient ? -1 : +1) * gunHalfSize.x, gunHalfSize.y) +
+									   1.3f * glm::vec2((m_isLeftOrient ? -1 : +1) * bulletRadius, bulletRadius));
 	pBullet->pTransform = new Transform(bulletStartPos);
 
 	pBullet->pGraphicsObject = m_pScene->graphicsScene()->addObject(pBullet->pTransform);
@@ -93,7 +114,7 @@ GameObjectGun::Bullet *GameObjectGun::createNewShot()
 	pBullet->pGraphicsObject->setTexture(TextureId_Circle);
 
 	pBullet->pPhysicsBody = m_pScene->physicsScene()->addBody(pBullet->pTransform);
-	pBullet->pPhysicsBody->setVelocity(bulletVelAbs * glm::vec2((m_isLeftOrient ? -1 : +1) * bulletVel.x, bulletVel.y));
+	pBullet->pPhysicsBody->setVelocity(bulletVelAbs * toWorldSpace(m_pTransform, glm::vec2((m_isLeftOrient ? -1 : +1) * bulletVel.x, bulletVel.y), true));
 
 	pBullet->pPhysicsGeom = m_pScene->physicsScene()->addDynamicSphere(pBullet->pPhysicsBody, bulletRadius);
 

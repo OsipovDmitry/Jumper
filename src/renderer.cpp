@@ -64,6 +64,8 @@ const int Renderer::s_textureIndexes[TextureId_Count] = {
 	0, // TextureId_Brick
 	0, // TextureId_Circle
 	0, // TextureId_Rect
+	0, // TextureId_BrokenBrick
+	0, // TextureId_BrokenBrickPart
 	0, // TextureId_ButtonStart
 	0, // TextureId_ButtonExit
 	0, // TextureId_ButtonEmpty
@@ -75,6 +77,8 @@ const std::pair<glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureId_Coun
 	std::make_pair(glm::ivec2(32+1,0+1), glm::ivec2(96-2,32-2)), // TextureId_Brick,
 	std::make_pair(glm::ivec2(128+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_Circle,
 	std::make_pair(glm::ivec2(160+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_Rect,
+	std::make_pair(glm::ivec2(192+1,0+1), glm::ivec2(96-2,32-2)), // TextureId_BrokenBrick,
+	std::make_pair(glm::ivec2(288+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_BrokenBrickPart,
 	std::make_pair(glm::ivec2(0+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonStart,
 	std::make_pair(glm::ivec2(128+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonExit,
 	std::make_pair(glm::ivec2(256+132+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonEmpty,
@@ -259,8 +263,8 @@ Renderer::~Renderer()
 	glDeleteProgram(s_program);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-	for (int i = 0; i < s_textureIds.size(); ++i)
-		glDeleteTextures(1, &(s_textureIds[i]));
+	for (auto& id: s_textureIds)
+		glDeleteTextures(1, &id);
 }
 
 void Renderer::renderBackground(const Renderer::SpriteList& list) const

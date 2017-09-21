@@ -40,10 +40,11 @@ bool PhysicsController::process(AbstractControllerMessage* pMessage)
 		ControllerUpdateMessage *pMsg = msg_cast<ControllerUpdateMessage>(pMessage);
 		if (pMsg)
 			update(pMsg->dt);
-		break;
+		return true;
 	}
 	default: break;
 	}
+	return false;
 }
 
 PhysicsController::PhysicsController() :

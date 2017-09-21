@@ -19,6 +19,9 @@ public:
 	const PhysicsScene *scene() const;
 	PhysicsBody *body() const;
 
+	void setData(void *pData);
+	void *data() const;
+
 private:
 	PhysicsGeometry(Type type, const PhysicsScene *pScene, const Transform *pTransform, const glm::vec4& params);
 	PhysicsGeometry(Type type, PhysicsBody *pBody, const glm::vec4& params);
@@ -35,6 +38,7 @@ private:
 	PhysicsBody *m_pBody;
 	const Transform *m_pTransform;
 	Type m_type;
+	void *m_pData;
 
 	friend class PhysicsScene;
 };

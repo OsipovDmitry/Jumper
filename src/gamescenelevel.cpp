@@ -19,6 +19,8 @@
 
 void GameSceneLevel::update(uint64_t time, uint32_t dt)
 {
+	(void)time;
+	(void)dt;
 	Transform transform = m_pPlayer->transform();
 	if (Core::getController()->renderWidget()->testKey(RenderWidget::KeyCode_Left))
 		transform.pos.x -= 0.05f;
@@ -73,9 +75,8 @@ GameSceneLevel::GameSceneLevel() :
 
 	for (int i = 0; i < 10; ++i) {
 		auto pBrick = createGameObject<GameObjectBrokenBrick>();
-		pBrick->setTransform(Transform(glm::vec2(2 + 2.5f * i, 0.5f), 0.0f));
+		pBrick->setTransform(Transform(glm::vec2(2 + 2.1f * i, 0.0f), 0.0f));
 	}
-
 
 	m_pPlayer = createGameObject<GameObjectPlayer>();
 	m_pPlayer->setTransform(Transform(glm::vec2(0.0f, 0.7f), 0.0f));

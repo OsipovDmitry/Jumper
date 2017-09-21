@@ -21,6 +21,16 @@ PhysicsBody*PhysicsGeometry::body() const
 	return m_pBody;
 }
 
+void PhysicsGeometry::setData(void *pData)
+{
+	m_pData = pData;
+}
+
+void *PhysicsGeometry::data() const
+{
+	return m_pData;
+}
+
 bool PhysicsGeometry::collisionDetection(PhysicsGeometry* pGeom1, PhysicsGeometry* pGeom2, glm::vec2& n, float& depth)
 {
 	const Transform *pTr1 = isStatic(pGeom1) ? pGeom1->m_pTransform : pGeom1->m_pBody->transform();
@@ -99,25 +109,35 @@ bool PhysicsGeometry::sphereVsBox(const Transform* pTransform1, float r1, const 
 
 bool PhysicsGeometry::boxVsBox(const Transform* pTransform1, float w1, float h1, const Transform* pTransform2, float w2, float h2, glm::vec2& n, float& depth)
 {
+	(void)pTransform1;
+	(void)w1;
+	(void)h1;
+	(void)pTransform2;
+	(void)w2;
+	(void)h2;
+	(void)n;
+	(void)depth;
 	return false;
 }
 
 PhysicsGeometry::PhysicsGeometry(Type type, const PhysicsScene* pScene, const Transform *pTransform, const glm::vec4& params) :
 	m_params(params),
-	m_type(type),
 	m_pScene(pScene),
 	m_pBody(nullptr),
-	m_pTransform(pTransform)
+	m_pTransform(pTransform),
+	m_type(type),
+	m_pData(nullptr)
 {
 
 }
 
 PhysicsGeometry::PhysicsGeometry(Type type, PhysicsBody *pBody, const glm::vec4& params) :
 	m_params(params),
-	m_type(type),
 	m_pScene(pBody->scene()),
 	m_pBody(pBody),
-	m_pTransform(nullptr)
+	m_pTransform(nullptr),
+	m_type(type),
+	m_pData(nullptr)
 {
 	//assert(pBody == nullptr);
 }

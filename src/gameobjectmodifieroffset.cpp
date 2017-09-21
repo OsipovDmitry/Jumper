@@ -6,8 +6,8 @@
 
 GameObjectModifierOffset::GameObjectModifierOffset(GameObject *pObject, const glm::vec2& offset, const float velocity) :
 	GameObjectAbstractModifier(pObject),
-	m_offsetCur(0.0f),
 	m_offsetVel(velocity),
+	m_offsetCur(0.0f),
 	m_sign(1)
 {
 	m_offsetAbs = glm::length(offset);
@@ -17,7 +17,6 @@ GameObjectModifierOffset::GameObjectModifierOffset(GameObject *pObject, const gl
 
 GameObjectModifierOffset::~GameObjectModifierOffset()
 {
-
 }
 
 void GameObjectModifierOffset::update(uint32_t dt)

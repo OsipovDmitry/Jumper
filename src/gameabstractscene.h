@@ -6,6 +6,7 @@
 
 class GraphicsScene;
 class PhysicsScene;
+class PhysicsGeometry;
 class GameObject;
 class GameObjectBackground;
 
@@ -24,7 +25,7 @@ protected:
 	PhysicsScene *m_pPhysicsScene;
 
 	GameAbstractScene();
-	~GameAbstractScene();
+	virtual ~GameAbstractScene();
 
 	void delObject(GameObject *pObject);
 
@@ -42,6 +43,9 @@ protected:
 
 private:
 	void updateScene(uint64_t time, uint32_t dt);
+	void collisionDetection(PhysicsGeometry *p1, PhysicsGeometry *p2);
+
+	static void collisionDetection(void *pSceneData, PhysicsGeometry *p1, PhysicsGeometry *p2);
 
 	friend class GameController;
 };

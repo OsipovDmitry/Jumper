@@ -48,7 +48,8 @@ protected:
 	GameObject(GameAbstractScene *pScene);
 	virtual ~GameObject();
 
-	virtual void update(uint32_t dt) {}
+	virtual void update(uint32_t dt) { (void)dt; }
+	virtual void use() {}
 
 private:
 	void updateObject(uint32_t dt);
@@ -56,6 +57,7 @@ private:
 	ObjectModifiers m_modifiers;
 
 	friend class GameAbstractScene;
+	friend class GameController;
 };
 
 #endif // GAMEOBJECT_H
