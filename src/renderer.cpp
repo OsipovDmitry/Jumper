@@ -81,7 +81,7 @@ const std::pair<glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureId_Coun
 	std::make_pair(glm::ivec2(288+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_BrokenBrickPart,
 	std::make_pair(glm::ivec2(0+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonStart,
 	std::make_pair(glm::ivec2(128+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonExit,
-	std::make_pair(glm::ivec2(256+132+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonEmpty,
+	std::make_pair(glm::ivec2(256+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonEmpty,
 	std::make_pair(glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
 	std::make_pair(glm::ivec2(0,0+1), glm::ivec2(1024,128-2)), // TextureId_Background0,
 };

@@ -37,7 +37,7 @@ void GameSceneLevel::mouseClick(int32_t x, int32_t y)
 
 	if (std::find(list.cbegin(), list.cend(), m_pButtonStart) != list.cend()) {
 		m_pPlayer->setTransform(Transform(glm::vec2(0.0f, 0.7f), 0.0f));
-		m_pPlayerBody->setVelocity(glm::vec2(0.0f, 0.0f));
+		m_pPlayer->physicsBody()->setVelocity(glm::vec2(0.0f, 0.0f));
 	}
 
 	if (std::find(list.cbegin(), list.cend(), m_pButtonExit) != list.cend()) {
@@ -80,7 +80,6 @@ GameSceneLevel::GameSceneLevel() :
 
 	m_pPlayer = createGameObject<GameObjectPlayer>();
 	m_pPlayer->setTransform(Transform(glm::vec2(0.0f, 0.7f), 0.0f));
-	m_pPlayerBody = m_pPlayer->physicsBody();
 
 	GameObjectGun *pGun = createGameObject<GameObjectGun>();
 	pGun->setTransform(Transform(glm::vec2(5.5f, 0.05f), 0.0f));

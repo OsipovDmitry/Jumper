@@ -4,7 +4,7 @@
 #include "abstractcontroller.h"
 
 class PhysicsGeometry;
-class GameSceneLevel;
+class GameAbstractScene;
 class GameObject;
 
 class GameController : public AbstractController
@@ -22,7 +22,7 @@ private:
 	void update(uint64_t time, uint32_t dt);
 	void mouseClick(int32_t x, int32_t y);
 
-	GameSceneLevel *pLevel;
+	GameAbstractScene *pLevel;
 
 	friend class Core;
 };

@@ -53,6 +53,13 @@ enum BackgroundId {
 enum GuiButtonId {
 	GuiButtonId_Start = TextureId_GuiButtonStart,
 	GuiButtonId_Exit = TextureId_GuiButtonExit,
+	GuiButtonId_Empty = TextureId_GuiButtonEmpty,
+};
+
+enum GameSceneId {
+	GameSceneId_MainMenu = 0,
+	GameSceneId_Authors,
+	GameSceneId_SelectLevel,
 };
 
 const float GLOBAL_DOWN = -500.0f;

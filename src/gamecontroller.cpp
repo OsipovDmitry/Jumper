@@ -4,6 +4,7 @@
 #include "gamecontroller.h"
 #include "gameobject.h"
 
+#include "gamescenemainmenu.h"
 #include "gamescenelevel.h"
 
 bool GameController::process(AbstractControllerMessage* pMessage)
@@ -48,7 +49,7 @@ GameController::~GameController()
 void GameController::update(uint64_t time, uint32_t dt)
 {
 	if (!pLevel) {
-		pLevel = new GameSceneLevel();
+		pLevel = new GameSceneMainMenu();
 		Core::getController<GraphicsController>()->setCurrentScene(pLevel->graphicsScene());
 		Core::getController<PhysicsController>()->setCurrentScene(pLevel->physicsScene());
 	}
