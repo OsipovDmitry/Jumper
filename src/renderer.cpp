@@ -69,6 +69,11 @@ const int Renderer::s_textureIndexes[TextureId_Count] = {
 	0, // TextureId_ButtonStart
 	0, // TextureId_ButtonExit
 	0, // TextureId_ButtonEmpty
+	0, // TextureId_ButtonAuthors
+	0, // TextureId_ButtonBack
+	0, // TextureId_ButtonLevel1
+	0, // TextureId_ButtonLevel2
+	0, // TextureId_ButtonLevel3
 	0, // TextureId_Gun
 	1, // TextureId_Background0
 };
@@ -82,6 +87,11 @@ const std::pair<glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureId_Coun
 	std::make_pair(glm::ivec2(0+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonStart,
 	std::make_pair(glm::ivec2(128+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonExit,
 	std::make_pair(glm::ivec2(256+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonEmpty,
+	std::make_pair(glm::ivec2(384+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonAuthors,
+	std::make_pair(glm::ivec2(512+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonBack,
+	std::make_pair(glm::ivec2(640+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel1,
+	std::make_pair(glm::ivec2(768+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel2,
+	std::make_pair(glm::ivec2(896+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel3,
 	std::make_pair(glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
 	std::make_pair(glm::ivec2(0,0+1), glm::ivec2(1024,128-2)), // TextureId_Background0,
 };

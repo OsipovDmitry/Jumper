@@ -41,8 +41,15 @@ void GraphicsController::setCurrentScene(GraphicsScene* pScene)
 bool GraphicsController::process(AbstractControllerMessage* pMessage)
 {
 	switch (pMessage->type()) {
+	case CMT_ControllerInit: {
+		auto pMsg = msg_cast<ControllerInitMessage>(pMessage);
+		if (pMsg) {
+			//
+		}
+		return true;
+	}
 	case CMT_ControllerUpdate: {
-		ControllerUpdateMessage *pMsg = msg_cast<ControllerUpdateMessage>(pMessage);
+		auto pMsg = msg_cast<ControllerUpdateMessage>(pMessage);
 		if (pMsg)
 			update(pMsg->dt);
 		return true;

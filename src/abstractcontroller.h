@@ -22,11 +22,13 @@ enum ControllerMessageType {
 	CMT_CoreMouseClick,
 	CMT_CoreUpdate,
 
+	CMT_ControllerInit,
 	CMT_ControllerUpdate,
 
 	CMT_GameMouseClick,
 	CMT_GameOver,
 	CMT_GameObjectUse,
+	CMT_GameChangeScene,
 };
 
 class AbstractControllerMessage {
@@ -67,6 +69,8 @@ protected:
 	std::deque<AbstractControllerMessage*> m_messages;
 
 };
+
+DECLARE_SIMPLE_MESSAGE(ControllerInitMessage, CMT_ControllerInit)
 
 class ControllerUpdateMessage : public AbstractControllerMessage {
 public:

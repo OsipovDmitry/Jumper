@@ -83,6 +83,11 @@ void Core::exit()
 
 void Core::init()
 {
+	for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it) {
+		if (*it == static_cast<AbstractController*>(this)) // Пропускаем компонент Core
+			continue;
+		(*it)->sendMessage(new ControllerInitMessage());
+	}
 }
 
 void Core::update(uint64_t time, uint32_t dt)

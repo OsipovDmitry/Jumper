@@ -36,6 +36,11 @@ enum TextureId {
 	TextureId_GuiButtonStart,
 	TextureId_GuiButtonExit,
 	TextureId_GuiButtonEmpty,
+	TextureId_GuiButtonAuthors,
+	TextureId_GuiButtonBack,
+	TextureId_GuiButtonLevel1,
+	TextureId_GuiButtonLevel2,
+	TextureId_GuiButtonLevel3,
 
 	TextureId_Gun,
 
@@ -54,12 +59,20 @@ enum GuiButtonId {
 	GuiButtonId_Start = TextureId_GuiButtonStart,
 	GuiButtonId_Exit = TextureId_GuiButtonExit,
 	GuiButtonId_Empty = TextureId_GuiButtonEmpty,
+	GuiButtonId_Authors = TextureId_GuiButtonAuthors,
+	GuiButtonId_Back = TextureId_GuiButtonBack,
+	GuiButtonId_Level1 = TextureId_GuiButtonLevel1,
+	GuiButtonId_Level2 = TextureId_GuiButtonLevel2,
+	GuiButtonId_Level3 = TextureId_GuiButtonLevel3,
 };
 
 enum GameSceneId {
+	GameSceneId_None = -1,
 	GameSceneId_MainMenu = 0,
 	GameSceneId_Authors,
 	GameSceneId_SelectLevel,
+	GameSceneId_Level,
+	GameSceneId_Count
 };
 
 const float GLOBAL_DOWN = -500.0f;

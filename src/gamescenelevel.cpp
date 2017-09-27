@@ -1,3 +1,5 @@
+#include "rapidxml/rapidxml.hpp"
+
 #include "types.h"
 #include "core.h"
 #include "renderwidget.h"
