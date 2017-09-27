@@ -9,12 +9,16 @@ class GraphicsObject;
 class GameObjectGuiButton : public GameObject
 {
 public:
+	bool setParam(const std::string& key, const std::string& value) override;
+
 	void setButtonId(GuiButtonId id);
 
 protected:
 private:
 	GameObjectGuiButton(GameAbstractScene *pScene, GuiButtonId id);
 	~GameObjectGuiButton();
+
+	static GuiButtonId paramToButtonId(const std::string& param);
 
 	GraphicsObject *m_pGraphicsObject;
 

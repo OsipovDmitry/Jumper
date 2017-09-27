@@ -20,7 +20,7 @@ protected:
 	using ObjectsList = std::list<GameObject*>;
 
 	ObjectsList m_objects;
-	GameObjectBackground *m_pObjectBackground;
+	GameObjectBackground *m_pBackgroundObject;
 	GraphicsScene *m_pGraphicsScene;
 	PhysicsScene *m_pPhysicsScene;
 

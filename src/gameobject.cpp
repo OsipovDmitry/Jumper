@@ -67,6 +67,32 @@ GameObject::~GameObject()
 	delete m_pTransform;
 }
 
+bool GameObject::setParam(const std::string& key, const std::string& value)
+{
+	static const std::string s_posXTag = "x";
+	static const std::string s_posYTag = "y";
+	static const std::string s_angleTag = "angle";
+
+	if (key == s_posXTag) {
+		Transform t = transform();
+		t.pos.x = static_cast<float>(atof(value.c_str()));
+		setTransform(t);
+		return true;
+	} else if (key == s_posYTag) {
+		Transform t = transform();
+		t.pos.y = static_cast<float>(atof(value.c_str()));
+		setTransform(t);
+		return true;
+	} else if (key == s_angleTag) {
+		Transform t = transform();
+		t.angle = static_cast<float>(atof(value.c_str()));
+		setTransform(t);
+		return true;
+	}
+
+	return false;
+}
+
 void GameObject::updateObject(uint32_t dt)
 {
 	for (auto p: m_modifiers)

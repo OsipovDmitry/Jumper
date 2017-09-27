@@ -1,3 +1,5 @@
+#include <unordered_map>
+
 #include "graphicsscene.h"
 #include "graphicsobject.h"
 #include "gameabstractscene.h"
@@ -13,6 +15,21 @@ BackgroundId GameObjectBackground::backgrounId() const
 	return static_cast<BackgroundId>(m_pGraphicsObject->texture());
 }
 
+bool GameObjectBackground::setParam(const std::string& key, const std::string& value)
+{
+	if (GameObject::setParam(key, value))
+		return true;
+
+	static const std::string s_idTag = "id";
+
+	if (key == s_idTag) {
+		setBackgroundId(paramToBackgroundId(value));
+		return true;
+	}
+
+	return false;
+}
+
 GameObjectBackground::GameObjectBackground(GameAbstractScene *pScene, BackgroundId id) :
 	GameObject(pScene)
 {
@@ -26,4 +43,14 @@ GameObjectBackground::GameObjectBackground(GameAbstractScene *pScene, Background
 
 GameObjectBackground::~GameObjectBackground()
 {
+}
+
+BackgroundId GameObjectBackground::paramToBackgroundId(const std::string& param)
+{
+	static const std::unordered_map<std::string, BackgroundId> table = {
+		{"0", BackgroundId_0},
+	};
+
+	auto it = table.find(param);
+	return (it != table.end()) ? it->second : BackgroundId_0;
 }

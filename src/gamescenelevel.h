@@ -1,6 +1,8 @@
 #ifndef GAMESCENELEVEL_H
 #define GAMESCENELEVEL_H
 
+#include <string>
+
 #include "gameabstractscene.h"
 
 class PhysicsBody;
@@ -18,6 +20,8 @@ protected:
 private:
 	GameSceneLevel();
 	~GameSceneLevel();
+
+	bool loadFromFile(const std::string& filename);
 
 	GameObjectPlayer *m_pPlayer;
 	GameObjectGuiButton *m_pButtonStart, *m_pButtonExit;

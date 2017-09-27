@@ -27,13 +27,13 @@ PhysicsScene *GameAbstractScene::physicsScene() const
 
 GameAbstractScene::GameAbstractScene() :
 	m_objects(),
-	m_pObjectBackground(nullptr),
+	m_pBackgroundObject(nullptr),
 	m_pGraphicsScene(Core::getController<GraphicsController>()->addScene()),
 	m_pPhysicsScene(Core::getController<PhysicsController>()->addScene())
 {
 	m_pPhysicsScene->setCollisionDetectionCallback(collisionDetection, static_cast<void*>(this));
 
-	m_pObjectBackground = createGameObject<GameObjectBackground>(BackgroundId_0);
+	m_pBackgroundObject = createGameObject<GameObjectBackground>(BackgroundId_0);
 }
 
 GameAbstractScene::~GameAbstractScene()

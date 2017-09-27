@@ -1,6 +1,7 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include <string>
 #include <list>
 #include <inttypes.h>
 
@@ -25,6 +26,7 @@ public:
 
 	virtual const Transform& transform() const;
 	virtual void setTransform(const Transform& value);
+	virtual bool setParam(const std::string& key, const std::string& value);
 
 //	const GraphicsObjectsList& graphicsObjects() const;
 //	const PhysicsBodiesList& physicsBodies() const;
