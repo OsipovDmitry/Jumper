@@ -59,41 +59,122 @@ const std::vector<std::string> Renderer::s_textureFilenames {
         std::string("texture0.png"),
         std::string("texture1.png"),
 	};
-const int Renderer::s_textureIndexes[TextureId_Count] = {
-	0, // TextureId_None,
-	0, // TextureId_Brick
-	0, // TextureId_Circle
-	0, // TextureId_Rect
-	0, // TextureId_BrokenBrick
-	0, // TextureId_BrokenBrickPart
-	0, // TextureId_ButtonStart
-	0, // TextureId_ButtonExit
-	0, // TextureId_ButtonEmpty
-	0, // TextureId_ButtonAuthors
-	0, // TextureId_ButtonBack
-	0, // TextureId_ButtonLevel1
-	0, // TextureId_ButtonLevel2
-	0, // TextureId_ButtonLevel3
-	0, // TextureId_Gun
-	1, // TextureId_Background0
-};
-const std::pair<glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureId_Count] = {
-	std::make_pair(glm::ivec2(0+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_None,
-	std::make_pair(glm::ivec2(32+1,0+1), glm::ivec2(96-2,32-2)), // TextureId_Brick,
-	std::make_pair(glm::ivec2(128+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_Circle,
-	std::make_pair(glm::ivec2(160+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_Rect,
-	std::make_pair(glm::ivec2(192+1,0+1), glm::ivec2(96-2,32-2)), // TextureId_BrokenBrick,
-	std::make_pair(glm::ivec2(288+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_BrokenBrickPart,
-	std::make_pair(glm::ivec2(0+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonStart,
-	std::make_pair(glm::ivec2(128+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonExit,
-	std::make_pair(glm::ivec2(256+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonEmpty,
-	std::make_pair(glm::ivec2(384+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonAuthors,
-	std::make_pair(glm::ivec2(512+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonBack,
-	std::make_pair(glm::ivec2(640+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel1,
-	std::make_pair(glm::ivec2(768+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel2,
-	std::make_pair(glm::ivec2(896+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel3,
-	std::make_pair(glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
-	std::make_pair(glm::ivec2(0,0+1), glm::ivec2(1024,128-2)), // TextureId_Background0,
+const std::tuple<int, glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureId_Count] = {
+	std::make_tuple(0, glm::ivec2(0+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_None,
+	std::make_tuple(0, glm::ivec2(32+1,0+1), glm::ivec2(96-2,32-2)), // TextureId_Brick,
+	std::make_tuple(0, glm::ivec2(128+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_Circle,
+	std::make_tuple(0, glm::ivec2(160+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_Rect,
+	std::make_tuple(0, glm::ivec2(192+1,0+1), glm::ivec2(96-2,32-2)), // TextureId_BrokenBrick,
+	std::make_tuple(0, glm::ivec2(288+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_BrokenBrickPart,
+	std::make_tuple(0, glm::ivec2(0+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonStart,
+	std::make_tuple(0, glm::ivec2(128+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonExit,
+	std::make_tuple(0, glm::ivec2(256+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonEmpty,
+	std::make_tuple(0, glm::ivec2(384+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonAuthors,
+	std::make_tuple(0, glm::ivec2(512+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonBack,
+	std::make_tuple(0, glm::ivec2(640+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel1,
+	std::make_tuple(0, glm::ivec2(768+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel2,
+	std::make_tuple(0, glm::ivec2(896+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel3,
+	std::make_tuple(0, glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
+
+	std::make_tuple(0, glm::ivec2(  0+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2( 64+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(128+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(192+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(256+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(320+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(384+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(448+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(512+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(576+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(640+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(704+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(768+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(832+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(896+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(960+1,640+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(  0+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2( 64+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(128+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(192+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(256+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(320+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(384+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(448+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(512+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(576+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(640+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(704+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(768+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(832+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(896+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(960+1,704+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(  0+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2( 64+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(128+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(192+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(256+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(320+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(384+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(448+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(512+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(576+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(640+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(704+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(768+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(832+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(896+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(960+1,768+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(  0+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2( 64+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(128+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(192+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(256+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(320+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(384+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(448+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(512+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(576+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(640+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(704+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(768+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(832+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(896+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(960+1,832+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(  0+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2( 64+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(128+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(192+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(256+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(320+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(384+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(448+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(512+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(576+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(640+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(704+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(768+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(832+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(896+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(960+1,896+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(  0+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2( 64+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(128+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(192+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(256+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(320+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(384+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(448+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(512+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(576+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(640+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(704+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(768+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(832+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(896+1,960+1), glm::ivec2(64-2, 64-2)),
+	std::make_tuple(0, glm::ivec2(960+1,960+1), glm::ivec2(64-2, 64-2)),
+
+
+	std::make_tuple(1, glm::ivec2(0,0+1), glm::ivec2(1024,128-2)), // TextureId_Background0,
 };
 std::vector<glm::ivec2> Renderer::s_textureSizes;
 std::vector<GLuint> Renderer::s_textureIds;
@@ -286,16 +367,18 @@ void Renderer::renderBackground(const Renderer::SpriteList& list) const
 								glm::rotate(glm::mat4x4(), p->pTransform->angle, glm::vec3(0.0f, 0.0f, 1.0f)) *
 								glm::scale(glm::mat4x4(), glm::vec3(p->size, 1.0f));
 
-		const float texScale = (float)s_textureCoords[p->textureId].second.y /
-							  (float)s_textureCoords[p->textureId].second.x *
-							  s_viewportAspect;
+		const float texScale =
+				(float)std::get<2>(s_textureCoords[p->textureId]).y /
+				(float)std::get<2>(s_textureCoords[p->textureId]).x *
+				s_viewportAspect;
 
-		glm::mat4x4 textureMatrix = calcTextureMatrix(p->textureId) *
-									glm::scale(glm::mat4x4(), glm::vec3(texScale, 1.0f, 1.0f)) *
-									glm::translate(glm::mat4x4(), glm::vec3(m_pCameraTransform->pos.x/s_viewportAspect/2.0f, 0.0f, 0.0f));
+		glm::mat4x4 textureMatrix =
+				calcTextureMatrix(p->textureId) *
+				glm::scale(glm::mat4x4(), glm::vec3(texScale, 1.0f, 1.0f)) *
+				glm::translate(glm::mat4x4(), glm::vec3(m_pCameraTransform->pos.x/s_viewportAspect/2.0f, 0.0f, 0.0f));
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, s_textureIds[s_textureIndexes[p->textureId]]);
+		glBindTexture(GL_TEXTURE_2D, s_textureIds[std::get<0>(s_textureCoords[p->textureId])]);
 
 		glUniformMatrix4fv(s_uniformMVPMatrixLoc, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 		glUniformMatrix4fv(s_uniformTexMatrixLoc, 1, GL_FALSE, glm::value_ptr(textureMatrix));
@@ -318,7 +401,7 @@ void Renderer::renderObjects(const Renderer::SpriteList& list) const
 		glm::mat4x4 textureMatrix = calcTextureMatrix(p->textureId);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, s_textureIds[s_textureIndexes[p->textureId]]);
+		glBindTexture(GL_TEXTURE_2D, s_textureIds[std::get<0>(s_textureCoords[p->textureId])]);
 
 		glUniformMatrix4fv(s_uniformMVPMatrixLoc, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 		glUniformMatrix4fv(s_uniformTexMatrixLoc, 1, GL_FALSE, glm::value_ptr(textureMatrix));
@@ -340,7 +423,7 @@ void Renderer::renderGui(const Renderer::SpriteList& list) const
 		glm::mat4x4 textureMatrix = calcTextureMatrix(p->textureId);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, s_textureIds[s_textureIndexes[p->textureId]]);
+		glBindTexture(GL_TEXTURE_2D, s_textureIds[std::get<0>(s_textureCoords[p->textureId])]);
 
 		glUniformMatrix4fv(s_uniformMVPMatrixLoc, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 		glUniformMatrix4fv(s_uniformTexMatrixLoc, 1, GL_FALSE, glm::value_ptr(textureMatrix));
@@ -401,9 +484,9 @@ GLuint Renderer::loadProgram(GLuint vShader, GLuint fShader, std::string& log)
 
 glm::mat4x4 Renderer::calcTextureMatrix(TextureId textureId)
 {
-	glm::vec2 atlasSize = (glm::vec2)s_textureSizes[s_textureIndexes[textureId]];
-	glm::vec2 texPos = (glm::vec2)s_textureCoords[textureId].first;
-	glm::vec2 texSize = (glm::vec2)s_textureCoords[textureId].second;
+	glm::vec2 atlasSize = (glm::vec2)s_textureSizes[std::get<0>(s_textureCoords[textureId])];
+	glm::vec2 texPos = (glm::vec2)std::get<1>(s_textureCoords[textureId]);
+	glm::vec2 texSize = (glm::vec2)std::get<2>(s_textureCoords[textureId]);
 
 	return glm::translate(glm::mat4x4(), glm::vec3(texPos / atlasSize, 0.0f)) *
 			glm::scale(glm::mat4x4(), glm::vec3(texSize / atlasSize, 1.0f));

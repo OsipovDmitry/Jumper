@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 #include <string>
+#include <tuple>
 
 #include <GLES2/gl2.h>
 
@@ -58,8 +59,7 @@ private:
 	static GLint s_uniformMVPMatrixLoc, s_uniformTexMatrixLoc, s_uniformTextureLoc;
 
 	static const std::vector<std::string> s_textureFilenames;
-	static const int s_textureIndexes[TextureId_Count];
-	static const std::pair<glm::ivec2, glm::ivec2> s_textureCoords[TextureId_Count];
+	static const std::tuple<int, glm::ivec2, glm::ivec2> s_textureCoords[TextureId_Count];
 	static std::vector<glm::ivec2> s_textureSizes;
 	static std::vector<GLuint> s_textureIds;
 

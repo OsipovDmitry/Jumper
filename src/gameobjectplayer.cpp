@@ -24,7 +24,7 @@ GameObjectPlayer::GameObjectPlayer(GameAbstractScene* pScene) :
 	auto *pGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
 	pGraphicsObject->setLayer(LayerId_Objects);
 	pGraphicsObject->setSize(glm::vec2(2*ballRadius, 2*ballRadius));
-	pGraphicsObject->setTexture(TextureId_Circle);
+	pGraphicsObject->setTexture(TextureId_SymA);
 	m_graphicsObjects.push_back(pGraphicsObject);
 
 	auto *pPhysicsBody = pScene->physicsScene()->addBody(m_pTransform);
