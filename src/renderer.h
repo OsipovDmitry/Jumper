@@ -68,6 +68,7 @@ private:
 
 	void renderBackground(const SpriteList& list) const;
 	void renderObjects(const SpriteList& list) const;
+	void renderTransparentObjects(const SpriteList& list) const;
 	void renderGui(const SpriteList& list) const;
 
 	static GLuint loadShader(GLenum type, const char *shaderStr, std::string& log);

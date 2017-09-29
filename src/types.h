@@ -21,6 +21,7 @@ struct Transform {
 enum LayerId {
 	LayerId_Background = 0,
 	LayerId_Objects,
+	LayerId_TransparentObjects,
 	LayerId_Gui,
 	LayerId_Count
 };

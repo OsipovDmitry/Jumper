@@ -3,6 +3,7 @@
 #include "types.h"
 #include "core.h"
 #include "gamecontroller.h"
+#include "gameobjecttext.h"
 #include "gameobjectguibutton.h"
 #include "gamesceneauthorsmenu.h"
 
@@ -21,6 +22,8 @@ GameSceneAuthorsMenu::GameSceneAuthorsMenu() :
 {
 	m_pBackButton = createGameObject<GameObjectGuiButton>(GuiButtonId_Back);
 	m_pBackButton->setTransform(Transform(glm::vec2(0.0f, -0.6f)));
+
+	auto p = createGameObject<GameObjectText>("Hello!");
 }
 
 GameSceneAuthorsMenu::~GameSceneAuthorsMenu()

@@ -15,6 +15,7 @@ const float Renderer::s_viewportAspect = 16.0f / 9.0f;
 const Renderer::RenderMethod Renderer::s_renderMethods[LayerId_Count] = {
 	&Renderer::renderBackground,
 	&Renderer::renderObjects,
+	&Renderer::renderTransparentObjects,
 	&Renderer::renderGui,
 };
 
@@ -389,7 +390,6 @@ void Renderer::renderBackground(const Renderer::SpriteList& list) const
 
 void Renderer::renderObjects(const Renderer::SpriteList& list) const
 {
-	glEnable(GL_ALPHA);
 	for (SpriteList::const_iterator it = list.cbegin(); it != list.cend(); ++it) {
 		Sprite *p = *it;
 
@@ -408,6 +408,31 @@ void Renderer::renderObjects(const Renderer::SpriteList& list) const
 
 		glDrawElements(GL_TRIANGLES, sizeof(s_quadIndices)/sizeof(float), GL_UNSIGNED_INT, 0);
 	}
+}
+
+void Renderer::renderTransparentObjects(const Renderer::SpriteList& list) const
+{
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	for (SpriteList::const_iterator it = list.cbegin(); it != list.cend(); ++it) {
+		Sprite *p = *it;
+
+		glm::mat4x4 mvpMatrix = m_cachedVPMatrix *
+								  glm::translate(glm::mat4x4(), glm::vec3(p->pTransform->pos, 0.0f)) *
+								  glm::rotate(glm::mat4x4(), p->pTransform->angle, glm::vec3(0.0f, 0.0f, 1.0f)) *
+								  glm::scale(glm::mat4x4(), glm::vec3(p->size, 1.0f));
+
+		glm::mat4x4 textureMatrix = calcTextureMatrix(p->textureId);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, s_textureIds[std::get<0>(s_textureCoords[p->textureId])]);
+
+		glUniformMatrix4fv(s_uniformMVPMatrixLoc, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
+		glUniformMatrix4fv(s_uniformTexMatrixLoc, 1, GL_FALSE, glm::value_ptr(textureMatrix));
+
+		glDrawElements(GL_TRIANGLES, sizeof(s_quadIndices)/sizeof(float), GL_UNSIGNED_INT, 0);
+	}
+	glDisable(GL_BLEND);
 }
 
 void Renderer::renderGui(const Renderer::SpriteList& list) const
