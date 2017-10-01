@@ -67,7 +67,8 @@ const std::tuple<int, glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureI
 	std::make_tuple(0, glm::ivec2(160+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_Rect,
 	std::make_tuple(0, glm::ivec2(192+1,0+1), glm::ivec2(96-2,32-2)), // TextureId_BrokenBrick,
 	std::make_tuple(0, glm::ivec2(288+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_BrokenBrickPart,
-	std::make_tuple(0, glm::ivec2(0+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonStart,
+
+    std::make_tuple(0, glm::ivec2(0+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonStart,
 	std::make_tuple(0, glm::ivec2(128+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonExit,
 	std::make_tuple(0, glm::ivec2(256+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonEmpty,
 	std::make_tuple(0, glm::ivec2(384+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonAuthors,
@@ -75,107 +76,111 @@ const std::tuple<int, glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureI
 	std::make_tuple(0, glm::ivec2(640+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel1,
 	std::make_tuple(0, glm::ivec2(768+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel2,
 	std::make_tuple(0, glm::ivec2(896+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel3,
-	std::make_tuple(0, glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
 
-	std::make_tuple(0, glm::ivec2(  0+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2( 64+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(128+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(192+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(256+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(320+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(384+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(448+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(512+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(576+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(640+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(704+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(768+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(832+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(896+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(960+1,640+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(  0+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2( 64+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(128+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(192+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(256+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(320+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(384+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(448+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(512+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(576+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(640+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(704+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(768+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(832+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(896+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(960+1,704+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(  0+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2( 64+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(128+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(192+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(256+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(320+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(384+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(448+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(512+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(576+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(640+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(704+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(768+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(832+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(896+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(960+1,768+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(  0+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2( 64+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(128+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(192+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(256+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(320+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(384+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(448+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(512+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(576+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(640+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(704+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(768+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(832+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(896+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(960+1,832+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(  0+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2( 64+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(128+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(192+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(256+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(320+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(384+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(448+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(512+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(576+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(640+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(704+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(768+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(832+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(896+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(960+1,896+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(  0+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2( 64+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(128+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(192+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(256+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(320+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(384+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(448+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(512+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(576+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(640+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(704+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(768+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(832+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(896+1,960+1), glm::ivec2(64-2, 64-2)),
-	std::make_tuple(0, glm::ivec2(960+1,960+1), glm::ivec2(64-2, 64-2)),
+    std::make_tuple(0, glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
 
+    std::make_tuple(0, glm::ivec2(  0+1,640+1), glm::ivec2(40-2, 64-2)), // %
+    std::make_tuple(0, glm::ivec2( 40+1,640+1), glm::ivec2( 8-2, 64-2)), // !
+    std::make_tuple(0, glm::ivec2( 48+1,640+1), glm::ivec2(16-2, 64-2)), // "
+    std::make_tuple(0, glm::ivec2( 64+1,640+1), glm::ivec2(32-2, 64-2)), // #
+    std::make_tuple(0, glm::ivec2( 96+1,640+1), glm::ivec2(32-2, 64-2)), // $
+    std::make_tuple(0, glm::ivec2(128+1,640+1), glm::ivec2(32-2, 64-2)), // &
+    std::make_tuple(0, glm::ivec2(160+1,640+1), glm::ivec2( 8-2, 64-2)), // '
+    std::make_tuple(0, glm::ivec2(168+1,640+1), glm::ivec2( 8-2, 64-2)), // ,
+    std::make_tuple(0, glm::ivec2(176+1,640+1), glm::ivec2(16-2, 64-2)), // (
+    std::make_tuple(0, glm::ivec2(192+1,640+1), glm::ivec2(16-2, 64-2)), // )
+    std::make_tuple(0, glm::ivec2(208+1,640+1), glm::ivec2(16-2, 64-2)), // *
+    std::make_tuple(0, glm::ivec2(224+1,640+1), glm::ivec2(32-2, 64-2)), // +
+    std::make_tuple(0, glm::ivec2(256+1,640+1), glm::ivec2(16-2, 64-2)), // -
+    std::make_tuple(0, glm::ivec2(272+1,640+1), glm::ivec2( 8-2, 64-2)), // .
+    std::make_tuple(0, glm::ivec2(280+1,640+1), glm::ivec2( 8-2, 64-2)), // |
+    std::make_tuple(0, glm::ivec2(288+1,640+1), glm::ivec2(16-2, 64-2)), // /
+    std::make_tuple(0, glm::ivec2(304+1,640+1), glm::ivec2(16-2, 64-2)), // `
+    std::make_tuple(0, glm::ivec2(320+1,640+1), glm::ivec2( 8-2, 64-2)), // :
+    std::make_tuple(0, glm::ivec2(328+1,640+1), glm::ivec2( 8-2, 64-2)), // ;
+    std::make_tuple(0, glm::ivec2(336+1,640+1), glm::ivec2(24-2, 64-2)), // <
+    std::make_tuple(0, glm::ivec2(360+1,640+1), glm::ivec2(24-2, 64-2)), // =
+    std::make_tuple(0, glm::ivec2(384+1,640+1), glm::ivec2(24-2, 64-2)), // >
+    std::make_tuple(0, glm::ivec2(408+1,640+1), glm::ivec2(24-2, 64-2)), // ?
+    std::make_tuple(0, glm::ivec2(432+1,640+1), glm::ivec2(16-2, 64-2)), // [
+    std::make_tuple(0, glm::ivec2(448+1,640+1), glm::ivec2(16-2, 64-2)), // '\'
+    std::make_tuple(0, glm::ivec2(464+1,640+1), glm::ivec2(16-2, 64-2)), // ]
+    std::make_tuple(0, glm::ivec2(480+1,640+1), glm::ivec2(32-2, 64-2)), // _
 
-	std::make_tuple(1, glm::ivec2(0,0+1), glm::ivec2(1024,128-2)), // TextureId_Background0,
+    std::make_tuple(0, glm::ivec2(  0+1,704+1), glm::ivec2(32-2, 64-2)), // 0
+    std::make_tuple(0, glm::ivec2( 32+1,704+1), glm::ivec2(32-2, 64-2)), // 1
+    std::make_tuple(0, glm::ivec2( 64+1,704+1), glm::ivec2(32-2, 64-2)), // 2
+    std::make_tuple(0, glm::ivec2( 96+1,704+1), glm::ivec2(32-2, 64-2)), // 3
+    std::make_tuple(0, glm::ivec2(128+1,704+1), glm::ivec2(32-2, 64-2)), // 4
+    std::make_tuple(0, glm::ivec2(160+1,704+1), glm::ivec2(32-2, 64-2)), // 5
+    std::make_tuple(0, glm::ivec2(192+1,704+1), glm::ivec2(32-2, 64-2)), // 6
+    std::make_tuple(0, glm::ivec2(224+1,704+1), glm::ivec2(32-2, 64-2)), // 7
+    std::make_tuple(0, glm::ivec2(256+1,704+1), glm::ivec2(32-2, 64-2)), // 8
+    std::make_tuple(0, glm::ivec2(288+1,704+1), glm::ivec2(32-2, 64-2)), // 9
+    std::make_tuple(0, glm::ivec2(320+1,704+1), glm::ivec2(32-2, 64-2)), // L
+    std::make_tuple(0, glm::ivec2(352+1,704+1), glm::ivec2(48-2, 64-2)), // M
+    std::make_tuple(0, glm::ivec2(400+1,704+1), glm::ivec2(48-2, 64-2)), // N
+    std::make_tuple(0, glm::ivec2(448+1,704+1), glm::ivec2(48-2, 64-2)), // O
+
+    std::make_tuple(0, glm::ivec2(  0+1,768+1), glm::ivec2(48-2, 64-2)), // @
+    std::make_tuple(0, glm::ivec2( 48+1,768+1), glm::ivec2(48-2, 64-2)), // A
+    std::make_tuple(0, glm::ivec2( 96+1,768+1), glm::ivec2(48-2, 64-2)), // B
+    std::make_tuple(0, glm::ivec2(144+1,768+1), glm::ivec2(48-2, 64-2)), // C
+    std::make_tuple(0, glm::ivec2(192+1,768+1), glm::ivec2(48-2, 64-2)), // D
+    std::make_tuple(0, glm::ivec2(240+1,768+1), glm::ivec2(48-2, 64-2)), // E
+    std::make_tuple(0, glm::ivec2(288+1,768+1), glm::ivec2(48-2, 64-2)), // F
+    std::make_tuple(0, glm::ivec2(336+1,768+1), glm::ivec2(48-2, 64-2)), // G
+    std::make_tuple(0, glm::ivec2(384+1,768+1), glm::ivec2(48-2, 64-2)), // H
+    std::make_tuple(0, glm::ivec2(432+1,768+1), glm::ivec2(16-2, 64-2)), // I
+    std::make_tuple(0, glm::ivec2(448+1,768+1), glm::ivec2(32-2, 64-2)), // J
+    std::make_tuple(0, glm::ivec2(480+1,768+1), glm::ivec2(32-2, 64-2)), // K
+
+    std::make_tuple(0, glm::ivec2(  0+1,832+1), glm::ivec2(48-2, 64-2)), // P
+    std::make_tuple(0, glm::ivec2( 48+1,832+1), glm::ivec2(48-2, 64-2)), // Q
+    std::make_tuple(0, glm::ivec2( 96+1,832+1), glm::ivec2(48-2, 64-2)), // R
+    std::make_tuple(0, glm::ivec2(144+1,832+1), glm::ivec2(48-2, 64-2)), // S
+    std::make_tuple(0, glm::ivec2(192+1,832+1), glm::ivec2(48-2, 64-2)), // T
+    std::make_tuple(0, glm::ivec2(240+1,832+1), glm::ivec2(48-2, 64-2)), // U
+    std::make_tuple(0, glm::ivec2(288+1,832+1), glm::ivec2(48-2, 64-2)), // V
+    std::make_tuple(0, glm::ivec2(336+1,832+1), glm::ivec2(48-2, 64-2)), // W
+    std::make_tuple(0, glm::ivec2(384+1,832+1), glm::ivec2(48-2, 64-2)), // X
+    std::make_tuple(0, glm::ivec2(432+1,832+1), glm::ivec2(48-2, 64-2)), // Y
+    std::make_tuple(0, glm::ivec2(480+1,832+1), glm::ivec2(32-2, 64-2)), // Z
+
+    std::make_tuple(0, glm::ivec2(  0+1,896+1), glm::ivec2(32-2, 64-2)), // a
+    std::make_tuple(0, glm::ivec2( 32+1,896+1), glm::ivec2(32-2, 64-2)), // b
+    std::make_tuple(0, glm::ivec2( 64+1,896+1), glm::ivec2(32-2, 64-2)), // c
+    std::make_tuple(0, glm::ivec2( 96+1,896+1), glm::ivec2(32-2, 64-2)), // d
+    std::make_tuple(0, glm::ivec2(128+1,896+1), glm::ivec2(32-2, 64-2)), // e
+    std::make_tuple(0, glm::ivec2(160+1,896+1), glm::ivec2(32-2, 64-2)), // f
+    std::make_tuple(0, glm::ivec2(192+1,896+1), glm::ivec2(32-2, 64-2)), // g
+    std::make_tuple(0, glm::ivec2(224+1,896+1), glm::ivec2(32-2, 64-2)), // h
+    std::make_tuple(0, glm::ivec2(256+1,896+1), glm::ivec2(16-2, 64-2)), // i
+    std::make_tuple(0, glm::ivec2(272+1,896+1), glm::ivec2(16-2, 64-2)), // j
+    std::make_tuple(0, glm::ivec2(288+1,896+1), glm::ivec2(32-2, 64-2)), // k
+    std::make_tuple(0, glm::ivec2(320+1,896+1), glm::ivec2(16-2, 64-2)), // l
+    std::make_tuple(0, glm::ivec2(336+1,896+1), glm::ivec2(48-2, 64-2)), // m
+    std::make_tuple(0, glm::ivec2(384+1,896+1), glm::ivec2(32-2, 64-2)), // n
+    std::make_tuple(0, glm::ivec2(416+1,896+1), glm::ivec2(32-2, 64-2)), // o
+    std::make_tuple(0, glm::ivec2(448+1,896+1), glm::ivec2(32-2, 64-2)), // p
+    std::make_tuple(0, glm::ivec2(480+1,896+1), glm::ivec2(32-2, 64-2)), // q
+
+    std::make_tuple(0, glm::ivec2(  0+1,960+1), glm::ivec2(32-2, 64-2)), // r
+    std::make_tuple(0, glm::ivec2( 32+1,960+1), glm::ivec2(32-2, 64-2)), // s
+    std::make_tuple(0, glm::ivec2( 64+1,960+1), glm::ivec2(32-2, 64-2)), // t
+    std::make_tuple(0, glm::ivec2( 96+1,960+1), glm::ivec2(32-2, 64-2)), // u
+    std::make_tuple(0, glm::ivec2(128+1,960+1), glm::ivec2(32-2, 64-2)), // v
+    std::make_tuple(0, glm::ivec2(160+1,960+1), glm::ivec2(40-2, 64-2)), // w
+    std::make_tuple(0, glm::ivec2(200+1,960+1), glm::ivec2(24-2, 64-2)), // x
+    std::make_tuple(0, glm::ivec2(224+1,960+1), glm::ivec2(32-2, 64-2)), // y
+    std::make_tuple(0, glm::ivec2(256+1,960+1), glm::ivec2(32-2, 64-2)), // z
+    std::make_tuple(0, glm::ivec2(288+1,896+1), glm::ivec2(16-2, 64-2)), // {
+    std::make_tuple(0, glm::ivec2(304+1,960+1), glm::ivec2(16-2, 64-2)), // }
+    std::make_tuple(0, glm::ivec2(320+1,960+1), glm::ivec2(24-2, 64-2)), // ~
+    std::make_tuple(0, glm::ivec2(344+1,960+1), glm::ivec2(24-2, 64-2)), // ^
+
+    std::make_tuple(1, glm::ivec2(0,  0+1), glm::ivec2(1024,128-2)), // TextureId_Background0,
+    std::make_tuple(1, glm::ivec2(0,128+1), glm::ivec2(1024,128-2)), // TextureId_Background1,
 };
 std::vector<glm::ivec2> Renderer::s_textureSizes;
 std::vector<GLuint> Renderer::s_textureIds;
@@ -212,55 +217,6 @@ void Renderer::setCameraTransform(const Transform* pTransform)
 	m_pCameraTransform = pTransform;
 }
 
-void Renderer::resize(int w, int h)
-{
-	m_cachedWindowSize = glm::ivec2(w, h);
-	if (w >= s_viewportAspect * h) {
-		m_cachedViewport[2] = s_viewportAspect * h;
-		m_cachedViewport[3] = h;
-		m_cachedViewport[0] = (w - m_cachedViewport[2]) / 2;
-		m_cachedViewport[1] = 0;
-	}
-	else {
-		m_cachedViewport[2] = w;
-		m_cachedViewport[3] = w / s_viewportAspect;
-		m_cachedViewport[0] = 0;
-		m_cachedViewport[1] = (h-m_cachedViewport[3]) / 2;
-	}
-	glViewport(m_cachedViewport[0], m_cachedViewport[1], m_cachedViewport[2], m_cachedViewport[3]);
-}
-
-void Renderer::render() const
-{
-	m_cachedVPMatrix = m_cachedPMatrix;
-	if (m_pCameraTransform)
-		m_cachedVPMatrix *= glm::translate(glm::mat4x4(), -glm::vec3(m_pCameraTransform->pos, 0.0f));
-	m_cachedVPMatrixInv = glm::inverse(m_cachedVPMatrix);
-
-	glClearColor(0.5f, 0.5f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	SpriteList lists[LayerId_Count];
-
-	for (SpriteList::const_iterator it = m_sprites.cbegin(); it != m_sprites.cend(); ++it)
-		if ((*it)->visible)
-			lists[(*it)->layerId].push_back(*it);
-
-	glBindBuffer(GL_ARRAY_BUFFER, s_vertexBuffer);
-	glVertexAttribPointer(s_attribPosLoc, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (const void*)(0*sizeof(float)));
-	glEnableVertexAttribArray(s_attribPosLoc);
-	glVertexAttribPointer(s_attribTexCoordLoc, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (const void*)(2*sizeof(float)));
-	glEnableVertexAttribArray(s_attribTexCoordLoc);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_indexBuffer);
-
-	glUseProgram(s_program);
-	glUniform1i(s_uniformTextureLoc, 0);
-
-	for (int layerId = 0; layerId < LayerId_Count; ++layerId) {
-		(this->*s_renderMethods[layerId])(lists[layerId]);
-	}
-}
-
 glm::vec2 Renderer::windowToClipSpace(const glm::ivec2& windowCoords) const
 {
 	return 2.0f *
@@ -279,8 +235,19 @@ glm::vec2 Renderer::windowToWorldSpace(const glm::ivec2& windowCoords, LayerId l
 		case LayerId_Gui: { worldCoords = m_cachedPMatrixInv * glm::vec4(windowToClipSpace(windowCoords), 0.0f, 1.0f); break; }
 		default: { worldCoords = glm::vec4(); break; }
 	}
-	return glm::vec2(worldCoords);
+    return glm::vec2(worldCoords);
 }
+
+const glm::ivec2 &Renderer::texturePosInfo(TextureId textureId)
+{
+    return std::get<1>(s_textureCoords[textureId]);
+}
+
+const glm::ivec2 &Renderer::textureSizeInfo(TextureId textureId)
+{
+    return std::get<2>(s_textureCoords[textureId]);
+}
+
 
 Renderer::Renderer() :
 	m_sprites(),
@@ -357,6 +324,55 @@ Renderer::~Renderer()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	for (auto& id: s_textureIds)
 		glDeleteTextures(1, &id);
+}
+
+void Renderer::resize(int w, int h)
+{
+    m_cachedWindowSize = glm::ivec2(w, h);
+    if (w >= s_viewportAspect * h) {
+        m_cachedViewport[2] = s_viewportAspect * h;
+        m_cachedViewport[3] = h;
+        m_cachedViewport[0] = (w - m_cachedViewport[2]) / 2;
+        m_cachedViewport[1] = 0;
+    }
+    else {
+        m_cachedViewport[2] = w;
+        m_cachedViewport[3] = w / s_viewportAspect;
+        m_cachedViewport[0] = 0;
+        m_cachedViewport[1] = (h-m_cachedViewport[3]) / 2;
+    }
+    glViewport(m_cachedViewport[0], m_cachedViewport[1], m_cachedViewport[2], m_cachedViewport[3]);
+}
+
+void Renderer::render() const
+{
+    m_cachedVPMatrix = m_cachedPMatrix;
+    if (m_pCameraTransform)
+        m_cachedVPMatrix *= glm::translate(glm::mat4x4(), -glm::vec3(m_pCameraTransform->pos, 0.0f));
+    m_cachedVPMatrixInv = glm::inverse(m_cachedVPMatrix);
+
+    glClearColor(0.5f, 0.5f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    SpriteList lists[LayerId_Count];
+
+    for (SpriteList::const_iterator it = m_sprites.cbegin(); it != m_sprites.cend(); ++it)
+        if ((*it)->visible)
+            lists[(*it)->layerId].push_back(*it);
+
+    glBindBuffer(GL_ARRAY_BUFFER, s_vertexBuffer);
+    glVertexAttribPointer(s_attribPosLoc, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (const void*)(0*sizeof(float)));
+    glEnableVertexAttribArray(s_attribPosLoc);
+    glVertexAttribPointer(s_attribTexCoordLoc, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (const void*)(2*sizeof(float)));
+    glEnableVertexAttribArray(s_attribTexCoordLoc);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_indexBuffer);
+
+    glUseProgram(s_program);
+    glUniform1i(s_uniformTextureLoc, 0);
+
+    for (int layerId = 0; layerId < LayerId_Count; ++layerId) {
+        (this->*s_renderMethods[layerId])(lists[layerId]);
+    }
 }
 
 void Renderer::renderBackground(const Renderer::SpriteList& list) const

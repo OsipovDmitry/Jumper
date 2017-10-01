@@ -3,6 +3,7 @@
 #include "types.h"
 #include "core.h"
 #include "gamecontroller.h"
+#include "gameobjectbackground.h"
 #include "gameobjecttext.h"
 #include "gameobjectguibutton.h"
 #include "gamesceneauthorsmenu.h"
@@ -20,10 +21,12 @@ void GameSceneAuthorsMenu::mouseClick(int32_t x, int32_t y)
 GameSceneAuthorsMenu::GameSceneAuthorsMenu() :
 	GameAbstractScene()
 {
+    m_pBackgroundObject->setBackgroundId(BackgroundId_1);
+
 	m_pBackButton = createGameObject<GameObjectGuiButton>(GuiButtonId_Back);
 	m_pBackButton->setTransform(Transform(glm::vec2(0.0f, -0.6f)));
 
-	auto p = createGameObject<GameObjectText>("Hello!");
+    auto p = createGameObject<GameObjectText>("Hello, World!!!\n__YES123__\n&#^@)$&+_-");
 }
 
 GameSceneAuthorsMenu::~GameSceneAuthorsMenu()

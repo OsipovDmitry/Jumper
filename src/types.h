@@ -45,111 +45,149 @@ enum TextureId {
 
 	TextureId_Gun,
 
-	TextureId_SymSpace, // ' '
-	TextureId_SymExclamation, // '!'
-	TextureId_SymDoubleQuot, // '"'
-	TextureId_SymGrid, // '#'
-	TextureId_SymDollar, // '$'
-	TextureId_SymPercent, // '%'
-	TextureId_SymAmpersand, // '&'
-	TextureId_SymQuot, // '''
-	TextureId_SymLeftCBracket, // '('
-	TextureId_SymRightCBracket, // ')'
-	TextureId_SymStar, // '*'
-	TextureId_SymPlus, // '+'
-	TextureId_SymComma, // ','
-	TextureId_SymMinus, // '-'
-	TextureId_SymPoint, // '.'
-	TextureId_SymSlash, // '/'
-	TextureId_Sym0, // '0'
-	TextureId_Sym1, // '1'
-	TextureId_Sym2, // '2'
-	TextureId_Sym3, // '3'
-	TextureId_Sym4, // '4'
-	TextureId_Sym5, // '5'
-	TextureId_Sym6, // '6'
-	TextureId_Sym7, // '7'
-	TextureId_Sym8, // '8'
-	TextureId_Sym9, // '9'
-	TextureId_SymColon, // ':'
-	TextureId_SymSemicolon, // ';'
-	TextureId_SymLess, // '<'
-	TextureId_SymEqual, // '='
-	TextureId_SymGreat, // '>'
-	TextureId_SymQuestion, // '?'
-	TextureId_SymAt, // '@'
-	TextureId_SymA, // 'A'
-	TextureId_SymB, // 'B'
-	TextureId_SymC, // 'C'
-	TextureId_SymD, // 'D'
-	TextureId_SymE, // 'E'
-	TextureId_SymF, // 'F'
-	TextureId_SymG, // 'G'
-	TextureId_SymH, // 'H'
-	TextureId_SymI, // 'I'
-	TextureId_SymJ, // 'J'
-	TextureId_SymK, // 'K'
-	TextureId_SymL, // 'L'
-	TextureId_SymM, // 'M'
-	TextureId_SymN, // 'N'
-	TextureId_SymO, // 'O'
-	TextureId_SymP, // 'P'
-	TextureId_SymQ, // 'Q'
-	TextureId_SymR, // 'R'
-	TextureId_SymS, // 'S'
-	TextureId_SymT, // 'T'
-	TextureId_SymU, // 'U'
-	TextureId_SymV, // 'V'
-	TextureId_SymW, // 'W'
-	TextureId_SymX, // 'X'
-	TextureId_SymY, // 'Y'
-	TextureId_SymZ, // 'Z'
-	TextureId_SymLeftQBracket, // '['
-	TextureId_SymBackSlash, // '\'
-	TextureId_SymRightQBracket, // ']'
-	TextureId_SymPower, // '^'
-	TextureId_SymLine, // '_'
-	TextureId_SymBackQuote, // '`'
-	TextureId_Sym_a, // 'a'
-	TextureId_Sym_b, // 'b'
-	TextureId_Sym_c, // 'c'
-	TextureId_Sym_d, // 'd'
-	TextureId_Sym_e, // 'e'
-	TextureId_Sym_f, // 'f'
-	TextureId_Sym_g, // 'g'
-	TextureId_Sym_h, // 'h'
-	TextureId_Sym_i, // 'i'
-	TextureId_Sym_j, // 'j'
-	TextureId_Sym_k, // 'k'
-	TextureId_Sym_l, // 'l'
-	TextureId_Sym_m, // 'm'
-	TextureId_Sym_n, // 'n'
-	TextureId_Sym_o, // 'o'
-	TextureId_Sym_p, // 'p'
-	TextureId_Sym_q, // 'w'
-	TextureId_Sym_r, // 'r'
-	TextureId_Sym_s, // 's'
-	TextureId_Sym_t, // 't'
-	TextureId_Sym_u, // 'u'
-	TextureId_Sym_v, // 'v'
-	TextureId_Sym_w, // 'w'
-	TextureId_Sym_x, // 'x'
-	TextureId_Sym_y, // 'y'
-	TextureId_Sym_z, // 'z'
-	TextureId_SymLeftFBracket, // '{'
-	TextureId_SymBackPipe, // '|'
-	TextureId_SymRightFBracket, // '}'
-	TextureId_SymTilde, // '~'
-	TextureId_SymRect, // '[]'
 
 
-	TextureId_Background0,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    TextureId_SymPercent, // '%' 40
+    TextureId_SymExclamation, // '!' 8
+    TextureId_SymDoubleQuot, // '"' 16
+    TextureId_SymGrid, // '#' 32
+    TextureId_SymDollar, // '$' 32
+    TextureId_SymAmpersand, // '&' 32
+    TextureId_SymQuot, // ''' 8
+    TextureId_SymComma, // ',' 8
+    TextureId_SymLeftCBracket, // '(' 16
+    TextureId_SymRightCBracket, // ')' 16
+    TextureId_SymStar, // '*' 16
+    TextureId_SymPlus, // '+' 32
+    TextureId_SymMinus, // '-' 16
+    TextureId_SymPoint, // '.' 8
+    TextureId_SymPipe, // '|' 8
+    TextureId_SymSlash, // '/' 16
+    TextureId_SymBackQuote, // '`' 16
+    TextureId_SymColon, // ':' 8
+    TextureId_SymSemicolon, // ';' 8
+    TextureId_SymLess, // '<' 24
+    TextureId_SymEqual, // '=' 24
+    TextureId_SymGreat, // '>' 24
+    TextureId_SymQuestion, // '?' 24
+    TextureId_SymLeftQBracket, // '[' 16
+    TextureId_SymBackSlash, // '\' 16
+    TextureId_SymRightQBracket, // ']' 16
+    TextureId_SymLine, // '_' 32
+
+    TextureId_Sym0, // '0' 32
+    TextureId_Sym1, // '1' 32
+    TextureId_Sym2, // '2' 32
+    TextureId_Sym3, // '3' 32
+    TextureId_Sym4, // '4' 32
+    TextureId_Sym5, // '5' 32
+    TextureId_Sym6, // '6' 32
+    TextureId_Sym7, // '7' 32
+    TextureId_Sym8, // '8' 32
+    TextureId_Sym9, // '9' 32
+    TextureId_SymL, // 'L' 32
+    TextureId_SymM, // 'M' 48
+    TextureId_SymN, // 'N' 48
+    TextureId_SymO, // 'O' 48
+
+    TextureId_SymAt, // '@' 48
+    TextureId_SymA, // 'A' 48
+    TextureId_SymB, // 'B' 48
+    TextureId_SymC, // 'C' 48
+    TextureId_SymD, // 'D' 48
+    TextureId_SymE, // 'E' 48
+    TextureId_SymF, // 'F' 48
+    TextureId_SymG, // 'G' 48
+    TextureId_SymH, // 'H' 48
+    TextureId_SymI, // 'I' 16
+    TextureId_SymJ, // 'J' 32
+    TextureId_SymK, // 'K' 32
+
+    TextureId_SymP, // 'P' 48
+    TextureId_SymQ, // 'Q' 48
+    TextureId_SymR, // 'R' 48
+    TextureId_SymS, // 'S' 48
+    TextureId_SymT, // 'T' 48
+    TextureId_SymU, // 'U' 48
+    TextureId_SymV, // 'V' 48
+    TextureId_SymW, // 'W' 48
+    TextureId_SymX, // 'X' 48
+    TextureId_SymY, // 'Y' 48
+    TextureId_SymZ, // 'Z' 32
+
+    TextureId_Sym_a, // 'a' 32
+    TextureId_Sym_b, // 'b' 32
+    TextureId_Sym_c, // 'c' 32
+    TextureId_Sym_d, // 'd' 32
+    TextureId_Sym_e, // 'e' 32
+    TextureId_Sym_f, // 'f' 32
+    TextureId_Sym_g, // 'g' 32
+    TextureId_Sym_h, // 'h' 32
+    TextureId_Sym_i, // 'i' 16
+    TextureId_Sym_j, // 'j' 16
+    TextureId_Sym_k, // 'k' 32
+    TextureId_Sym_l, // 'l' 16
+    TextureId_Sym_m, // 'm' 48
+    TextureId_Sym_n, // 'n' 32
+    TextureId_Sym_o, // 'o' 32
+    TextureId_Sym_p, // 'p' 32
+    TextureId_Sym_q, // 'q' 32
+
+    TextureId_Sym_r, // 'r' 32
+    TextureId_Sym_s, // 's' 32
+    TextureId_Sym_t, // 't' 32
+    TextureId_Sym_u, // 'u' 32
+    TextureId_Sym_v, // 'v' 32
+    TextureId_Sym_w, // 'w' 40
+    TextureId_Sym_x, // 'x' 24
+    TextureId_Sym_y, // 'y' 32
+    TextureId_Sym_z, // 'z' 32
+    TextureId_SymLeftFBracket, // '{' 16
+    TextureId_SymRightFBracket, // '}' 16
+    TextureId_SymTilde, // '~' 24
+    TextureId_SymPower, // '^' 24
+
+    TextureId_Background0,
+    TextureId_Background1,
 
 	TextureId_Count
 };
 
 enum BackgroundId {
 	BackgroundId_0 = TextureId_Background0,
+    BackgroundId_1 = TextureId_Background1,
 
 	BackgroundId_Count
 };

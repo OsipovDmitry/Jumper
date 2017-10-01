@@ -10,7 +10,7 @@ public:
 
 protected:
 private:
-	GameObjectText(GameAbstractScene *pScene, const std::string& str);
+    GameObjectText(GameAbstractScene *pScene, const std::string& str, const float textSize = 0.2f);
 	~GameObjectText();
 
 	std::list<Transform*> m_symbolTransforms;

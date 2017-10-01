@@ -26,8 +26,7 @@ inline glm::vec2 toWorldSpace(Transform *pLocalTransform, const glm::vec2& local
 //}
 
 inline TextureId symbolToTextureId(char c) {
-	static const std::unordered_map<char, TextureId> table {
-		{' ', TextureId_SymSpace},
+    static const std::unordered_map<char, TextureId> table {
 		{'!', TextureId_SymExclamation}, // '!'
 		{'\"', TextureId_SymDoubleQuot}, // '"'
 		{'#', TextureId_SymGrid}, // '#'
@@ -119,10 +118,9 @@ inline TextureId symbolToTextureId(char c) {
 		{'y', TextureId_Sym_y}, // 'y'
 		{'z', TextureId_Sym_z}, // 'z'
 		{'{', TextureId_SymLeftFBracket}, // '{'
-		{'|', TextureId_SymBackPipe}, // '|'
+        {'|', TextureId_SymPipe}, // '|'
 		{'}', TextureId_SymRightFBracket}, // '}'
-		{'~', TextureId_SymTilde}, // '~'
-		{'?', TextureId_SymRect}, // '[]'
+        {'~', TextureId_SymTilde}, // '~'
 	};
 	auto it = table.find(c);
 	return (it == table.end()) ? TextureId_SymQuestion : it->second;

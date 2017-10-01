@@ -27,13 +27,13 @@ public:
 	void delSprite(Sprite *pSprite);
 	void delAllSprites();
 
-	void setCameraTransform(const Transform *pTransform);
+    void setCameraTransform(const Transform *pTransform);
 
-	void resize(int w, int h);
-	void render() const;
+    glm::vec2 windowToClipSpace(const glm::ivec2& windowCoords) const;
+    glm::vec2 windowToWorldSpace(const glm::ivec2& windowCoords, LayerId layerId) const;
 
-	glm::vec2 windowToClipSpace(const glm::ivec2& windowCoords) const;
-	glm::vec2 windowToWorldSpace(const glm::ivec2& windowCoords, LayerId layerId) const;
+    static const glm::ivec2& texturePosInfo(TextureId textureId);
+    static const glm::ivec2& textureSizeInfo(TextureId textureId);
 
 private:
 	using SpriteList = std::list<Sprite*>;
@@ -65,6 +65,9 @@ private:
 
 	Renderer();
 	~Renderer();
+
+    void resize(int w, int h);
+    void render() const;
 
 	void renderBackground(const SpriteList& list) const;
 	void renderObjects(const SpriteList& list) const;
