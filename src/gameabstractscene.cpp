@@ -92,7 +92,7 @@ GameAbstractScene::ObjectsList GameAbstractScene::selectObjects(int32_t x, int32
 		}
 	}
 
-	return std::move(result);
+	return result;
 }
 
 void GameAbstractScene::updateScene(uint64_t time, uint32_t dt)

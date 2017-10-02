@@ -27,7 +27,8 @@ GameSceneAuthorsMenu::GameSceneAuthorsMenu() :
 	m_pBackButton->setTransform(Transform(glm::vec2(0.0f, -0.6f)));
 
     auto p = createGameObject<GameObjectText>("Abc def Dima\n123\t456\n!@#$%^&*()_+");
-    p->setTransform(glm::vec2(-1, 0.5));
+	p->setTransform(Transform(glm::vec2(-1, 0.5), 0.25f * 3.1415f));
+	p->setCentering(0.5f, 0.0f);
 }
 
 GameSceneAuthorsMenu::~GameSceneAuthorsMenu()
