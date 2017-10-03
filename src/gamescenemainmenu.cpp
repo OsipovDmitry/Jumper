@@ -10,7 +10,7 @@ void GameSceneMainMenu::mouseClick(int32_t x, int32_t y)
 	ObjectsList list = selectObjects(x, y);
 
 	if (std::find(list.cbegin(), list.cend(), m_pStartButton) != list.cend()) {
-		Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_Level));
+		Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_SelectLevel));
 	}
 
 	if (std::find(list.cbegin(), list.cend(), m_pAuthorsButton) != list.cend()) {
@@ -36,7 +36,4 @@ GameSceneMainMenu::GameSceneMainMenu()
 
 GameSceneMainMenu::~GameSceneMainMenu()
 {
-	delObject(m_pStartButton);
-	delObject(m_pAuthorsButton);
-	delObject(m_pExitButton);
 }

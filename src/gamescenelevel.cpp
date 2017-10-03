@@ -1,4 +1,6 @@
 #include <fstream>
+#include <array>
+#include <cstdio>
 
 #include "rapidxml/rapidxml.hpp"
 
@@ -11,6 +13,7 @@
 #include "graphicscamera.h"
 #include "physicsscene.h"
 #include "physicsbody.h"
+#include "gamecontroller.h"
 #include "gameobjectbackground.h"
 #include "gameobjectbrick.h"
 #include "gameobjectbrokenbrick.h"
@@ -21,6 +24,10 @@
 #include "gameobjectmodifierrotate.h"
 #include "gameobjectmodifieroffset.h"
 #include "gameobjectmodifiertrain.h"
+
+namespace {
+	static const std::string s_maxOpenedlevelFilename = "savefile";
+}
 
 void GameSceneLevel::update(uint64_t time, uint32_t dt)
 {
@@ -34,75 +41,38 @@ void GameSceneLevel::update(uint64_t time, uint32_t dt)
 	m_pPlayer->setTransform(transform);
 
 	graphicsScene()->camera()->transform()->pos.x = transform.pos.x;
+
+	if (m_pPlayer->transform().pos.y < GLOBAL_DOWN)
+		Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_GameOver));
 }
 
 void GameSceneLevel::mouseClick(int32_t x, int32_t y)
 {
 	ObjectsList list = selectObjects(x, y);
 
-	if (std::find(list.cbegin(), list.cend(), m_pButtonStart) != list.cend()) {
-		m_pPlayer->setTransform(Transform(glm::vec2(0.0f, 0.7f), 0.0f));
-		m_pPlayer->physicsBody()->setVelocity(glm::vec2(0.0f, 0.0f));
-	}
+	//
+}
 
-	if (std::find(list.cbegin(), list.cend(), m_pButtonExit) != list.cend()) {
-		Core::getController()->sendMessage(new CoreExitMessage());
-	}
+void GameSceneLevel::activate()
+{
+	m_pPlayer->physicsBody()->setVelocity(glm::vec2());
 }
 
 GameSceneLevel::GameSceneLevel() :
-	GameAbstractScene()
+	GameAbstractScene(),
+	m_gameObjects(),
+	m_currentLevel(GameLevelId_None)
 {
 	physicsScene()->setGravity(glm::vec2(0.0f, -5.0f));
 
 	m_pPlayer = createGameObject<GameObjectPlayer>();
-	m_pPlayer->setTransform(Transform(glm::vec2(0.0f, 0.7f), 0.0f));
-
-//	const int N = 20;
-//	for (int i = 0; i < N; ++i) {
-//		auto pBrick = createGameObject<GameObjectBrick>();
-//		pBrick->setTransform(Transform(glm::vec2(1.375f * i, ((float)rand()/(float)RAND_MAX*2 - 1) * 0.4f - 0.5f), 0.0f));
-//		if (i == 0) {
-//			pBrick->setTransform(Transform(glm::vec2(0.0f, -0.7f), 0.0f));
-////			auto pMod = pBrick->addModifier<GameObjectModifierTrain>();
-////			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, -0.7f), 0.0f), 0.0f);
-////			pMod->keyFramesList().emplace_back(Transform(glm::vec2(0.5f, -0.7f), 0.0f), 2.0f);
-////			pMod->keyFramesList().emplace_back(Transform(glm::vec2(0.5f, 0.3f), 0.0f), 2.0f);
-////			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, 0.3f), 0.0f), 2.0f);
-////			pMod->keyFramesList().emplace_back(Transform(glm::vec2(-0.5f, -0.7f), 0.0f), 2.0f);
-////			pMod->setLoop(true);
-//		}
-
-//		if ((i % 4 == 1) && (i != 1))
-//			pBrick->addModifier<GameObjectModifierRotate>(3.14f / 4.0f);
-//		if (i % 4 == 2)
-//			pBrick->addModifier<GameObjectModifierOffset>(glm::vec2(0.0f, 1.0f), 0.5f);
-//		if (i % 4 == 3)
-//			pBrick->addModifier<GameObjectModifierOffset>(glm::vec2(1.0f, 0.0f), 0.5f);
-//	}
-
-//	for (int i = 0; i < 10; ++i) {
-//		auto pBrick = createGameObject<GameObjectBrokenBrick>();
-//		pBrick->setTransform(Transform(glm::vec2(2 + 2.1f * i, 0.0f), 0.0f));
-//	}
-
-//	GameObjectGun *pGun = createGameObject<GameObjectGun>();
-//	pGun->setTransform(Transform(glm::vec2(5.5f, 0.05f), 0.0f));
-
-//	m_pButtonStart = createGameObject<GameObjectGuiButton>(GuiButtonId_Start);
-//	m_pButtonStart->setTransform(Transform(glm::vec2(-1.2f, 0.8f)));
-
-//	m_pButtonExit = createGameObject<GameObjectGuiButton>(GuiButtonId_Exit);
-//	m_pButtonExit->setTransform(Transform(glm::vec2(+1.2f, 0.8f)));
-
-	loadFromFile("level1.xml");
 }
 
 GameSceneLevel::~GameSceneLevel()
 {
 }
 
-bool GameSceneLevel::loadFromFile(const std::string& filename)
+bool GameSceneLevel::reload(GameLevelId levelId)
 {
 	static const auto s_rootNodeName = "level";
 	static const auto s_backgroundNodeName = "background";
@@ -111,6 +81,9 @@ bool GameSceneLevel::loadFromFile(const std::string& filename)
 	static const auto s_objectTypeAttr = "type";
 	static const auto s_objectTypeBrick = "brick";
 	static const auto s_objectTypeBrokenBrick = "broken_brick";
+
+	unload();
+	std::string filename = levelIdToFilename(levelId);
 
 	std::ifstream stream(filename);
 	if (!stream.is_open())
@@ -126,7 +99,7 @@ bool GameSceneLevel::loadFromFile(const std::string& filename)
 
 	rapidxml::xml_document<> doc;
 	try {
-			doc.parse<0>(buffer.data());
+		doc.parse<0>(buffer.data());
 	} catch (const rapidxml::parse_error&) {
 		return false;
 	}
@@ -152,6 +125,8 @@ bool GameSceneLevel::loadFromFile(const std::string& filename)
 					pGameObject = createGameObject<GameObjectBrick>();
 				else if (!strcmp(pType->value(), s_objectTypeBrokenBrick))
 					pGameObject = createGameObject<GameObjectBrokenBrick>();
+
+				m_gameObjects.push_back(pGameObject);
 			}
 		}
 
@@ -162,4 +137,52 @@ bool GameSceneLevel::loadFromFile(const std::string& filename)
 
 		pNode = pNode->next_sibling();
 	}
+	m_currentLevel = levelId;
+	return true;
+}
+
+void GameSceneLevel::unload()
+{
+	for (auto pObject: m_gameObjects)
+		delObject(pObject);
+	m_gameObjects.clear();
+	m_currentLevel = GameLevelId_None;
+}
+
+GameLevelId GameSceneLevel::currentLevel() const
+{
+	return m_currentLevel;
+}
+
+GameLevelId GameSceneLevel::maxOpenedLevel()
+{
+	FILE *pFile = fopen(s_maxOpenedlevelFilename.c_str(), "r");
+	if (!pFile)
+		return GameLevelId_1;
+	int id;
+	fscanf(pFile, "%d", &id);
+	fclose(pFile);
+	return static_cast<GameLevelId>(id);
+}
+
+void GameSceneLevel::setMaxOpenedLevel(GameLevelId levelId)
+{
+	if (levelId >= maxOpenedLevel()) {
+		FILE *pFile = fopen(s_maxOpenedlevelFilename.c_str(), "w");
+		if (!pFile)
+			return;
+		fprintf(pFile, "%d", static_cast<GameLevelId>(levelId));
+		fclose(pFile);
+	}
+}
+
+std::string GameSceneLevel::levelIdToFilename(GameLevelId levelId)
+{
+	static const std::array<std::string, GameLevelId_Count> table = {
+		"level1.xml",
+		"level1.xml",
+		"level1.xml"
+	};
+
+	return table[levelId];
 }

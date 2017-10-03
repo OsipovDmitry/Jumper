@@ -185,7 +185,7 @@ const std::tuple<int, glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureI
 std::vector<glm::ivec2> Renderer::s_textureSizes;
 std::vector<GLuint> Renderer::s_textureIds;
 
-Renderer::Sprite *Renderer::drawSprite(const Transform* pTransform)
+Renderer::Sprite *Renderer::createSprite(const Transform* pTransform)
 {
 	Sprite *pSprite = new Sprite;
 	pSprite->pTransform = pTransform;
@@ -199,17 +199,28 @@ Renderer::Sprite *Renderer::drawSprite(const Transform* pTransform)
 	return pSprite;
 }
 
-void Renderer::delSprite(Sprite* pSprite)
+void Renderer::drawSprite(Renderer::Sprite *pSprite)
 {
-	SpriteList::iterator it = std::find(m_sprites.begin(), m_sprites.end(), pSprite);
-	if (it != m_sprites.end())
-		m_sprites.erase(it);
+	auto it = std::find(m_drawSprites.begin(), m_drawSprites.end(), pSprite);
+	if (it == m_drawSprites.end())
+		m_drawSprites.push_back(pSprite);
 }
 
-void Renderer::delAllSprites()
+void Renderer::eraseSprite(Renderer::Sprite *pSprite)
 {
-	for (SpriteList::iterator it = m_sprites.begin(); it != m_sprites.end(); delete *(it++));
-	m_sprites.clear();
+	auto it = std::find(m_drawSprites.begin(), m_drawSprites.end(), pSprite);
+	if (it != m_drawSprites.end())
+		m_drawSprites.erase(it);
+}
+
+void Renderer::destroySprite(Renderer::Sprite *pSprite)
+{
+	eraseSprite(pSprite);
+	auto it = std::find(m_sprites.begin(), m_sprites.end(), pSprite);
+	if (it != m_sprites.end()) {
+		m_sprites.erase(it);
+		delete pSprite;
+	}
 }
 
 void Renderer::setCameraTransform(const Transform* pTransform)
@@ -228,10 +239,11 @@ glm::vec2 Renderer::windowToClipSpace(const glm::ivec2& windowCoords) const
 
 glm::vec2 Renderer::windowToWorldSpace(const glm::ivec2& windowCoords, LayerId layerId) const
 {
-	glm::vec4 worldCoords, clipCoords = glm::vec4(windowToClipSpace(windowCoords), 0.0f, 1.0f);
+	glm::vec4 worldCoords, clipCoords(windowToClipSpace(windowCoords), 0.0f, 1.0f);
 	switch (layerId) {
 		case LayerId_Background: { worldCoords = clipCoords; break; }
-		case LayerId_Objects: { worldCoords = m_cachedVPMatrixInv * glm::vec4(windowToClipSpace(windowCoords), 0.0f, 1.0f); break; }
+		case LayerId_Objects:
+		case LayerId_TransparentObjects: { worldCoords = m_cachedVPMatrixInv * glm::vec4(windowToClipSpace(windowCoords), 0.0f, 1.0f); break; }
 		case LayerId_Gui: { worldCoords = m_cachedPMatrixInv * glm::vec4(windowToClipSpace(windowCoords), 0.0f, 1.0f); break; }
 		default: { worldCoords = glm::vec4(); break; }
 	}
@@ -251,6 +263,7 @@ const glm::ivec2 &Renderer::textureSizeInfo(TextureId textureId)
 
 Renderer::Renderer() :
 	m_sprites(),
+	m_drawSprites(),
 	m_cachedPMatrix(glm::ortho(-s_viewportAspect, +s_viewportAspect, -1.0f, +1.0f)),
 	m_cachedPMatrixInv(glm::inverse(m_cachedPMatrix)),
 	m_cachedVPMatrix(),
@@ -311,6 +324,8 @@ Renderer::Renderer() :
 
 Renderer::~Renderer()
 {
+	for (auto it = m_sprites.begin(); it != m_sprites.end(); delete *(it++));
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDeleteBuffers(1, &s_vertexBuffer);
 
@@ -356,7 +371,7 @@ void Renderer::render() const
 
     SpriteList lists[LayerId_Count];
 
-    for (SpriteList::const_iterator it = m_sprites.cbegin(); it != m_sprites.cend(); ++it)
+	for (auto it = m_drawSprites.cbegin(); it != m_drawSprites.cend(); ++it)
         if ((*it)->visible)
             lists[(*it)->layerId].push_back(*it);
 

@@ -41,8 +41,6 @@ public:
 	int32_t x, y;
 };
 
-DECLARE_SIMPLE_MESSAGE(GameOverMessage, CMT_GameOver)
-
 class GameObjectUseMessage : public AbstractControllerMessage {
 public:
 	GameObjectUseMessage(GameObject *pObject) : AbstractControllerMessage(CMT_GameObjectUse), pGameObject(pObject) {}
@@ -58,5 +56,15 @@ public:
 
 	GameSceneId sceneId;
 };
+
+class GameLoadLevelMessage : public AbstractControllerMessage {
+public:
+	GameLoadLevelMessage(GameLevelId id) : AbstractControllerMessage(CMT_GameLoadLevel), levelId(id) {}
+	static ControllerMessageType typeOfClass() { return CMT_GameLoadLevel; }
+
+	GameLevelId levelId;
+};
+
+DECLARE_SIMPLE_MESSAGE(GameReloadLevelMessage, CMT_GameReloadLevel)
 
 #endif // GAMECONTROLLER_H

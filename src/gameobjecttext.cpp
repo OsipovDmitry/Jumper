@@ -50,10 +50,10 @@ float GameObjectText::centeringY() const
 	return m_centeringY;
 }
 
-GameObjectText::GameObjectText(GameAbstractScene* pScene, const std::string& str, const float textSize) :
+GameObjectText::GameObjectText(GameAbstractScene* pScene, const std::string& str) :
     GameObject(pScene),
     m_text(str),
-	m_size(textSize),
+	m_size(0.2f),
 	m_centeringX(0.0f),
 	m_centeringY(0.0f)
 {
@@ -82,7 +82,7 @@ void GameObjectText::rebuild()
     destroy();
 
 	glm::vec2 symPos(0.0f, -0.5f * m_size);
-	float maxWidth = 0.0f, maxHeight = 0.0f;
+	float maxWidth = 0.0f, maxHeight = m_size;
     for (auto c: m_text) {
         switch (c) {
         case ' ': {

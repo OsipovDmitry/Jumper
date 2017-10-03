@@ -38,6 +38,7 @@ protected:
 
 	virtual void update(uint64_t, uint32_t) {}
 	virtual void mouseClick(int32_t x, int32_t y);
+	virtual void activate() {}
 
 	ObjectsList selectObjects(int32_t x, int32_t y);
 

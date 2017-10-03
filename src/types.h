@@ -3,19 +3,19 @@
 
 #include "glm/vec2.hpp"
 
+struct Transform {
+	glm::vec2 pos;
+	float angle;
+
+	Transform(const glm::vec2& p = glm::vec2(), float a = 0.0f) : pos(p), angle(a) {}
+};
+
 enum ControllerType {
 	ControllerType_Core = 0,
 	ControllerType_Graphics,
 	ControllerType_Physics,
 	ControllerType_Game,
 	ControllerType_Count
-};
-
-struct Transform {
-	glm::vec2 pos;
-	float angle;
-
-	Transform(const glm::vec2& p = glm::vec2(), float a = 0.0f) : pos(p), angle(a) {}
 };
 
 enum LayerId {
@@ -45,41 +45,7 @@ enum TextureId {
 
 	TextureId_Gun,
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    TextureId_SymPercent, // '%' 40
+	TextureId_SymPercent, // '%' 40
     TextureId_SymExclamation, // '!' 8
     TextureId_SymDoubleQuot, // '"' 16
     TextureId_SymGrid, // '#' 32
@@ -209,9 +175,18 @@ enum GameSceneId {
 	GameSceneId_Authors,
 	GameSceneId_SelectLevel,
 	GameSceneId_Level,
+	GameSceneId_GameOver,
 	GameSceneId_Count
 };
 
-const float GLOBAL_DOWN = -500.0f;
+enum GameLevelId {
+	GameLevelId_None = -1,
+	GameLevelId_1 = 0,
+	GameLevelId_2,
+	GameLevelId_3,
+	GameLevelId_Count
+};
+
+const float GLOBAL_DOWN = -5.0f;
 
 #endif // TYPES_H

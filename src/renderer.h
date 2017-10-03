@@ -23,11 +23,12 @@ public:
 		bool visible;
 	};
 
-	Sprite *drawSprite(const Transform *pTransform);
-	void delSprite(Sprite *pSprite);
-	void delAllSprites();
+	Sprite *createSprite(const Transform *pTransform);
+	void drawSprite(Sprite *pSprite);
+	void eraseSprite(Sprite *pSprite);
+	void destroySprite(Sprite *pSprite);
 
-    void setCameraTransform(const Transform *pTransform);
+	void setCameraTransform(const Transform *pTransform);
 
     glm::vec2 windowToClipSpace(const glm::ivec2& windowCoords) const;
     glm::vec2 windowToWorldSpace(const glm::ivec2& windowCoords, LayerId layerId) const;
@@ -39,7 +40,7 @@ private:
 	using SpriteList = std::list<Sprite*>;
 	using RenderMethod = void (Renderer::*)(const SpriteList&) const;
 
-	SpriteList m_sprites;
+	SpriteList m_sprites, m_drawSprites;
 	mutable glm::mat4x4 m_cachedPMatrix, m_cachedPMatrixInv, m_cachedVPMatrix, m_cachedVPMatrixInv;
 	mutable glm::ivec4 m_cachedViewport;
 	mutable glm::ivec2 m_cachedWindowSize;

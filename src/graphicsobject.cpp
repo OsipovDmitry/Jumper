@@ -54,19 +54,26 @@ float GraphicsObject::opacity() const
 	return m_pSprite->opacity;
 }
 
+void GraphicsObject::setVisible(bool state)
+{
+	m_pSprite->visible = state;
+}
+
+bool GraphicsObject::isVisible() const
+{
+	return m_pSprite->visible;
+}
+
 GraphicsObject::GraphicsObject(GraphicsScene* pScene, const Transform* pTransform) :
 	m_pScene(pScene)
 {
-	m_pSprite = Core::getController()->renderWidget()->renderer()->drawSprite(pTransform);
-	m_pSprite->visible = Core::getController<GraphicsController>()->currentScene() == pScene;
+	Renderer *pRenderer = Core::getController()->renderWidget()->renderer();
+	m_pSprite = pRenderer->createSprite(pTransform);
+	if (Core::getController<GraphicsController>()->currentScene() == pScene)
+		pRenderer->drawSprite(m_pSprite);
 }
 
 GraphicsObject::~GraphicsObject()
 {
-	Core::getController()->renderWidget()->renderer()->delSprite(m_pSprite);
-}
-
-void GraphicsObject::setVisible(bool state)
-{
-	m_pSprite->visible = state;
+	Core::getController()->renderWidget()->renderer()->destroySprite(m_pSprite);
 }

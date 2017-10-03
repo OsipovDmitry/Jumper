@@ -7,6 +7,7 @@
 #include "gameobjecttext.h"
 #include "gameobjectguibutton.h"
 #include "gamesceneauthorsmenu.h"
+#include "gameobjectmodifierrotate.h"
 
 
 void GameSceneAuthorsMenu::mouseClick(int32_t x, int32_t y)
@@ -26,9 +27,19 @@ GameSceneAuthorsMenu::GameSceneAuthorsMenu() :
 	m_pBackButton = createGameObject<GameObjectGuiButton>(GuiButtonId_Back);
 	m_pBackButton->setTransform(Transform(glm::vec2(0.0f, -0.6f)));
 
-    auto p = createGameObject<GameObjectText>("Abc def Dima\n123\t456\n!@#$%^&*()_+");
-	p->setTransform(Transform(glm::vec2(-1, 0.5), 0.25f * 3.1415f));
+	auto p = createGameObject<GameObjectText>("Jumper");
+	p->setTransform(glm::vec2(0.0f, 0.8f));
 	p->setCentering(0.5f, 0.0f);
+
+	p = createGameObject<GameObjectText>("Test game");
+	p->setTransform(glm::vec2(0.0f, 0.6f));
+	p->setCentering(0.5f, 0.0f);
+
+	p = createGameObject<GameObjectText>("Dmitry Osipov\n"
+										 "dmitry1992osipov@yandex.ru");
+	p->setTransform(glm::vec2(0.0f, 0.4f));
+	p->setCentering(0.5f, 0.0f);
+
 }
 
 GameSceneAuthorsMenu::~GameSceneAuthorsMenu()

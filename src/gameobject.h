@@ -28,6 +28,9 @@ public:
 	virtual void setTransform(const Transform& value);
 	virtual bool setParam(const std::string& key, const std::string& value);
 
+	void show(bool state = true);
+	void hide();
+
 //	const GraphicsObjectsList& graphicsObjects() const;
 //	const PhysicsBodiesList& physicsBodies() const;
 //	const PhysicsGeometriesList& physicsGeometries() const;

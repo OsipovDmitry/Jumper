@@ -24,14 +24,15 @@ public:
 	void setOpacity(float value);
 	float opacity() const;
 
+	void setVisible(bool state);
+	bool isVisible() const;
+
 private:
 	GraphicsObject(GraphicsScene *pScene, const Transform *pTransform);
 	~GraphicsObject();
 
 	GraphicsScene *m_pScene;
 	Renderer::Sprite *m_pSprite;
-
-	void setVisible(bool state);
 
 	friend class GraphicsScene;
 };

@@ -34,7 +34,9 @@ SOURCES += \
     src/gameobjectbrokenbrick.cpp \
     src/gamescenemainmenu.cpp \
     src/gamesceneauthorsmenu.cpp \
-    src/gameobjecttext.cpp
+    src/gameobjecttext.cpp \
+    src/gamesceneselectlevelmenu.cpp \
+    src/gamescenegameover.cpp
 
 HEADERS += \
     src/renderwidget.h \
@@ -67,7 +69,9 @@ HEADERS += \
     src/mathutils.h \
     src/gamescenemainmenu.h \
     src/gamesceneauthorsmenu.h \
-    src/gameobjecttext.h
+    src/gameobjecttext.h \
+    src/gamesceneselectlevelmenu.h \
+    src/gamescenegameover.h
 
 LIBS += -lGLESv2
 

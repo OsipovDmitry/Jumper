@@ -4,27 +4,35 @@
 #include <string>
 
 #include "gameabstractscene.h"
+#include "types.h"
 
-class PhysicsBody;
 class GameObjectPlayer;
-class GameObjectGuiButton;
 
 class GameSceneLevel : public GameAbstractScene
 {
 public:
+	bool reload(GameLevelId levelId);
+	void unload();
+
+	GameLevelId currentLevel() const;
+
+	static GameLevelId maxOpenedLevel();
+	static void setMaxOpenedLevel(GameLevelId levelId);
 
 protected:
 	void update(uint64_t time, uint32_t dt);
 	void mouseClick(int32_t x, int32_t y);
+	void activate();
 
 private:
 	GameSceneLevel();
 	~GameSceneLevel();
 
-	bool loadFromFile(const std::string& filename);
+	static std::string levelIdToFilename(GameLevelId levelId);
 
 	GameObjectPlayer *m_pPlayer;
-	GameObjectGuiButton *m_pButtonStart, *m_pButtonExit;
+	ObjectsList m_gameObjects;
+	GameLevelId m_currentLevel;
 
 	friend class GameController;
 };

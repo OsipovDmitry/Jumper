@@ -1,5 +1,6 @@
 #include <algorithm>
 
+#include "graphicsobject.h"
 #include "gameobject.h"
 #include "gameobjectabstractmodifier.h"
 #include "types.h"
@@ -91,6 +92,17 @@ bool GameObject::setParam(const std::string& key, const std::string& value)
 	}
 
 	return false;
+}
+
+void GameObject::show(bool state)
+{
+	for (auto p: m_graphicsObjects)
+		p->setVisible(state);
+}
+
+void GameObject::hide()
+{
+	show(false);
 }
 
 void GameObject::updateObject(uint32_t dt)

@@ -21,7 +21,7 @@ public:
 
 protected:
 private:
-    GameObjectText(GameAbstractScene *pScene, const std::string& str, const float textSize = 0.2f);
+	GameObjectText(GameAbstractScene *pScene, const std::string& str);
 	~GameObjectText();
 
     void destroy();

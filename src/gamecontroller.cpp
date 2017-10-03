@@ -6,7 +6,9 @@
 
 #include "gamescenemainmenu.h"
 #include "gamesceneauthorsmenu.h"
+#include "gamesceneselectlevelmenu.h"
 #include "gamescenelevel.h"
+#include "gamescenegameover.h"
 
 bool GameController::process(AbstractControllerMessage* pMessage)
 {
@@ -29,9 +31,6 @@ bool GameController::process(AbstractControllerMessage* pMessage)
 			mouseClick(pMsg->x, pMsg->y);
 		return true;
 	}
-	case CMT_GameOver: {
-		return true;
-	}
 	case CMT_GameObjectUse: {
 		auto pMsg = msg_cast<GameObjectUseMessage>(pMessage);
 		if (pMsg)
@@ -42,6 +41,20 @@ bool GameController::process(AbstractControllerMessage* pMessage)
 		auto pMsg = msg_cast<GameChangeSceneMessage>(pMessage);
 		if (pMsg)
 			changeLevel(pMsg->sceneId);
+		return true;
+	}
+	case CMT_GameLoadLevel: {
+		auto pMsg = msg_cast<GameLoadLevelMessage>(pMessage);
+		if (pMsg)
+			static_cast<GameSceneLevel*>(m_scenes[GameSceneId_Level])->reload(pMsg->levelId);
+		return true;
+	}
+	case CMT_GameReloadLevel: {
+		auto pMsg = msg_cast<GameReloadLevelMessage>(pMessage);
+		if (pMsg) {
+			GameSceneLevel *pLevel = static_cast<GameSceneLevel*>(m_scenes[GameSceneId_Level]);
+			pLevel->reload(pLevel->currentLevel());
+		}
 		return true;
 	}
 	default: break;
@@ -63,8 +76,10 @@ void GameController::init()
 {
 	m_scenes[GameSceneId_MainMenu] = new GameSceneMainMenu();
 	m_scenes[GameSceneId_Authors] = new GameSceneAuthorsMenu();
-	m_scenes[GameSceneId_SelectLevel] = nullptr;
+	m_scenes[GameSceneId_SelectLevel] = new GameSceneSelectLevelMenu();
 	m_scenes[GameSceneId_Level] = new GameSceneLevel();
+	m_scenes[GameSceneId_GameOver] = new GameSceneGameOver();
+
 	changeLevel(GameSceneId_MainMenu);
 }
 
@@ -86,4 +101,5 @@ void GameController::changeLevel(GameSceneId id)
 	m_currentSceneId = id;
 	Core::getController<GraphicsController>()->setCurrentScene(m_scenes[id]->graphicsScene());
 	Core::getController<PhysicsController>()->setCurrentScene(m_scenes[id]->physicsScene());
+	m_scenes[id]->activate();
 }

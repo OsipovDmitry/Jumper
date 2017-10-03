@@ -1,7 +1,7 @@
 #include <algorithm>
 
-#include "glm/gtc/matrix_transform.hpp"
 #include "types.h"
+#include "mathutils.h"
 #include "core.h"
 #include "renderwidget.h"
 #include "renderer.h"
@@ -76,19 +76,18 @@ void GameAbstractScene::mouseClick(int32_t x, int32_t y)
 
 GameAbstractScene::ObjectsList GameAbstractScene::selectObjects(int32_t x, int32_t y)
 {
+	Renderer *pRenderer = Core::getController()->renderWidget()->renderer();
 	ObjectsList result;
 	for (auto pObject: m_objects) {
 		for (auto pGraphicsObject: pObject->m_graphicsObjects) {
-			glm::vec2 worldNewPos = glm::vec2(
-				glm::rotate(glm::mat4x4(), -pObject->m_pTransform->angle, glm::vec3(0.0f,0.0f,1.0f)) *
-				glm::translate(glm::mat4x4(), glm::vec3(-pObject->m_pTransform->pos, 0.0f)) *
-				glm::vec4(Core::getController()->renderWidget()->renderer()->windowToWorldSpace(glm::ivec2(x, y), pGraphicsObject->layer()), 0.0f, 1.0f)
-			);
-			glm::vec2 size = pGraphicsObject->size();
-			if ((glm::abs(worldNewPos.x) < size.x) && (glm::abs(worldNewPos.y) < size.y)) {
-				result.push_back(pObject);
+			if (!pGraphicsObject->isVisible())
 				continue;
-			}
+			glm::vec2 worldPos = pRenderer->windowToWorldSpace(glm::ivec2(x, y), pGraphicsObject->layer());
+			glm::vec2 localPos = toLocalSpace(pObject->m_pTransform, worldPos);
+			glm::vec2 halfSize = 0.5f * pGraphicsObject->size();
+
+			if ((glm::abs(localPos.x) < halfSize.x) && (glm::abs(localPos.y) < halfSize.y))
+				result.push_back(pObject);
 		}
 	}
 

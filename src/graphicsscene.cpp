@@ -18,7 +18,7 @@ void GraphicsScene::delObject(GraphicsObject* pObject)
 {
 	assert(pObject->scene() == this);
 
-	ObjectsList::iterator it = std::find(m_objects.begin(), m_objects.end(), pObject);
+	auto it = std::find(m_objects.begin(), m_objects.end(), pObject);
 	assert(it != m_objects.end());
 
 	m_objects.erase(it);
@@ -46,13 +46,15 @@ GraphicsScene::~GraphicsScene()
 
 void GraphicsScene::show()
 {
-	for (ObjectsList::iterator it = m_objects.begin(); it != m_objects.end(); ++it)
-		(*it)->setVisible(true);
+	Renderer *pRenderer = Core::getController()->renderWidget()->renderer();
+	for (auto obj: m_objects)
+		pRenderer->drawSprite(obj->m_pSprite);
 	Core::getController()->renderWidget()->renderer()->setCameraTransform(m_pCamera->transform());
 }
 
 void GraphicsScene::hide()
 {
-	for (ObjectsList::iterator it = m_objects.begin(); it != m_objects.end(); ++it)
-		(*it)->setVisible(false);
+	Renderer *pRenderer = Core::getController()->renderWidget()->renderer();
+	for (auto obj: m_objects)
+		pRenderer->eraseSprite(obj->m_pSprite);
 }
