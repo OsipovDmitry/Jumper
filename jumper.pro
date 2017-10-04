@@ -36,7 +36,8 @@ SOURCES += \
     src/gamesceneauthorsmenu.cpp \
     src/gameobjecttext.cpp \
     src/gamesceneselectlevelmenu.cpp \
-    src/gamescenegameover.cpp
+    src/gamescenegameover.cpp \
+    src/gameobjectlevelpassed.cpp
 
 HEADERS += \
     src/renderwidget.h \
@@ -71,7 +72,8 @@ HEADERS += \
     src/gamesceneauthorsmenu.h \
     src/gameobjecttext.h \
     src/gamesceneselectlevelmenu.h \
-    src/gamescenegameover.h
+    src/gamescenegameover.h \
+    src/gameobjectlevelpassed.h
 
 LIBS += -lGLESv2
 

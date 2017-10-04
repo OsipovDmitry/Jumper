@@ -2,6 +2,7 @@
 #define GAMEOBJECTTEXT_H
 
 #include "gameobject.h"
+#include "types.h"
 
 class GameObjectText : public GameObject
 {
@@ -13,6 +14,9 @@ public:
 
     float size() const;
     void setSize(const float sz);
+
+	Color4ub color() const;
+	void setColor(const Color4ub& value);
 
 	// 0 <= x,y <= 1; (0,0 - left up corner, 1,1 - right down corner)
 	void setCentering(float x, float y);
@@ -31,6 +35,7 @@ private:
     std::string m_text;
     float m_size;
 	float m_centeringX, m_centeringY;
+	Color4ub m_color;
 
 	friend class GameAbstractScene;
 };

@@ -44,14 +44,14 @@ LayerId GraphicsObject::layer() const
 	return m_pSprite->layerId;
 }
 
-void GraphicsObject::setOpacity(float value)
+void GraphicsObject::setColor(const Color4ub& value)
 {
-	m_pSprite->opacity = value;
+	m_pSprite->color = value;
 }
 
-float GraphicsObject::opacity() const
+Color4ub GraphicsObject::color() const
 {
-	return m_pSprite->opacity;
+	return m_pSprite->color;
 }
 
 void GraphicsObject::setVisible(bool state)

@@ -33,6 +33,17 @@ void GameObjectText::setSize(const float sz)
 	rebuild();
 }
 
+Color4ub GameObjectText::color() const
+{
+	return m_color;
+}
+
+void GameObjectText::setColor(const Color4ub& value)
+{
+	m_color = value;
+	rebuild();
+}
+
 void GameObjectText::setCentering(float x, float y)
 {
 	m_centeringX = x;
@@ -55,7 +66,8 @@ GameObjectText::GameObjectText(GameAbstractScene* pScene, const std::string& str
     m_text(str),
 	m_size(0.2f),
 	m_centeringX(0.0f),
-	m_centeringY(0.0f)
+	m_centeringY(0.0f),
+	m_color(255,255,255,255)
 {
     rebuild();
 }
@@ -111,7 +123,8 @@ void GameObjectText::rebuild()
             auto pGraphicsObject = m_pScene->graphicsScene()->addObject(pTr);
             pGraphicsObject->setLayer(LayerId_TransparentObjects);
             pGraphicsObject->setSize(glm::vec2(symWidth, m_size));
-            pGraphicsObject->setTexture(textureId);
+			pGraphicsObject->setTexture(textureId);
+			pGraphicsObject->setColor(m_color);
             m_graphicsObjects.push_back(pGraphicsObject);
             m_symbolTransforms.push_back(pTr);
             break;

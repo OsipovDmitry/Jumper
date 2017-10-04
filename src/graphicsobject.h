@@ -21,8 +21,8 @@ public:
 	void setLayer(LayerId value);
 	LayerId layer() const;
 
-	void setOpacity(float value);
-	float opacity() const;
+	void setColor(const Color4ub& value);
+	Color4ub color() const;
 
 	void setVisible(bool state);
 	bool isVisible() const;

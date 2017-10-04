@@ -30,10 +30,10 @@ GameSceneGameOver::GameSceneGameOver() :
 	pText->setTransform(glm::vec2(0.0f, 0.2f));
 	pText->setCentering(0.5f, 0.5f);
 
-	m_pButtonMenu = createGameObject<GameObjectGuiButton>(GuiButtonId_Empty);
+	m_pButtonMenu = createGameObject<GameObjectGuiButton>(GuiButtonId_ToMenu);
 	m_pButtonMenu->setTransform(Transform(glm::vec2(-0.3f, -0.2f)));
 
-	m_pButtonRestart = createGameObject<GameObjectGuiButton>(GuiButtonId_Empty);
+	m_pButtonRestart = createGameObject<GameObjectGuiButton>(GuiButtonId_Restart);
 	m_pButtonRestart->setTransform(Transform(glm::vec2(+0.3f, -0.2f)));
 }
 

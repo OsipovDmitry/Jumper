@@ -19,7 +19,7 @@ public:
 		glm::vec2 size;
 		TextureId textureId;
 		LayerId layerId;
-		float opacity;
+		Color4ub color;
 		bool visible;
 	};
 
@@ -57,7 +57,7 @@ private:
 	static const char s_fragmentShaderString[];
 	static GLuint s_program, s_vertexShader, s_fragmentShader;
 	static GLint s_attribPosLoc, s_attribTexCoordLoc;
-	static GLint s_uniformMVPMatrixLoc, s_uniformTexMatrixLoc, s_uniformTextureLoc;
+	static GLint s_uniformMVPMatrixLoc, s_uniformTexMatrixLoc, s_uniformTextureLoc, s_uniformColorLoc;
 
 	static const std::vector<std::string> s_textureFilenames;
 	static const std::tuple<int, glm::ivec2, glm::ivec2> s_textureCoords[TextureId_Count];

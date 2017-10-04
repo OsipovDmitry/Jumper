@@ -20,6 +20,7 @@
 #include "gameobjectplayer.h"
 #include "gameobjectguibutton.h"
 #include "gameobjectgun.h"
+#include "gameobjectlevelpassed.h"
 #include "gamescenelevel.h"
 #include "gameobjectmodifierrotate.h"
 #include "gameobjectmodifieroffset.h"
@@ -81,6 +82,7 @@ bool GameSceneLevel::reload(GameLevelId levelId)
 	static const auto s_objectTypeAttr = "type";
 	static const auto s_objectTypeBrick = "brick";
 	static const auto s_objectTypeBrokenBrick = "broken_brick";
+	static const auto s_objectTypeLevelPassed = "level_passed";
 
 	unload();
 	std::string filename = levelIdToFilename(levelId);
@@ -125,6 +127,8 @@ bool GameSceneLevel::reload(GameLevelId levelId)
 					pGameObject = createGameObject<GameObjectBrick>();
 				else if (!strcmp(pType->value(), s_objectTypeBrokenBrick))
 					pGameObject = createGameObject<GameObjectBrokenBrick>();
+				else if (!strcmp(pType->value(), s_objectTypeLevelPassed))
+					pGameObject = createGameObject<GameObjectLevelPassed>();
 
 				m_gameObjects.push_back(pGameObject);
 			}

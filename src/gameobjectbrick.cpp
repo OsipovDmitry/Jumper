@@ -11,13 +11,13 @@ GameObjectBrick::GameObjectBrick(GameAbstractScene* pScene) :
 	static const float height = 0.15f;
 	static const float width = 3 * height;
 
-	GraphicsObject *pGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
+	auto pGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
 	pGraphicsObject->setLayer(LayerId_Objects);
 	pGraphicsObject->setSize(glm::vec2(width, height));
 	pGraphicsObject->setTexture(TextureId_Brick);
 	m_graphicsObjects.push_back(pGraphicsObject);
 
-	PhysicsGeometry *pPhysicsGeom = pScene->physicsScene()->addStaticBox(m_pTransform, width, height);
+	auto pPhysicsGeom = pScene->physicsScene()->addStaticBox(m_pTransform, width, height);
 	m_physicsGeoms.push_back(pPhysicsGeom);
 }
 

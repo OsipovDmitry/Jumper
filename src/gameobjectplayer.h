@@ -12,6 +12,7 @@ public:
 
 protected:
 	void update(uint32_t dt);
+	void use();
 
 private:
 	GameObjectPlayer(GameAbstractScene *pScene);

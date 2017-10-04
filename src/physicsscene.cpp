@@ -115,7 +115,7 @@ void PhysicsScene::simulationStep(uint32_t dt)
 		p->update(dt);
 	});
 
-	static const float dampVel = 1.0f;
+	static const float dampVel = 0.8f;
 
 	glm::vec2 normal;
 	float depth;

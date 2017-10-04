@@ -1,7 +1,10 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <inttypes.h>
+
 #include "glm/vec2.hpp"
+#include "glm/vec4.hpp"
 
 struct Transform {
 	glm::vec2 pos;
@@ -9,6 +12,8 @@ struct Transform {
 
 	Transform(const glm::vec2& p = glm::vec2(), float a = 0.0f) : pos(p), angle(a) {}
 };
+
+using Color4ub = glm::tvec4<uint8_t>;
 
 enum ControllerType {
 	ControllerType_Core = 0,
@@ -42,8 +47,11 @@ enum TextureId {
 	TextureId_GuiButtonLevel1,
 	TextureId_GuiButtonLevel2,
 	TextureId_GuiButtonLevel3,
+	TextureId_GuiButtonRestart,
+	TextureId_GuiButtonToMenu,
 
 	TextureId_Gun,
+	TextureID_LevelPassed,
 
 	TextureId_SymPercent, // '%' 40
     TextureId_SymExclamation, // '!' 8
@@ -167,6 +175,8 @@ enum GuiButtonId {
 	GuiButtonId_Level1 = TextureId_GuiButtonLevel1,
 	GuiButtonId_Level2 = TextureId_GuiButtonLevel2,
 	GuiButtonId_Level3 = TextureId_GuiButtonLevel3,
+	GuiButtonId_Restart = TextureId_GuiButtonRestart,
+	GuiButtonId_ToMenu = TextureId_GuiButtonToMenu,
 };
 
 enum GameSceneId {

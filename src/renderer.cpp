@@ -44,17 +44,18 @@ const char Renderer::s_vertexShaderString[] =
 	"}\n";
 const char Renderer::s_fragmentShaderString[] =
 	//"precision mediump float;\n"
-	"uniform sampler2D texture;\n"
+	"uniform sampler2D objTexture;\n"
+	"uniform vec4 objColor;"
 	"varying vec2 tex_coord;\n"
 	"void main()\n"
 	"{\n"
-	"	vec4 outColor = texture2D(texture, tex_coord);\n"
+	"	vec4 outColor = texture2D(objTexture, tex_coord) * objColor;\n"
 	"	if (outColor.a < 0.01) discard;\n"
 	"	gl_FragColor = outColor;\n"
 	"}\n";
 GLuint Renderer::s_program, Renderer::s_vertexShader, Renderer::s_fragmentShader;
 GLint Renderer::s_attribPosLoc, Renderer::s_attribTexCoordLoc;
-GLint Renderer::s_uniformMVPMatrixLoc, Renderer::s_uniformTexMatrixLoc, Renderer::s_uniformTextureLoc;
+GLint Renderer::s_uniformMVPMatrixLoc, Renderer::s_uniformTexMatrixLoc, Renderer::s_uniformTextureLoc, Renderer::s_uniformColorLoc;
 
 const std::vector<std::string> Renderer::s_textureFilenames {
         std::string("texture0.png"),
@@ -76,8 +77,11 @@ const std::tuple<int, glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureI
 	std::make_tuple(0, glm::ivec2(640+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel1,
 	std::make_tuple(0, glm::ivec2(768+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel2,
 	std::make_tuple(0, glm::ivec2(896+1,32+1), glm::ivec2(128-2, 64-2)), // TextureId_ButtonLevel3,
+	std::make_tuple(0, glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Restart,
+	std::make_tuple(0, glm::ivec2(128+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_ToMenu,
 
-    std::make_tuple(0, glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
+	std::make_tuple(0, glm::ivec2(0+1,160+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
+	std::make_tuple(0, glm::ivec2(128+1,160+1), glm::ivec2(96-2, 64-2)), // TextureId_LevelPassed,
 
     std::make_tuple(0, glm::ivec2(  0+1,640+1), glm::ivec2(40-2, 64-2)), // %
     std::make_tuple(0, glm::ivec2( 40+1,640+1), glm::ivec2( 8-2, 64-2)), // !
@@ -190,7 +194,7 @@ Renderer::Sprite *Renderer::createSprite(const Transform* pTransform)
 	Sprite *pSprite = new Sprite;
 	pSprite->pTransform = pTransform;
 	pSprite->layerId = LayerId_Objects;
-	pSprite->opacity = 1.0f;
+	pSprite->color = Color4ub(255, 255, 255, 255);
 	pSprite->size = glm::vec2(1.5f, 1.0f);
 	pSprite->textureId = TextureId_None;
 	pSprite->visible = true;
@@ -301,7 +305,8 @@ Renderer::Renderer() :
 	s_attribTexCoordLoc = glGetAttribLocation(s_program, "vTexcoord");
 	s_uniformMVPMatrixLoc = glGetUniformLocation(s_program, "mvpMatrix");
 	s_uniformTexMatrixLoc = glGetUniformLocation(s_program, "textureMatrix");
-	s_uniformTextureLoc = glGetUniformLocation(s_program, "texture");
+	s_uniformTextureLoc = glGetUniformLocation(s_program, "objTexture");
+	s_uniformColorLoc = glGetUniformLocation(s_program, "objColor");
 
 	int numTextures = s_textureFilenames.size();
 	s_textureIds.resize(numTextures);
@@ -414,6 +419,7 @@ void Renderer::renderBackground(const Renderer::SpriteList& list) const
 
 		glUniformMatrix4fv(s_uniformMVPMatrixLoc, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 		glUniformMatrix4fv(s_uniformTexMatrixLoc, 1, GL_FALSE, glm::value_ptr(textureMatrix));
+		glUniform4fv(s_uniformColorLoc, 1, glm::value_ptr(glm::vec4(p->color) / 255.0f));
 
 		glDrawElements(GL_TRIANGLES, sizeof(s_quadIndices)/sizeof(float), GL_UNSIGNED_INT, 0);
 	}
@@ -436,6 +442,7 @@ void Renderer::renderObjects(const Renderer::SpriteList& list) const
 
 		glUniformMatrix4fv(s_uniformMVPMatrixLoc, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 		glUniformMatrix4fv(s_uniformTexMatrixLoc, 1, GL_FALSE, glm::value_ptr(textureMatrix));
+		glUniform4fv(s_uniformColorLoc, 1, glm::value_ptr(glm::vec4(p->color) / 255.0f));
 
 		glDrawElements(GL_TRIANGLES, sizeof(s_quadIndices)/sizeof(float), GL_UNSIGNED_INT, 0);
 	}
@@ -460,6 +467,7 @@ void Renderer::renderTransparentObjects(const Renderer::SpriteList& list) const
 
 		glUniformMatrix4fv(s_uniformMVPMatrixLoc, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 		glUniformMatrix4fv(s_uniformTexMatrixLoc, 1, GL_FALSE, glm::value_ptr(textureMatrix));
+		glUniform4fv(s_uniformColorLoc, 1, glm::value_ptr(glm::vec4(p->color) / 255.0f));
 
 		glDrawElements(GL_TRIANGLES, sizeof(s_quadIndices)/sizeof(float), GL_UNSIGNED_INT, 0);
 	}
@@ -483,6 +491,7 @@ void Renderer::renderGui(const Renderer::SpriteList& list) const
 
 		glUniformMatrix4fv(s_uniformMVPMatrixLoc, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 		glUniformMatrix4fv(s_uniformTexMatrixLoc, 1, GL_FALSE, glm::value_ptr(textureMatrix));
+		glUniform4fv(s_uniformColorLoc, 1, glm::value_ptr(glm::vec4(p->color) / 255.0f));
 
 		glDrawElements(GL_TRIANGLES, sizeof(s_quadIndices)/sizeof(float), GL_UNSIGNED_INT, 0);
 	}

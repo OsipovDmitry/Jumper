@@ -2,26 +2,44 @@
 <level>
 	<background id="0" />
 	<player x="0" y="0.7" />
-	<object type="brick" x="0.0" y="-0.8" />
-	<object type="brick" x="2.0" y="-0.8" />
-	<object type="brick" x="4.0" y="-0.8" />
-	<object type="broken_brick" x="6.0" y="-0.8" />
-	<object type="brick" x="10.0" y="-0.8" />
-	<object type="brick" x="12.5" y="-0.8" />
-	<object type="brick" x="15.0" y="-0.8" />
-	<object type="broken_brick" x="17.5" y="-0.8" />
-	<object type="brick" x="20.0" y="-0.8" />
-	<object type="brick" x="22.5" y="-0.8" />
-	<object type="brick" x="25.0" y="-0.8" />
-	<object type="broken_brick" x="27.5" y="-0.8" />
-	<object type="brick" x="30.0" y="-0.8" />
-	<object type="brick" x="32.5" y="-0.8" />
-	<object type="brick" x="35.0" y="-0.8" />
-	<object type="broken_brick" x="37.5" y="-0.8" />
-	<object type="brick" x="40.0" y="-0.8" />
-	<object type="brick" x="42.5" y="-0.8" />
-	<object type="brick" x="45.0" y="-0.8" />
-	<object type="broken_brick" x="47.5" y="-0.8" />
-	<object type="brick" x="50.0" y="-0.8" />
+	<object type="brick" x="0.0" y="-0.5" />
+	<object type="brick" x="1.5" y="-0.5" />
+	<object type="brick" x="3.0" y="-0.5" />
+    <object type="brick" x="4.5" y="-0.5" />
+	<object type="brick" x="6.0" y="-0.5" />
+	<object type="brick" x="7.5" y="-0.5" />
+    <object type="brick" x="8.5" y="-0.2" />
+    <object type="brick" x="9.5" y="0.1" />
+    <object type="brick" x="10.5" y="0.4" />
+    <object type="brick" x="11.5" y="0.1" />
+    <object type="brick" x="12.5" y="-0.2" />
+    <object type="brick" x="13.5" y="-0.5" />
+    <object type="brick" x="15.0" y="-0.5" />
+	<object type="brick" x="16.5" y="-0.5" />
+	<object type="brick" x="18.0" y="-0.5" />
+    <object type="brick" x="19.5" y="-0.5" />
+	<object type="brick" x="21.0" y="-0.5" />
+	<object type="brick" x="22.0" y="-0.2" />
+    <object type="brick" x="23.0" y="0.1" />
+    <object type="brick" x="24.0" y="0.4" />
+    <object type="broken_brick" x="26.0" y="-0.5" />
+    <object type="brick" x="27.5" y="-0.5" />
+    <object type="broken_brick" x="29.0" y="-0.5" />
+    <object type="brick" x="30.5" y="-0.5" />
+    <object type="broken_brick" x="32.0" y="-0.5" />
+    <object type="brick" x="33.5" y="-0.5" />
+    <object type="broken_brick" x="35.0" y="-0.5" />
+    <object type="broken_brick" x="36.5" y="-0.5" />
+    <object type="broken_brick" x="38.0" y="-0.5" />
+    <object type="brick" x="39.0" y="-0.2" />
+    <object type="broken_brick" x="40.0" y="0.1" />
+    <object type="brick" x="41.0" y="0.4" />
+    <object type="broken_brick" x="42.0" y="0.1" />
+    <object type="brick" x="43.0" y="-0.2" />
+    <object type="broken_brick" x="44.0" y="-0.5" />
+    <object type="brick" x="45.5" y="-0.5" />
+	<object type="brick" x="47.0" y="-0.5" />
+	<object type="brick" x="48.5" y="-0.5" />
+    <object type="level_passed" x="5.0" y="0.0" />
 </level>
 
