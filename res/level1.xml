@@ -40,6 +40,6 @@
     <object type="brick" x="45.5" y="-0.5" />
 	<object type="brick" x="47.0" y="-0.5" />
 	<object type="brick" x="48.5" y="-0.5" />
-    <object type="level_passed" x="5.0" y="0.0" />
+    <object type="level_passed" x="50.0" y="0.0" />
 </level>
 

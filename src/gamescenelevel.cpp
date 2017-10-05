@@ -77,13 +77,22 @@ GameSceneLevel::~GameSceneLevel()
 bool GameSceneLevel::load(GameLevelId levelId)
 {
 	static const auto s_rootNodeName = "level";
+
 	static const auto s_backgroundNodeName = "background";
 	static const auto s_playerNodeName = "player";
 	static const auto s_objectNodeName = "object";
+
 	static const auto s_objectTypeAttr = "type";
+
 	static const auto s_objectTypeBrick = "brick";
 	static const auto s_objectTypeBrokenBrick = "broken_brick";
 	static const auto s_objectTypeLevelPassed = "level_passed";
+	static const auto s_objectTypeGun = "gun";
+
+	static const auto s_objectModifierNodeName = "mod";
+	static const auto s_objectModifierTypeAttr = "type";
+
+	static const auto s_objectModifierTypeOffset = "offset";
 
 	unload();
 	std::string filename = levelIdToFilename(levelId);
@@ -132,14 +141,31 @@ bool GameSceneLevel::load(GameLevelId levelId)
 					pGameObject = createGameObject<GameObjectBrokenBrick>();
 				else if (!strcmp(pType->value(), s_objectTypeLevelPassed))
 					pGameObject = createGameObject<GameObjectLevelPassed>(m_currentLevelId);
+				else if (!strcmp(pType->value(), s_objectTypeGun))
+					pGameObject = createGameObject<GameObjectGun>();
 
 				m_gameObjects.push_back(pGameObject);
 			}
 		}
 
 		if (pGameObject) {
-			for (auto a = pNode->first_attribute(); a; a = a->next_attribute())
-				pGameObject->setParam(a->name(), a->value());
+			for (auto attr = pNode->first_attribute(); attr; attr = attr->next_attribute())
+				pGameObject->setParam(attr->name(), attr->value());
+
+			for (auto pObjMod = pNode->first_node(); pObjMod; pObjMod = pObjMod->next_sibling()) {
+				if (!strcmp(pObjMod->name(), s_objectModifierNodeName)) {
+					auto pType = pObjMod->first_attribute(s_objectModifierTypeAttr);
+					GameObjectAbstractModifier *pModifier;
+					if (pType) {
+						if (!strcmp(pType->value(), s_objectModifierTypeOffset))
+							pModifier = pGameObject->addModifier<GameObjectModifierOffset>();
+					}
+					if (pModifier) {
+						for (auto attr = pObjMod->first_attribute(); attr; attr = attr->next_attribute())
+							pModifier->setParam(attr->name(), attr->value());
+					}
+				}
+			}
 		}
 
 		pNode = pNode->next_sibling();
@@ -186,7 +212,7 @@ std::string GameSceneLevel::levelIdToFilename(GameLevelId levelId)
 {
 	static const std::array<std::string, GameLevelId_Count> table = {
 		"level1.xml",
-		"level1.xml",
+		"level2.xml",
 		"level1.xml"
 	};
 

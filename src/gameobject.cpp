@@ -70,10 +70,13 @@ GameObject::~GameObject()
 
 bool GameObject::setParam(const std::string& key, const std::string& value)
 {
+	static const std::string s_type = "type";
 	static const std::string s_posXTag = "x";
 	static const std::string s_posYTag = "y";
 	static const std::string s_angleTag = "angle";
 
+	if (key == s_type)
+		return true;
 	if (key == s_posXTag) {
 		Transform t = transform();
 		t.pos.x = static_cast<float>(atof(value.c_str()));

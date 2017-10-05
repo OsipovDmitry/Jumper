@@ -8,6 +8,8 @@
 class GameObjectGun : public GameObject
 {
 public:
+	bool setParam(const std::string& key, const std::string& value) override;
+
 	void setShotTime(float value);
 	float shotTime() const;
 

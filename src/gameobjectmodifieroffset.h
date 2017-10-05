@@ -6,17 +6,24 @@
 
 class GameObjectModifierOffset : public GameObjectAbstractModifier
 {
+public:
+	virtual bool setParam(const std::string& key, const std::string& value) override;
+
+	glm::vec2 offset() const;
+	void setOffset(const glm::vec2& value);
+
+	float velocity() const;
+	void setVelocity(const float value);
 
 protected:
-	GameObjectModifierOffset(GameObject *pObject, const glm::vec2& offset, const float velocity);
-	~GameObjectModifierOffset();
+	GameObjectModifierOffset(GameObject *pObject);
 
 	void update(uint32_t dt);
 
 private:
 	glm::vec2 m_offsetNorm;
 	float m_offsetAbs, m_offsetVel, m_offsetCur;
-	int m_sign;
+	int32_t m_sign;
 
 	friend class GameObject;
 };

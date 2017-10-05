@@ -12,6 +12,31 @@
 const float GameObjectGun::s_gunHeight = 0.3f;
 const float GameObjectGun::s_gunWidth = 2 * GameObjectGun::s_gunHeight;
 
+bool GameObjectGun::setParam(const std::string& key, const std::string& value)
+{
+	if (GameObject::setParam(key, value))
+		return true;
+
+	static const std::string s_orientTag = "orient";
+	static const std::string s_leftOrientValue = "left";
+	static const std::string s_rightOrientValue = "right";
+	static const std::string s_shotTime = "shot_time";
+
+	if (key == s_orientTag) {
+		bool isLeftOrient;
+		if (value == s_leftOrientValue) isLeftOrient = true;
+		else if (value == s_rightOrientValue) isLeftOrient = false;
+		else return false;
+		setLeftOrient(isLeftOrient);
+		return true;
+	} else if (key == s_shotTime) {
+		setShotTime(static_cast<float>(atof(value.c_str())));
+		return true;
+	}
+
+	return false;
+}
+
 void GameObjectGun::setShotTime(float value)
 {
 	m_shotTime = value;
@@ -25,6 +50,9 @@ float GameObjectGun::shotTime() const
 void GameObjectGun::setLeftOrient(bool value)
 {
 	m_isLeftOrient = value;
+	//TODO: если правая ориентация, то нужно как-то развернуть текстуру:)
+	//Или рисовать еще одну, но отзеркаленную, или как-то прокидывать в рендерер в textureMatrix.
+	//Проще, конечно, еще одну нарисовать.
 }
 
 bool GameObjectGun::isLeftOrient() const
@@ -34,7 +62,8 @@ bool GameObjectGun::isLeftOrient() const
 
 void GameObjectGun::setTransform(const Transform& value)
 {
-	m_restTransform = value;
+	m_restTransform = *m_pTransform = value;
+	m_nextShotTime = 0;
 }
 
 void GameObjectGun::update(uint32_t dt)
