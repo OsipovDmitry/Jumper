@@ -30,7 +30,7 @@ bool GameObjectGun::setParam(const std::string& key, const std::string& value)
 		setLeftOrient(isLeftOrient);
 		return true;
 	} else if (key == s_shotTime) {
-		setShotTime(static_cast<float>(atof(value.c_str())));
+        setShotTime(static_cast<float>(stof(value.c_str())));
 		return true;
 	}
 

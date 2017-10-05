@@ -3,6 +3,7 @@
 #include "gameobject.h"
 #include "gameobjectmodifieroffset.h"
 #include "types.h"
+#include "mathutils.h"
 
 GameObjectModifierOffset::GameObjectModifierOffset(GameObject *pObject) :
 	GameObjectAbstractModifier(pObject),
@@ -24,16 +25,16 @@ bool GameObjectModifierOffset::setParam(const std::string& key, const std::strin
 
 	if (key == s_offsXTag) {
 		auto offs = offset();
-		offs.x = static_cast<float>(atof(value.c_str()));
+        offs.x = static_cast<float>(stof(value.c_str()));
 		setOffset(offs);
 		return true;
 	} else if (key == s_offsYTag) {
 		auto offs = offset();
-		offs.y = static_cast<float>(atof(value.c_str()));
+        offs.y = static_cast<float>(stof(value.c_str()));
 		setOffset(offs);
 		return true;
 	} else if (key == s_velocityTag) {
-		setVelocity(static_cast<float>(atof(value.c_str())));
+        setVelocity(static_cast<float>(stof(value.c_str())));
 		return true;
 	}
 

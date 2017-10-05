@@ -4,6 +4,7 @@
 #include "gameobject.h"
 #include "gameobjectabstractmodifier.h"
 #include "types.h"
+#include "mathutils.h"
 
 GameAbstractScene*GameObject::scene() const
 {
@@ -67,9 +68,11 @@ GameObject::~GameObject()
 
 	delete m_pTransform;
 }
-
+#include <iostream>
 bool GameObject::setParam(const std::string& key, const std::string& value)
 {
+    std::cout << key << "=" << value << std::endl;
+
 	static const std::string s_type = "type";
 	static const std::string s_posXTag = "x";
 	static const std::string s_posYTag = "y";
@@ -79,17 +82,17 @@ bool GameObject::setParam(const std::string& key, const std::string& value)
 		return true;
 	if (key == s_posXTag) {
 		Transform t = transform();
-		t.pos.x = static_cast<float>(atof(value.c_str()));
+        t.pos.x = static_cast<float>(stof(value.c_str()));
 		setTransform(t);
 		return true;
 	} else if (key == s_posYTag) {
 		Transform t = transform();
-		t.pos.y = static_cast<float>(atof(value.c_str()));
+        t.pos.y = static_cast<float>(stof(value.c_str()));
 		setTransform(t);
 		return true;
 	} else if (key == s_angleTag) {
 		Transform t = transform();
-		t.angle = static_cast<float>(atof(value.c_str()));
+        t.angle = static_cast<float>(stof(value.c_str()));
 		setTransform(t);
 		return true;
 	}
