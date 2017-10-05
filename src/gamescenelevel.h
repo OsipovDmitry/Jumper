@@ -11,7 +11,7 @@ class GameObjectPlayer;
 class GameSceneLevel : public GameAbstractScene
 {
 public:
-	bool reload(GameLevelId levelId);
+	bool load(GameLevelId levelId);
 	void unload();
 
 	GameLevelId currentLevel() const;
@@ -22,7 +22,7 @@ public:
 protected:
 	void update(uint64_t time, uint32_t dt);
 	void mouseClick(int32_t x, int32_t y);
-	void activate();
+	void activate(AbstractActivateData*);
 
 private:
 	GameSceneLevel();
@@ -32,7 +32,7 @@ private:
 
 	GameObjectPlayer *m_pPlayer;
 	ObjectsList m_gameObjects;
-	GameLevelId m_currentLevel;
+	GameLevelId m_currentLevelId;
 
 	friend class GameController;
 };

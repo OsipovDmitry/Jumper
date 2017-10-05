@@ -13,6 +13,11 @@ class GameObjectBackground;
 class GameAbstractScene
 {
 public:
+	class AbstractActivateData {
+	public:
+		virtual ~AbstractActivateData() = default;
+	};
+
 	GraphicsScene *graphicsScene() const;
 	PhysicsScene *physicsScene() const;
 
@@ -37,8 +42,8 @@ protected:
 	}
 
 	virtual void update(uint64_t, uint32_t) {}
-	virtual void mouseClick(int32_t x, int32_t y);
-	virtual void activate() {}
+	virtual void mouseClick(int32_t, int32_t) {}
+	virtual void activate(AbstractActivateData*) {}
 
 	ObjectsList selectObjects(int32_t x, int32_t y);
 

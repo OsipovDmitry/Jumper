@@ -2,6 +2,7 @@
 #define GAMEOBJECTLEVELPASSED_H
 
 #include "gameobject.h"
+#include "types.h"
 
 class GameObjectLevelPassed : public GameObject
 {
@@ -10,7 +11,9 @@ protected:
 	void use();
 
 private:
-	GameObjectLevelPassed(GameAbstractScene *pScene);
+	GameObjectLevelPassed(GameAbstractScene *pScene, GameLevelId id);
+
+	GameLevelId m_levelId;
 
 	friend class GameAbstractScene;
 };

@@ -22,6 +22,7 @@
 #include "gameobjectgun.h"
 #include "gameobjectlevelpassed.h"
 #include "gamescenelevel.h"
+#include "gamescenegameover.h"
 #include "gameobjectmodifierrotate.h"
 #include "gameobjectmodifieroffset.h"
 #include "gameobjectmodifiertrain.h"
@@ -44,7 +45,7 @@ void GameSceneLevel::update(uint64_t time, uint32_t dt)
 	graphicsScene()->camera()->transform()->pos.x = transform.pos.x;
 
 	if (m_pPlayer->transform().pos.y < GLOBAL_DOWN)
-		Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_GameOver));
+		Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_GameOver, new GameSceneGameOver::ActivateData(m_currentLevelId)));
 }
 
 void GameSceneLevel::mouseClick(int32_t x, int32_t y)
@@ -54,7 +55,7 @@ void GameSceneLevel::mouseClick(int32_t x, int32_t y)
 	//
 }
 
-void GameSceneLevel::activate()
+void GameSceneLevel::activate(AbstractActivateData*)
 {
 	m_pPlayer->physicsBody()->setVelocity(glm::vec2());
 }
@@ -62,7 +63,7 @@ void GameSceneLevel::activate()
 GameSceneLevel::GameSceneLevel() :
 	GameAbstractScene(),
 	m_gameObjects(),
-	m_currentLevel(GameLevelId_None)
+	m_currentLevelId(GameLevelId_None)
 {
 	physicsScene()->setGravity(glm::vec2(0.0f, -5.0f));
 
@@ -73,7 +74,7 @@ GameSceneLevel::~GameSceneLevel()
 {
 }
 
-bool GameSceneLevel::reload(GameLevelId levelId)
+bool GameSceneLevel::load(GameLevelId levelId)
 {
 	static const auto s_rootNodeName = "level";
 	static const auto s_backgroundNodeName = "background";
@@ -111,6 +112,8 @@ bool GameSceneLevel::reload(GameLevelId levelId)
 	if (strcmp(pRootNode->name(), s_rootNodeName))
 		return false;
 
+	m_currentLevelId = levelId;
+
 	auto pNode = pRootNode->first_node();
 	while (pNode) {
 		GameObject *pGameObject = nullptr;
@@ -128,7 +131,7 @@ bool GameSceneLevel::reload(GameLevelId levelId)
 				else if (!strcmp(pType->value(), s_objectTypeBrokenBrick))
 					pGameObject = createGameObject<GameObjectBrokenBrick>();
 				else if (!strcmp(pType->value(), s_objectTypeLevelPassed))
-					pGameObject = createGameObject<GameObjectLevelPassed>();
+					pGameObject = createGameObject<GameObjectLevelPassed>(m_currentLevelId);
 
 				m_gameObjects.push_back(pGameObject);
 			}
@@ -141,7 +144,6 @@ bool GameSceneLevel::reload(GameLevelId levelId)
 
 		pNode = pNode->next_sibling();
 	}
-	m_currentLevel = levelId;
 	return true;
 }
 
@@ -150,12 +152,12 @@ void GameSceneLevel::unload()
 	for (auto pObject: m_gameObjects)
 		delObject(pObject);
 	m_gameObjects.clear();
-	m_currentLevel = GameLevelId_None;
+	m_currentLevelId = GameLevelId_None;
 }
 
 GameLevelId GameSceneLevel::currentLevel() const
 {
-	return m_currentLevel;
+	return m_currentLevelId;
 }
 
 GameLevelId GameSceneLevel::maxOpenedLevel()

@@ -49,6 +49,7 @@ enum TextureId {
 	TextureId_GuiButtonLevel3,
 	TextureId_GuiButtonRestart,
 	TextureId_GuiButtonToMenu,
+	TextureId_GuiButtonNextLevel,
 
 	TextureId_Gun,
 	TextureID_LevelPassed,
@@ -177,6 +178,7 @@ enum GuiButtonId {
 	GuiButtonId_Level3 = TextureId_GuiButtonLevel3,
 	GuiButtonId_Restart = TextureId_GuiButtonRestart,
 	GuiButtonId_ToMenu = TextureId_GuiButtonToMenu,
+	GuiButtonId_NextLevel = TextureId_GuiButtonNextLevel,
 };
 
 enum GameSceneId {
@@ -186,6 +188,7 @@ enum GameSceneId {
 	GameSceneId_SelectLevel,
 	GameSceneId_Level,
 	GameSceneId_GameOver,
+	GameSceneId_LevelPassed,
 	GameSceneId_Count
 };
 

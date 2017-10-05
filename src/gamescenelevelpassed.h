@@ -1,12 +1,12 @@
-#ifndef GAMESCENEGAMEOVER_H
-#define GAMESCENEGAMEOVER_H
+#ifndef GAMESCENELEVELPASSED_H
+#define GAMESCENELEVELPASSED_H
 
 #include "gameabstractscene.h"
 #include "types.h"
 
 class GameObjectGuiButton;
 
-class GameSceneGameOver : public GameAbstractScene
+class GameSceneLevelPassed : public GameAbstractScene
 {
 public:
 	class ActivateData : public GameAbstractScene::AbstractActivateData {
@@ -21,13 +21,12 @@ protected:
 	void activate(AbstractActivateData *pData);
 
 private:
-	GameSceneGameOver();
-	~GameSceneGameOver();
+	GameSceneLevelPassed();
 
-	GameObjectGuiButton *m_pButtonMenu, *m_pButtonRestart;
-	GameLevelId	m_overLevelId;
+	GameObjectGuiButton *m_pButtonMenu, *m_pButtonRestart, *m_pButtonNext;
+	GameLevelId m_passedLevelId;
 
 	friend class GameController;
 };
 
-#endif // GAMESCENEGAMEOVER_H
+#endif // GAMESCENELEVELPASSED_H

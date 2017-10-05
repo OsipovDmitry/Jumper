@@ -4,9 +4,9 @@
 #include <array>
 
 #include "abstractcontroller.h"
+#include "gameabstractscene.h"
 
 class PhysicsGeometry;
-class GameAbstractScene;
 class GameObject;
 
 class GameController : public AbstractController
@@ -25,7 +25,7 @@ private:
 	void update(uint64_t time, uint32_t dt);
 	void mouseClick(int32_t x, int32_t y);
 
-	void changeLevel(GameSceneId id);
+	void changeLevel(GameSceneId id, GameAbstractScene::AbstractActivateData *pActivateData);
 
 	std::array<GameAbstractScene*, GameSceneId_Count> m_scenes;
 	GameSceneId m_currentSceneId;
@@ -51,10 +51,14 @@ public:
 
 class GameChangeSceneMessage : public AbstractControllerMessage {
 public:
-	GameChangeSceneMessage(GameSceneId id) : AbstractControllerMessage(CMT_GameChangeScene), sceneId(id) {}
+	GameChangeSceneMessage(GameSceneId id, GameAbstractScene::AbstractActivateData *pData = nullptr) :
+		AbstractControllerMessage(CMT_GameChangeScene),
+		sceneId(id),
+		pActivateData(pData) {}
 	static ControllerMessageType typeOfClass() { return CMT_GameChangeScene; }
 
 	GameSceneId sceneId;
+	GameAbstractScene::AbstractActivateData *pActivateData;
 };
 
 class GameLoadLevelMessage : public AbstractControllerMessage {
@@ -64,7 +68,5 @@ public:
 
 	GameLevelId levelId;
 };
-
-DECLARE_SIMPLE_MESSAGE(GameReloadLevelMessage, CMT_GameReloadLevel)
 
 #endif // GAMECONTROLLER_H

@@ -29,7 +29,6 @@ enum ControllerMessageType {
 	CMT_GameObjectUse,
 	CMT_GameChangeScene,
 	CMT_GameLoadLevel,
-	CMT_GameReloadLevel,
 };
 
 class AbstractControllerMessage {

@@ -68,11 +68,7 @@ void GameAbstractScene::delObject(GameObject* pObject)
 	delete pObject;
 }
 
-void GameAbstractScene::mouseClick(int32_t x, int32_t y)
-{
-	(void)x;
-	(void)y;
-}
+
 
 GameAbstractScene::ObjectsList GameAbstractScene::selectObjects(int32_t x, int32_t y)
 {

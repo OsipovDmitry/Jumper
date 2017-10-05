@@ -24,7 +24,7 @@ void GameSceneSelectLevelMenu::mouseClick(int32_t x, int32_t y)
 	}
 }
 
-void GameSceneSelectLevelMenu::activate()
+void GameSceneSelectLevelMenu::activate(AbstractActivateData*)
 {
 	for (auto id = GameLevelId_1; id < GameLevelId_Count; id = static_cast<GameLevelId>(id+1))
 		m_pLevelButton[id]->show();

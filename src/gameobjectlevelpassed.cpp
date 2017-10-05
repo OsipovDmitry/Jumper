@@ -5,16 +5,17 @@
 #include "physicsgeometry.h"
 #include "gamecontroller.h"
 #include "gameabstractscene.h"
-#include "gameabstractscene.h"
+#include "gamescenelevelpassed.h"
 #include "gameobjectlevelpassed.h"
 
 void GameObjectLevelPassed::use()
 {
-	Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_SelectLevel));
+	Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_LevelPassed, new GameSceneLevelPassed::ActivateData(m_levelId)));
 }
 
-GameObjectLevelPassed::GameObjectLevelPassed(GameAbstractScene* pScene) :
-	GameObject(pScene)
+GameObjectLevelPassed::GameObjectLevelPassed(GameAbstractScene* pScene, GameLevelId id) :
+	GameObject(pScene),
+	m_levelId(id)
 {
 	static const float height = 0.4f;
 	static const float width = 1.5f * height;

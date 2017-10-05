@@ -12,7 +12,7 @@ public:
 
 protected:
 	void mouseClick(int32_t x, int32_t y);
-	void activate();
+	void activate(AbstractActivateData*);
 
 private:
 	GameSceneSelectLevelMenu();

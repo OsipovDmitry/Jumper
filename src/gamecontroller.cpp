@@ -9,6 +9,7 @@
 #include "gamesceneselectlevelmenu.h"
 #include "gamescenelevel.h"
 #include "gamescenegameover.h"
+#include "gamescenelevelpassed.h"
 
 bool GameController::process(AbstractControllerMessage* pMessage)
 {
@@ -39,22 +40,16 @@ bool GameController::process(AbstractControllerMessage* pMessage)
 	}
 	case CMT_GameChangeScene: {
 		auto pMsg = msg_cast<GameChangeSceneMessage>(pMessage);
-		if (pMsg)
-			changeLevel(pMsg->sceneId);
+		if (pMsg) {
+			changeLevel(pMsg->sceneId, pMsg->pActivateData);
+			delete pMsg->pActivateData;
+		}
 		return true;
 	}
 	case CMT_GameLoadLevel: {
 		auto pMsg = msg_cast<GameLoadLevelMessage>(pMessage);
 		if (pMsg)
-			static_cast<GameSceneLevel*>(m_scenes[GameSceneId_Level])->reload(pMsg->levelId);
-		return true;
-	}
-	case CMT_GameReloadLevel: {
-		auto pMsg = msg_cast<GameReloadLevelMessage>(pMessage);
-		if (pMsg) {
-			GameSceneLevel *pLevel = static_cast<GameSceneLevel*>(m_scenes[GameSceneId_Level]);
-			pLevel->reload(pLevel->currentLevel());
-		}
+			static_cast<GameSceneLevel*>(m_scenes[GameSceneId_Level])->load(pMsg->levelId);
 		return true;
 	}
 	default: break;
@@ -79,8 +74,9 @@ void GameController::init()
 	m_scenes[GameSceneId_SelectLevel] = new GameSceneSelectLevelMenu();
 	m_scenes[GameSceneId_Level] = new GameSceneLevel();
 	m_scenes[GameSceneId_GameOver] = new GameSceneGameOver();
+	m_scenes[GameSceneId_LevelPassed] = new GameSceneLevelPassed();
 
-	changeLevel(GameSceneId_MainMenu);
+	changeLevel(GameSceneId_MainMenu, nullptr);
 }
 
 void GameController::update(uint64_t time, uint32_t dt)
@@ -93,7 +89,7 @@ void GameController::mouseClick(int32_t x, int32_t y)
 	m_scenes[m_currentSceneId]->mouseClick(x, y);
 }
 
-void GameController::changeLevel(GameSceneId id)
+void GameController::changeLevel(GameSceneId id, GameAbstractScene::AbstractActivateData* pActivateData)
 {
 	if (m_currentSceneId == id)
 		return;
@@ -101,5 +97,5 @@ void GameController::changeLevel(GameSceneId id)
 	m_currentSceneId = id;
 	Core::getController<GraphicsController>()->setCurrentScene(m_scenes[id]->graphicsScene());
 	Core::getController<PhysicsController>()->setCurrentScene(m_scenes[id]->physicsScene());
-	m_scenes[id]->activate();
+	m_scenes[id]->activate(pActivateData);
 }
