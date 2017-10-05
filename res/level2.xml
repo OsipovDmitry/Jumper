@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <level>
 	<background id="0" />
-	<player x="0" y="0.7" />
+	<player x="34.5" y="0.7" />
 	<object type="brick" x="0.0" y="-0.5" />
     <object type="brick" x="1.5" y="-0.5" />
-	<object type="brick" x="2.5" y="-0.5">
-        <mod type="offset" x="3.0" velocity="0.7"> 
+	<object type="brick" x="2.5" y="-0.5" >
+        <mod type="offset" x="3.0" velocity="0.7" /> 
     </object>
+    <object type="brick" x="6.0" y="-0.5" />
+    <object type="brick" x="7.0" y="-0.2" />
+    <object type="brick" x="8.0" y="0.1" />
+    <object type="brick" x="9.0" y="0.4" />
+    <object type="brick" x="10.0" y="0.1" />
+    <object type="brick" x="11.0" y="-0.2" />
+    <object type="brick" x="12.0" y="-0.5" />
+    <object type="brick" x="12.5" y="-0.5" >
+        <mod type="offset" x="3.0" velocity="0.7" /> 
+    </object>
+    <object type="brick" x="19.0" y="-0.5" >
+        <mod type="offset" x="-3.0" velocity="0.7" /> 
+    </object>
+    <object type="broken_brick" x="19.5" y="-0.5" />
+    <object type="broken_brick" x="20.5" y="-0.2" />
+    <object type="broken_brick" x="21.5" y="0.1" />
+    <object type="broken_brick" x="22.5" y="0.4" />
+    <object type="broken_brick" x="23.5" y="0.1" />
+    <object type="broken_brick" x="24.5" y="-0.2" />
+    <object type="broken_brick" x="25.5" y="-0.5" />
+    <object type="brick" x="27.0" y="-0.5" />
+    <object type="brick" x="28.5" y="-0.5" >
+        <mod type="offset" y="1.0" velocity="0.5" /> 
+    </object>
+    <object type="brick" x="30.0" y="0.5" />
+    <object type="broken_brick" x="31.5" y="0.16" />
+    <object type="broken_brick" x="33.0" y="-0.16" />
+    <object type="brick" x="34.5" y="-0.5" />
+    <object type="brick" x="35.0" y="-0.5" >
+        <mod type="offset" x="3.0" velocity="0.7" /> 
+    </object>
+    <object type="brick" x="41.5" y="-0.5" >
+        <mod type="offset" x="-3.0" velocity="0.7" /> 
+    </object>
+    <object type="brick" x="42.0" y="-0.5" >
+        <mod type="offset" x="3.0" velocity="0.7" /> 
+    </object>
+    <object type="brick" x="45.5" y="-0.5" />
+    <object type="level_passed" x="47.0" y="0.0" />
 </level>
 
