@@ -22,7 +22,7 @@
 	<object type="brick" x="22.0" y="-0.2" />
     <object type="brick" x="23.0" y="0.1" />
     <object type="brick" x="24.0" y="0.4" />
-    <object type="broken_brick" x="26.0" y="-0.5" />
+    <object type="broken_brick" x="25.75" y="-0.5" />
     <object type="brick" x="27.5" y="-0.5" />
     <object type="broken_brick" x="29.0" y="-0.5" />
     <object type="brick" x="30.5" y="-0.5" />

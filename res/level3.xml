@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level>
+	<background id="0" />
+	<player x="0.0" y="0.7" />
+	<object type="brick" x="0.0" y="-0.5" />
+    <object type="broken_brick" x="1.5" y="-0.5" />
+    <object type="brick" x="3.0" y="-0.5" />
+    <object type="broken_brick" x="4.5" y="-0.5" />
+    <object type="brick" x="6.0" y="-0.5" />
+    <object type="brick" x="7.5" y="-0.5" />
+    <object type="brick" x="9.0" y="-0.5" />
+    <object type="gun" x="8.9" y="-0.3" />
+
+</level>
+

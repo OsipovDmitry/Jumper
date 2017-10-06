@@ -213,7 +213,7 @@ std::string GameSceneLevel::levelIdToFilename(GameLevelId levelId)
 	static const std::array<std::string, GameLevelId_Count> table = {
 		"level1.xml",
 		"level2.xml",
-		"level1.xml"
+		"level3.xml"
 	};
 
 	return table[levelId];
