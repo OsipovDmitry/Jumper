@@ -49,6 +49,9 @@ BackgroundId GameObjectBackground::paramToBackgroundId(const std::string& param)
 {
 	static const std::unordered_map<std::string, BackgroundId> table = {
 		{"0", BackgroundId_0},
+		{"1", BackgroundId_1},
+		{"2", BackgroundId_2},
+		{"3", BackgroundId_3},
 	};
 
 	auto it = table.find(param);

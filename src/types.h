@@ -156,6 +156,8 @@ enum TextureId {
 
     TextureId_Background0,
     TextureId_Background1,
+	TextureId_Background2,
+	TextureId_Background3,
 
 	TextureId_Count
 };
@@ -163,6 +165,8 @@ enum TextureId {
 enum BackgroundId {
 	BackgroundId_0 = TextureId_Background0,
     BackgroundId_1 = TextureId_Background1,
+	BackgroundId_2 = TextureId_Background2,
+	BackgroundId_3 = TextureId_Background3,
 
 	BackgroundId_Count
 };

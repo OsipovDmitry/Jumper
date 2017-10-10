@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <level>
-	<background id="0" />
+	<background id="2" />
 	<player x="0" y="0.7" />
 	<object type="brick" x="0.0" y="-0.5" />
 	<object type="brick" x="1.5" y="-0.5" />

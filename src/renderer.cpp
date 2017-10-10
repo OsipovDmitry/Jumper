@@ -185,7 +185,9 @@ const std::tuple<int, glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureI
     std::make_tuple(0, glm::ivec2(344+1,960+1), glm::ivec2(24-2, 64-2)), // ^
 
     std::make_tuple(1, glm::ivec2(0,  0+1), glm::ivec2(1024,128-2)), // TextureId_Background0,
-    std::make_tuple(1, glm::ivec2(0,128+1), glm::ivec2(1024,128-2)), // TextureId_Background1,
+	std::make_tuple(1, glm::ivec2(0,128+1), glm::ivec2(1024,256-2)), // TextureId_Background1,
+	std::make_tuple(1, glm::ivec2(0,384+1), glm::ivec2(1024,256-2)), // TextureId_Background2,
+	std::make_tuple(1, glm::ivec2(0,640+1), glm::ivec2(1024,256-2)), // TextureId_Background3,
 };
 std::vector<glm::ivec2> Renderer::s_textureSizes;
 std::vector<GLuint> Renderer::s_textureIds;

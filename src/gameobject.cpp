@@ -92,7 +92,7 @@ bool GameObject::setParam(const std::string& key, const std::string& value)
 		return true;
 	} else if (key == s_angleTag) {
 		Transform t = transform();
-        t.angle = static_cast<float>(stof(value.c_str()));
+		t.angle = glm::radians(static_cast<float>(stof(value.c_str())));
 		setTransform(t);
 		return true;
 	}
