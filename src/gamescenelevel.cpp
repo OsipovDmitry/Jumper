@@ -104,7 +104,7 @@ bool GameSceneLevel::load(GameLevelId levelId)
 	stream.seekg(0, stream.end);
 	auto length = stream.tellg();
 	stream.seekg(0, stream.beg);
-	std::vector<char> buffer(length+1);
+    std::vector<char> buffer((int32_t)length+1);
 	stream.read(buffer.data(),length);
 	stream.close();
 	buffer[length] = '\0';

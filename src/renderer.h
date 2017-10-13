@@ -34,11 +34,26 @@ public:
     glm::vec2 windowToWorldSpace(const glm::ivec2& windowCoords, LayerId layerId) const;
 
     static const glm::ivec2& texturePosInfo(TextureId textureId);
-    static const glm::ivec2& textureSizeInfo(TextureId textureId);
+	static const glm::ivec2& textureSizeInfo(TextureId textureId);
 
 private:
 	using SpriteList = std::list<Sprite*>;
 	using RenderMethod = void (Renderer::*)(const SpriteList&) const;
+
+	Renderer();
+	~Renderer();
+
+	void resize(int w, int h);
+	void render() const;
+
+	void renderBackground(const SpriteList& list) const;
+	void renderObjects(const SpriteList& list) const;
+	void renderTransparentObjects(const SpriteList& list) const;
+	void renderGui(const SpriteList& list) const;
+
+	static GLuint loadShader(GLenum type, const char *shaderStr, std::string& log);
+	static GLuint loadProgram(GLuint vShader, GLuint fShader, std::string& log);
+	static glm::mat4x4 calcTextureMatrix(TextureId textureId);
 
 	SpriteList m_sprites, m_drawSprites;
 	mutable glm::mat4x4 m_cachedPMatrix, m_cachedPMatrixInv, m_cachedVPMatrix, m_cachedVPMatrixInv;
@@ -63,21 +78,6 @@ private:
 	static const std::tuple<int, glm::ivec2, glm::ivec2> s_textureCoords[TextureId_Count];
 	static std::vector<glm::ivec2> s_textureSizes;
 	static std::vector<GLuint> s_textureIds;
-
-	Renderer();
-	~Renderer();
-
-    void resize(int w, int h);
-    void render() const;
-
-	void renderBackground(const SpriteList& list) const;
-	void renderObjects(const SpriteList& list) const;
-	void renderTransparentObjects(const SpriteList& list) const;
-	void renderGui(const SpriteList& list) const;
-
-	static GLuint loadShader(GLenum type, const char *shaderStr, std::string& log);
-	static GLuint loadProgram(GLuint vShader, GLuint fShader, std::string& log);
-	static glm::mat4x4 calcTextureMatrix(TextureId textureId);
 
 	friend class RenderWidget;
 };

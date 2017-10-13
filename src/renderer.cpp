@@ -254,7 +254,7 @@ glm::vec2 Renderer::windowToWorldSpace(const glm::ivec2& windowCoords, LayerId l
 		case LayerId_Gui: { worldCoords = m_cachedPMatrixInv * glm::vec4(windowToClipSpace(windowCoords), 0.0f, 1.0f); break; }
 		default: { worldCoords = glm::vec4(); break; }
 	}
-    return glm::vec2(worldCoords);
+	return glm::vec2(worldCoords);
 }
 
 const glm::ivec2 &Renderer::texturePosInfo(TextureId textureId)

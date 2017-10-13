@@ -10,7 +10,7 @@ void GameObjectGuiButton::setButtonId(GuiButtonId id)
 	m_pGraphicsObject->setTexture(static_cast<TextureId>(id));
 }
 
-bool GameObjectGuiButton::setParam(const std::__cxx11::string& key, const std::__cxx11::string& value)
+bool GameObjectGuiButton::setParam(const std::string& key, const std::string& value)
 {
 	if (GameObject::setParam(key, value))
 		return true;
