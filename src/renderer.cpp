@@ -8,6 +8,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include <QImage>
+#include <QDebug>
 
 #include "renderer.h"
 
@@ -43,7 +44,7 @@ const char Renderer::s_vertexShaderString[] =
 	"	gl_Position = mvpMatrix * vec4(vPosition, 0.0, 1.0);\n"
 	"}\n";
 const char Renderer::s_fragmentShaderString[] =
-	//"precision mediump float;\n"
+	"precision mediump float;\n"
 	"uniform sampler2D objTexture;\n"
 	"uniform vec4 objColor;"
 	"varying vec2 tex_coord;\n"
@@ -58,8 +59,8 @@ GLint Renderer::s_attribPosLoc, Renderer::s_attribTexCoordLoc;
 GLint Renderer::s_uniformMVPMatrixLoc, Renderer::s_uniformTexMatrixLoc, Renderer::s_uniformTextureLoc, Renderer::s_uniformColorLoc;
 
 const std::vector<std::string> Renderer::s_textureFilenames {
-        std::string("texture0.png"),
-        std::string("texture1.png"),
+		std::string(":/res/texture0.png"),
+		std::string(":/res/texture1.png"),
 	};
 const std::tuple<int, glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureId_Count] = {
 	std::make_tuple(0, glm::ivec2(0+1,0+1), glm::ivec2(32-2,32-2)), // TextureId_None,
@@ -289,14 +290,18 @@ Renderer::Renderer() :
 	log.clear();
 	s_vertexShader = loadShader(GL_VERTEX_SHADER, s_vertexShaderString, log);
 #ifdef JUMPER_DEBUG
-	if (!log.empty())
+	if (!log.empty()) {
 		std::cout << "Vertex shader: " << log << std::endl;
+		qDebug() << "Vertex shader: " << QString::fromStdString(log);
+	}
 #endif
 	log.clear();
 	s_fragmentShader = loadShader(GL_FRAGMENT_SHADER, s_fragmentShaderString, log);
 #ifdef JUMPER_DEBUG
-	if (!log.empty())
+	if (!log.empty()) {
 		std::cout << "Fragment shader: " << log << std::endl;
+		qDebug() << "Fragment shader: " << QString::fromStdString(log);
+	}
 #endif
 	log.clear();
 	s_program = loadProgram(s_vertexShader, s_fragmentShader, log);

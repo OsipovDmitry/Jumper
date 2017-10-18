@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level>
+	<background id="2" />
+	<player x="1.5" y="0.7" />
+	<object type="brick" x="1.5" y="-0.5" />
+	<object type="brick" x="2.0" y="-0.5" >
+        <mod type="offset" x="3.5" velocity="0.7" /> 
+    </object>
+    <object type="brick" x="6.0" y="-0.5" />
+</level>
+

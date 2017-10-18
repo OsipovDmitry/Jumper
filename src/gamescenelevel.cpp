@@ -2,6 +2,8 @@
 #include <array>
 #include <cstdio>
 
+#include <QFile>
+
 #include "rapidxml/rapidxml.hpp"
 
 #include "types.h"
@@ -96,22 +98,29 @@ bool GameSceneLevel::load(GameLevelId levelId)
 
 	unload();
 	std::string filename = levelIdToFilename(levelId);
+	std::string buffer;
 
-	std::ifstream stream(filename);
-	if (!stream.is_open())
+//	std::ifstream stream(filename);
+//	if (!stream.is_open())
+//		return false;
+//	stream.seekg(0, stream.end);
+//	auto length = stream.tellg();
+//	stream.seekg(0, stream.beg);
+//	buffer.resize((int32_t)length+1);
+//	stream.read(&(buffer[0]),length);
+//	stream.close();
+//	buffer[length] = '\0';
+
+	QFile file(QString::fromStdString(filename));
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 		return false;
-
-	stream.seekg(0, stream.end);
-	auto length = stream.tellg();
-	stream.seekg(0, stream.beg);
-    std::vector<char> buffer((int32_t)length+1);
-	stream.read(buffer.data(),length);
-	stream.close();
-	buffer[length] = '\0';
+	buffer = file.readAll().toStdString();
+	file.close();
+	buffer.push_back('\0');
 
 	rapidxml::xml_document<> doc;
 	try {
-		doc.parse<0>(buffer.data());
+		doc.parse<0>(&(buffer[0]));
 	} catch (const rapidxml::parse_error&) {
 		return false;
 	}
@@ -211,9 +220,9 @@ void GameSceneLevel::setMaxOpenedLevel(GameLevelId levelId)
 std::string GameSceneLevel::levelIdToFilename(GameLevelId levelId)
 {
 	static const std::array<std::string, GameLevelId_Count> table = {
-		"level1.xml",
-		"level2.xml",
-		"level3.xml"
+		":/res/level1.xml",
+		":/res/level2.xml",
+		":/res/level3.xml"
 	};
 
 	return table[levelId];

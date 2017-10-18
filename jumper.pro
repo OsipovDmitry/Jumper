@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += opengl
+QT += opengl sensors
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -80,3 +80,6 @@ HEADERS += \
 LIBS += -lGLESv2
 
 DEFINES += JUMPER_DEBUG
+
+RESOURCES += \
+    jumper.qrc
