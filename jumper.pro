@@ -1,6 +1,7 @@
 TEMPLATE = app
 
-QT += opengl sensors
+QT += opengl multimedia
+message($$QT)
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -38,7 +39,8 @@ SOURCES += \
     src/gamesceneselectlevelmenu.cpp \
     src/gamescenegameover.cpp \
     src/gameobjectlevelpassed.cpp \
-    src/gamescenelevelpassed.cpp
+    src/gamescenelevelpassed.cpp \
+    src/audiocontroller.cpp
 
 HEADERS += \
     src/renderwidget.h \
@@ -75,7 +77,8 @@ HEADERS += \
     src/gamesceneselectlevelmenu.h \
     src/gamescenegameover.h \
     src/gameobjectlevelpassed.h \
-    src/gamescenelevelpassed.h
+    src/gamescenelevelpassed.h \
+    src/audiocontroller.h
 
 LIBS += -lGLESv2
 

@@ -3,6 +3,7 @@
 #include "renderer.h"
 #include "graphicscontroller.h"
 #include "physicscontroller.h"
+#include "audiocontroller.h"
 #include "gamecontroller.h"
 
 Core *Core::s_pCore = nullptr;
@@ -66,12 +67,14 @@ Core::Core() :
 	m_controllers[ControllerType_Core] = this;
 	m_controllers[ControllerType_Graphics] = new GraphicsController();
 	m_controllers[ControllerType_Physics] = new PhysicsController();
+	m_controllers[ControllerType_Audio] = new AudioController();
 	m_controllers[ControllerType_Game] = new GameController();
 }
 
 Core::~Core()
 {
 	delete m_controllers[ControllerType_Game];
+	delete m_controllers[ControllerType_Audio];
 	delete m_controllers[ControllerType_Physics];
 	delete m_controllers[ControllerType_Graphics];
 }

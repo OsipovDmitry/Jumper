@@ -10,7 +10,7 @@ class GraphicsScene;
 class GraphicsController : public AbstractController
 {
 public:
-	typedef std::list<GraphicsScene*> ScenesList;
+	using ScenesList = std::list<GraphicsScene*>;
 
 	static ControllerType controllerType() { return ControllerType_Graphics; }
 

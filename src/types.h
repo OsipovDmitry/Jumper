@@ -19,6 +19,7 @@ enum ControllerType {
 	ControllerType_Core = 0,
 	ControllerType_Graphics,
 	ControllerType_Physics,
+	ControllerType_Audio,
 	ControllerType_Game,
 	ControllerType_Count
 };
@@ -183,6 +184,11 @@ enum GuiButtonId {
 	GuiButtonId_Restart = TextureId_GuiButtonRestart,
 	GuiButtonId_ToMenu = TextureId_GuiButtonToMenu,
 	GuiButtonId_NextLevel = TextureId_GuiButtonNextLevel,
+};
+
+enum SoundId {
+	SoundId_0,
+	SoundId_Count
 };
 
 enum GameSceneId {

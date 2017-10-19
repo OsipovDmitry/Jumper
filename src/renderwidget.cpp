@@ -81,8 +81,6 @@ void RenderWidget::keyPressEvent(QKeyEvent* pEvent)
 		case Qt::Key_Down:
 			code = KeyCode_Down;
 			break;
-		default:
-			return;
 	}
 
 	m_keys[code] = true;

@@ -1,6 +1,4 @@
-#include <fstream>
 #include <array>
-#include <cstdio>
 
 #include <QFile>
 
@@ -15,6 +13,7 @@
 #include "graphicscamera.h"
 #include "physicsscene.h"
 #include "physicsbody.h"
+#include "audiocontroller.h"
 #include "gamecontroller.h"
 #include "gameobjectbackground.h"
 #include "gameobjectbrick.h"
@@ -45,6 +44,7 @@ void GameSceneLevel::update(uint64_t time, uint32_t dt)
 	m_pPlayer->setTransform(transform);
 
 	graphicsScene()->camera()->transform()->pos.x = transform.pos.x;
+	Core::getController<AudioController>()->setListenerPosition(transform.pos);
 
 	if (m_pPlayer->transform().pos.y < GLOBAL_DOWN)
 		Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_GameOver, new GameSceneGameOver::ActivateData(m_currentLevelId)));
@@ -99,17 +99,6 @@ bool GameSceneLevel::load(GameLevelId levelId)
 	unload();
 	std::string filename = levelIdToFilename(levelId);
 	std::string buffer;
-
-//	std::ifstream stream(filename);
-//	if (!stream.is_open())
-//		return false;
-//	stream.seekg(0, stream.end);
-//	auto length = stream.tellg();
-//	stream.seekg(0, stream.beg);
-//	buffer.resize((int32_t)length+1);
-//	stream.read(&(buffer[0]),length);
-//	stream.close();
-//	buffer[length] = '\0';
 
 	QFile file(QString::fromStdString(filename));
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -197,23 +186,23 @@ GameLevelId GameSceneLevel::currentLevel() const
 
 GameLevelId GameSceneLevel::maxOpenedLevel()
 {
-	FILE *pFile = fopen(s_maxOpenedlevelFilename.c_str(), "r");
-	if (!pFile)
+	QFile file(QString::fromStdString(s_maxOpenedlevelFilename));
+	if (!file.open(QIODevice::ReadOnly))
 		return GameLevelId_1;
-	int id;
-	fscanf(pFile, "%d", &id);
-	fclose(pFile);
-	return static_cast<GameLevelId>(id);
+	GameLevelId id = GameLevelId_1;
+	file.read(reinterpret_cast<char*>(&id), sizeof(GameLevelId));
+	file.close();
+	return id;
 }
 
 void GameSceneLevel::setMaxOpenedLevel(GameLevelId levelId)
 {
 	if (levelId >= maxOpenedLevel()) {
-		FILE *pFile = fopen(s_maxOpenedlevelFilename.c_str(), "w");
-		if (!pFile)
+		QFile file(QString::fromStdString(s_maxOpenedlevelFilename));
+		if (!file.open(QIODevice::WriteOnly))
 			return;
-		fprintf(pFile, "%d", static_cast<GameLevelId>(levelId));
-		fclose(pFile);
+		file.write(reinterpret_cast<const char*>(&levelId), sizeof(GameLevelId));
+		file.close();
 	}
 }
 

@@ -6,9 +6,9 @@
 
 #include "abstractcontroller.h"
 
-class GraphicsController;
-class PhysicsController;
-class GameController;
+//class GraphicsController;
+//class PhysicsController;
+//class GameController;
 class RenderWidget;
 
 class Core : public AbstractController

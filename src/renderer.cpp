@@ -1,14 +1,13 @@
 #include <utility>
 #include <algorithm>
 #ifdef JUMPER_DEBUG
-#include <iostream>
+	#include <QDebug>
 #endif
 
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 #include <QImage>
-#include <QDebug>
 
 #include "renderer.h"
 
@@ -44,7 +43,9 @@ const char Renderer::s_vertexShaderString[] =
 	"	gl_Position = mvpMatrix * vec4(vPosition, 0.0, 1.0);\n"
 	"}\n";
 const char Renderer::s_fragmentShaderString[] =
+#ifdef Q_OS_ANDROID
 	"precision mediump float;\n"
+#endif
 	"uniform sampler2D objTexture;\n"
 	"uniform vec4 objColor;"
 	"varying vec2 tex_coord;\n"
@@ -290,24 +291,20 @@ Renderer::Renderer() :
 	log.clear();
 	s_vertexShader = loadShader(GL_VERTEX_SHADER, s_vertexShaderString, log);
 #ifdef JUMPER_DEBUG
-	if (!log.empty()) {
-		std::cout << "Vertex shader: " << log << std::endl;
+	if (!log.empty())
 		qDebug() << "Vertex shader: " << QString::fromStdString(log);
-	}
 #endif
 	log.clear();
 	s_fragmentShader = loadShader(GL_FRAGMENT_SHADER, s_fragmentShaderString, log);
 #ifdef JUMPER_DEBUG
-	if (!log.empty()) {
-		std::cout << "Fragment shader: " << log << std::endl;
+	if (!log.empty())
 		qDebug() << "Fragment shader: " << QString::fromStdString(log);
-	}
 #endif
 	log.clear();
 	s_program = loadProgram(s_vertexShader, s_fragmentShader, log);
 #ifdef JUMPER_DEBUG
 	if (!log.empty())
-		std::cout << "Program: " << log << std::endl;
+		qDebug() << "Program: " << QString::fromStdString(log);
 #endif
 	s_attribPosLoc = glGetAttribLocation(s_program, "vPosition");
 	s_attribTexCoordLoc = glGetAttribLocation(s_program, "vTexcoord");

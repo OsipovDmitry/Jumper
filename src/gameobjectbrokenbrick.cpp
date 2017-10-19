@@ -1,10 +1,12 @@
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "core.h"
 #include "graphicsscene.h"
 #include "graphicsobject.h"
 #include "physicsscene.h"
 #include "physicsgeometry.h"
 #include "physicsbody.h"
+#include "audiocontroller.h"
 #include "gameabstractscene.h"
 #include "gameobjectbrokenbrick.h"
 #include "mathutils.h"
@@ -59,6 +61,8 @@ void GameObjectBrokenBrick::breakDown()
 	}
 
 	m_isWhole = false;
+
+	Core::getController<AudioController>()->playSound(SoundId_0, m_pTransform->pos);
 }
 
 GameObjectBrokenBrick::GameObjectBrokenBrick(GameAbstractScene *pScene) :
