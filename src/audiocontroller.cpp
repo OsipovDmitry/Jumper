@@ -5,19 +5,23 @@
 #include "glm/geometric.hpp"
 #include "audiocontroller.h"
 
+struct SoundData {
+	QSoundEffect soundEffect;
+	const Transform *pTransform;
+	SoundId id;
+	bool isInit;
+
+	SoundData(SoundId _id, const Transform *p) : soundEffect(), pTransform(p), id(_id), isInit(false) {}
+};
+
 void AudioController::setListenerPosition(const glm::vec2& value)
 {
 	m_listenerPos = value;
 }
 
-void AudioController::playSound(SoundId soundId, const glm::vec2& soundPos)
+void AudioController::playSound(SoundId soundId, const Transform* pTransform)
 {
-	auto pSound = new QSoundEffect;
-	pSound->setSource(QUrl::fromLocalFile(QString::fromStdString(soundIdToFilename(soundId))));
-	pSound->setVolume(soundVolume(soundId, soundPos));
-	pSound->play();
-
-	m_sounds.push_back(pSound);
+	m_sounds.push_back(new SoundData(soundId, pTransform));
 }
 
 bool AudioController::process(AbstractControllerMessage* pMessage)
@@ -57,28 +61,19 @@ void AudioController::update()
 {
 	SoundsList stopedSounds;
 	for (auto sound: m_sounds) {
-		switch (sound->status()) {
-			case QSoundEffect::Null:
-			case QSoundEffect::Error: {
-				stopedSounds.push_back(sound);
-				break;
-			}
-			case QSoundEffect::Loading: {
-				//
-				break;
-			}
-			case QSoundEffect::Ready: {
-				if (!sound->isPlaying()) {
-					stopedSounds.push_back(sound);
-				}
-				break;
-			}
-			default:
-				break;
+		if (sound->isInit == false) {
+			sound->soundEffect.setSource(QUrl::fromLocalFile(QString::fromStdString(soundIdToFilename(sound->id))));
+			sound->soundEffect.play();
+			sound->isInit = true;
 		}
+
+		sound->soundEffect.setVolume(soundVolume(sound->id, sound->pTransform->pos));
+
+		if (!sound->soundEffect.isPlaying())
+			stopedSounds.push_back(sound);
 	}
 	for (auto p: stopedSounds) {
-		p->stop();
+		p->soundEffect.stop();
 		m_sounds.remove(p);
 		delete p;
 	}
@@ -100,7 +95,10 @@ float AudioController::soundVolume(SoundId soundId, const glm::vec2& soundPos) c
 std::string AudioController::soundIdToFilename(SoundId soundId)
 {
 	static const std::array<std::string, SoundId_Count> table = {
-		":/res/snd.wav", //SoundId_0
+		":/res/jump.wav", // SoundId_Jump
+		":/res/broken_jump.wav", // SoundId_BrokenJump
+		":/res/pass.wav", // SoundId_LevelPassed
+		":/res/shot.wav", // SoundId_Shot
 	};
 
 	return table[soundId];
@@ -109,7 +107,10 @@ std::string AudioController::soundIdToFilename(SoundId soundId)
 glm::vec2 AudioController::soundRadiuses(SoundId soundId)
 {
 	static const std::array<glm::vec2, SoundId_Count> table = {
-		glm::vec2(2.0f, 3.0f), //SoundId_0
+		glm::vec2(2.0f, 5.0f), // SoundId_Jump
+		glm::vec2(2.0f, 5.0f), // SoundId_BrokenJump
+		glm::vec2(3.0f, 4.0f), // SoundId_LevelPassed
+		glm::vec2(3.0f, 8.0f), // SoundId_Shot
 	};
 
 	return table[soundId];

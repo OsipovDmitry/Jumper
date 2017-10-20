@@ -187,7 +187,10 @@ enum GuiButtonId {
 };
 
 enum SoundId {
-	SoundId_0,
+	SoundId_Jump,
+	SoundId_BrokenJump,
+	SoundId_LevelPassed,
+	SoundId_Shot,
 	SoundId_Count
 };
 

@@ -6,14 +6,14 @@
 
 PhysicsScene *PhysicsController::addScene()
 {
-	PhysicsScene *pScene = new PhysicsScene;
+	auto pScene = new PhysicsScene;
 	m_scenes.push_back(pScene);
 	return pScene;
 }
 
 void PhysicsController::delScene(PhysicsScene* pScene)
 {
-	ScenesList::iterator it = std::find(m_scenes.begin(), m_scenes.end(), pScene);
+	auto it = std::find(m_scenes.begin(), m_scenes.end(), pScene);
 	assert(it != m_scenes.end());
 
 	if (m_pCurrentScene == pScene)
@@ -64,7 +64,7 @@ PhysicsController::PhysicsController() :
 
 PhysicsController::~PhysicsController()
 {
-	for (ScenesList::iterator it = m_scenes.begin(); it != m_scenes.end(); ++it)
+	for (auto it = m_scenes.begin(); it != m_scenes.end(); ++it)
 		delete (*it);
 	m_scenes.clear();
 }

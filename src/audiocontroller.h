@@ -6,7 +6,7 @@
 
 #include "abstractcontroller.h"
 
-class QSoundEffect;
+struct SoundData;
 
 class AudioController : public AbstractController
 {
@@ -15,13 +15,13 @@ public:
 
 	void setListenerPosition(const glm::vec2& value);
 
-	void playSound(SoundId soundId, const glm::vec2& soundPos);
+	void playSound(SoundId soundId, const Transform* pTransform);
 
 protected:
 	virtual bool process(AbstractControllerMessage *pMessage);
 
 private:
-	using SoundsList = std::list<QSoundEffect*>;
+	using SoundsList = std::list<SoundData*>;
 
 	AudioController();
 	~AudioController();

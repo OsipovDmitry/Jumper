@@ -10,8 +10,6 @@ class PhysicsScene;
 class PhysicsController : public AbstractController
 {
 public:
-	typedef std::list<PhysicsScene*> ScenesList;
-
 	static ControllerType controllerType() { return ControllerType_Physics; }
 
 	PhysicsScene *addScene();
@@ -23,6 +21,8 @@ protected:
 	virtual bool process(AbstractControllerMessage *pMessage);
 
 private:
+	using ScenesList = std::list<PhysicsScene*>;
+
 	PhysicsController();
 	~PhysicsController();
 

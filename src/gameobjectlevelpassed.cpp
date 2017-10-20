@@ -3,6 +3,7 @@
 #include "graphicsobject.h"
 #include "physicsscene.h"
 #include "physicsgeometry.h"
+#include "audiocontroller.h"
 #include "gamecontroller.h"
 #include "gameabstractscene.h"
 #include "gamescenelevelpassed.h"
@@ -11,6 +12,7 @@
 void GameObjectLevelPassed::use()
 {
 	Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_LevelPassed, new GameSceneLevelPassed::ActivateData(m_levelId)));
+	Core::getController<AudioController>()->playSound(SoundId_LevelPassed, m_pTransform);
 }
 
 GameObjectLevelPassed::GameObjectLevelPassed(GameAbstractScene* pScene, GameLevelId id) :

@@ -1,11 +1,13 @@
 #include <algorithm>
 
 #include "mathutils.h"
+#include "core.h"
 #include "graphicsscene.h"
 #include "graphicsobject.h"
 #include "physicsscene.h"
 #include "physicsbody.h"
 #include "physicsgeometry.h"
+#include "audiocontroller.h"
 #include "gameabstractscene.h"
 #include "gameobjectgun.h"
 
@@ -148,6 +150,9 @@ GameObjectGun::Bullet *GameObjectGun::createNewShot()
 	pBullet->pPhysicsGeom = m_pScene->physicsScene()->addDynamicSphere(pBullet->pPhysicsBody, bulletRadius);
 
 	m_bullets.push_back(pBullet);
+
+	Core::getController<AudioController>()->playSound(SoundId_Shot, &m_restTransform);
+
 	return pBullet;
 }
 

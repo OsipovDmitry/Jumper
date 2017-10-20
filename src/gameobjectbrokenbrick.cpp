@@ -62,7 +62,7 @@ void GameObjectBrokenBrick::breakDown()
 
 	m_isWhole = false;
 
-	Core::getController<AudioController>()->playSound(SoundId_0, m_pTransform->pos);
+	Core::getController<AudioController>()->playSound(SoundId_BrokenJump, m_pTransform);
 }
 
 GameObjectBrokenBrick::GameObjectBrokenBrick(GameAbstractScene *pScene) :

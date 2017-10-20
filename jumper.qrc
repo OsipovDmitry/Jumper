@@ -7,5 +7,9 @@
         <file>res/texture0.png</file>
         <file>res/texture1.png</file>
         <file>res/snd.wav</file>
+        <file>res/jump.wav</file>
+        <file>res/pass.wav</file>
+        <file>res/shot.wav</file>
+        <file>res/broken_jump.wav</file>
     </qresource>
 </RCC>

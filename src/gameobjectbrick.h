@@ -7,6 +7,8 @@ class GameObjectBrick : public GameObject
 {
 public:
 protected:
+	void use();
+
 private:
 	GameObjectBrick(GameAbstractScene *pScene);
 	~GameObjectBrick();
