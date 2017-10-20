@@ -1,6 +1,7 @@
 #include "core.h"
 #include "graphicscontroller.h"
 #include "physicscontroller.h"
+#include "audiocontroller.h"
 #include "gamecontroller.h"
 #include "gameobject.h"
 
@@ -77,6 +78,7 @@ void GameController::init()
 	m_scenes[GameSceneId_LevelPassed] = new GameSceneLevelPassed();
 
 	changeLevel(GameSceneId_MainMenu, nullptr);
+	Core::getController<AudioController>()->playAmbient(SoundId_Ambient1);
 }
 
 void GameController::update(uint64_t time, uint32_t dt)

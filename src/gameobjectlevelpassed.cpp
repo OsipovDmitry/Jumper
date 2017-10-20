@@ -12,7 +12,7 @@
 void GameObjectLevelPassed::use()
 {
 	Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_LevelPassed, new GameSceneLevelPassed::ActivateData(m_levelId)));
-	Core::getController<AudioController>()->playSound(SoundId_LevelPassed, m_pTransform);
+	Core::getController<AudioController>()->playSound(SoundId_LevelPassed, nullptr);
 }
 
 GameObjectLevelPassed::GameObjectLevelPassed(GameAbstractScene* pScene, GameLevelId id) :

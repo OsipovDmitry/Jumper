@@ -16,6 +16,7 @@ public:
 	void setListenerPosition(const glm::vec2& value);
 
 	void playSound(SoundId soundId, const Transform* pTransform);
+	void playAmbient(SoundId soundId);
 
 protected:
 	virtual bool process(AbstractControllerMessage *pMessage);

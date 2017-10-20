@@ -46,8 +46,10 @@ void GameSceneLevel::update(uint64_t time, uint32_t dt)
 	graphicsScene()->camera()->transform()->pos.x = transform.pos.x;
 	Core::getController<AudioController>()->setListenerPosition(transform.pos);
 
-	if (m_pPlayer->transform().pos.y < GLOBAL_DOWN)
+	if (m_pPlayer->transform().pos.y < GLOBAL_DOWN) {
 		Core::getController<GameController>()->sendMessage(new GameChangeSceneMessage(GameSceneId_GameOver, new GameSceneGameOver::ActivateData(m_currentLevelId)));
+		Core::getController<AudioController>()->playSound(SoundId_GameOver, nullptr);
+	}
 }
 
 void GameSceneLevel::mouseClick(int32_t x, int32_t y)

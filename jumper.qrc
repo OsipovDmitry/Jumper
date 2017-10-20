@@ -11,5 +11,7 @@
         <file>res/pass.wav</file>
         <file>res/shot.wav</file>
         <file>res/broken_jump.wav</file>
+        <file>res/ambient1.wav</file>
+        <file>res/game_over.wav</file>
     </qresource>
 </RCC>
