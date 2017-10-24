@@ -6,6 +6,7 @@
 #include <QGLWidget>
 
 class QTimer;
+class QTiltSensor;
 
 class Renderer;
 
@@ -31,12 +32,21 @@ protected:
 	void initializeGL();
 	void resizeGL(int w, int h);
 	void paintGL();
+
 	void mousePressEvent(QMouseEvent *pEvent);
 	void keyPressEvent(QKeyEvent *pEvent);
 	void keyReleaseEvent(QKeyEvent *pEvent);
 
+private slots:
+#ifdef Q_OS_ANDROID
+	void sTiltSensorReading();
+#endif
+
 private:
 	QTimer *m_pTimer;
+#ifdef Q_OS_ANDROID
+	QTiltSensor *m_pTiltSensor;
+#endif
 	Renderer *m_pRenderer;
 	qint64 m_startTime, m_lastUpdateTime;
 	std::bitset<KeyCode_Count> m_keys;

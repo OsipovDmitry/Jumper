@@ -38,9 +38,9 @@ void GameSceneLevel::update(uint64_t time, uint32_t dt)
 	(void)dt;
 	Transform transform = m_pPlayer->transform();
 	if (Core::getController()->renderWidget()->testKey(RenderWidget::KeyCode_Left))
-		transform.pos.x -= 0.05f;
+		transform.pos.x -= 3.0f * 0.001f * dt;
 	if (Core::getController()->renderWidget()->testKey(RenderWidget::KeyCode_Right))
-		transform.pos.x += 0.05f;
+		transform.pos.x += 3.0f * 0.001f * dt;
 	m_pPlayer->setTransform(transform);
 
 	graphicsScene()->camera()->transform()->pos.x = transform.pos.x;

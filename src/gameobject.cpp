@@ -11,11 +11,6 @@ GameAbstractScene*GameObject::scene() const
 	return m_pScene;
 }
 
-//Transform *GameObject::transform() const
-//{
-//	return m_pTransform;
-//}
-
 //const GameObject::GraphicsObjectsList& GameObject::graphicsObjects() const
 //{
 //	return m_graphicsObjects;
@@ -68,11 +63,9 @@ GameObject::~GameObject()
 
 	delete m_pTransform;
 }
-#include <iostream>
+
 bool GameObject::setParam(const std::string& key, const std::string& value)
 {
-    std::cout << key << "=" << value << std::endl;
-
 	static const std::string s_type = "type";
 	static const std::string s_posXTag = "x";
 	static const std::string s_posYTag = "y";

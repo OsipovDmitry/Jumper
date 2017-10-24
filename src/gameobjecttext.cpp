@@ -121,7 +121,7 @@ void GameObjectText::rebuild()
             symPos.x += 0.5f * symWidth;
 
             auto pGraphicsObject = m_pScene->graphicsScene()->addObject(pTr);
-            pGraphicsObject->setLayer(LayerId_TransparentObjects);
+			pGraphicsObject->setLayer(LayerId_Gui);
             pGraphicsObject->setSize(glm::vec2(symWidth, m_size));
 			pGraphicsObject->setTexture(textureId);
 			pGraphicsObject->setColor(m_color);

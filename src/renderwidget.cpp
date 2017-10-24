@@ -1,6 +1,9 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QMouseEvent>
+#ifdef Q_OS_ANDROID
+#include <QTiltSensor>
+#endif
 
 #include "core.h"
 #include "renderer.h"
@@ -17,6 +20,13 @@ RenderWidget::RenderWidget(QWidget* pParentWidget) :
 	const int height = 20;
 	resize(height * Renderer::s_viewportAspect, height);
 
+#ifdef Q_OS_ANDROID
+	m_pTiltSensor = new QTiltSensor(this);
+	connect(m_pTiltSensor, SIGNAL(readingChanged()), SLOT(sTiltSensorReading()));
+	m_pTiltSensor->calibrate();
+	m_pTiltSensor->start();
+#endif
+
 	connect(m_pTimer, SIGNAL(timeout()), SLOT(update()));
 	m_pTimer->start(16);
 }
@@ -24,6 +34,9 @@ RenderWidget::RenderWidget(QWidget* pParentWidget) :
 RenderWidget::~RenderWidget()
 {
 	delete m_pRenderer;
+#ifdef Q_OS_ANDROID
+	delete m_pTiltSensor;
+#endif
 	delete m_pTimer;
 }
 
@@ -108,3 +121,27 @@ void RenderWidget::keyReleaseEvent(QKeyEvent* pEvent)
 
 	m_keys[code] = false;
 }
+
+#ifdef Q_OS_ANDROID
+void RenderWidget::sTiltSensorReading()
+{
+	auto pSensor = qobject_cast<QTiltSensor*>(sender());
+	if (!pSensor)
+		return;
+	auto pReading = pSensor->reading();
+
+	static const float s_angleValue = 7.0f;
+	if (pReading->yRotation() > s_angleValue) {
+		m_keys[KeyCode_Right] = true;
+		m_keys[KeyCode_Left] = false;
+	}
+	else if (pReading->yRotation() < -s_angleValue) {
+		m_keys[KeyCode_Right] = false;
+		m_keys[KeyCode_Left] = true;
+	}
+	else {
+		m_keys[KeyCode_Right] = false;
+		m_keys[KeyCode_Left] = false;
+	}
+}
+#endif

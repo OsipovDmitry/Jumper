@@ -2,6 +2,7 @@
 #define MATHUTILS_H
 
 #include <unordered_map>
+#include <cstdlib>
 
 #include "glm/gtc/matrix_transform.hpp"
 #include "types.h"

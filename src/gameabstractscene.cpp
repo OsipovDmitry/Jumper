@@ -27,7 +27,6 @@ PhysicsScene *GameAbstractScene::physicsScene() const
 
 GameAbstractScene::GameAbstractScene() :
 	m_objects(),
-	m_pBackgroundObject(nullptr),
 	m_pGraphicsScene(Core::getController<GraphicsController>()->addScene()),
 	m_pPhysicsScene(Core::getController<PhysicsController>()->addScene())
 {
@@ -67,8 +66,6 @@ void GameAbstractScene::delObject(GameObject* pObject)
 	m_objects.erase(it);
 	delete pObject;
 }
-
-
 
 GameAbstractScene::ObjectsList GameAbstractScene::selectObjects(int32_t x, int32_t y)
 {

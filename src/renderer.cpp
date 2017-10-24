@@ -481,6 +481,8 @@ void Renderer::renderTransparentObjects(const Renderer::SpriteList& list) const
 
 void Renderer::renderGui(const Renderer::SpriteList& list) const
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	for (SpriteList::const_iterator it = list.cbegin(); it != list.cend(); ++it) {
 		Sprite *p = *it;
 
@@ -500,6 +502,7 @@ void Renderer::renderGui(const Renderer::SpriteList& list) const
 
 		glDrawElements(GL_TRIANGLES, sizeof(s_quadIndices)/sizeof(float), GL_UNSIGNED_INT, 0);
 	}
+	glDisable(GL_BLEND);
 }
 
 
