@@ -176,7 +176,7 @@ bool GameSceneLevel::load(GameLevelId levelId)
 void GameSceneLevel::unload()
 {
 	for (auto pObject: m_gameObjects)
-		delObject(pObject);
+		delGameObject(pObject);
 	m_gameObjects.clear();
 	m_currentLevelId = GameLevelId_None;
 }

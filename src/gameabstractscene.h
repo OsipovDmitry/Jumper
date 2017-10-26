@@ -32,7 +32,7 @@ protected:
 	GameAbstractScene();
 	virtual ~GameAbstractScene();
 
-	void delObject(GameObject *pObject);
+	void delGameObject(GameObject *pObject);
 
 	template <typename ObjectType, typename... Ts>
 	ObjectType *createGameObject(Ts&&... params) {

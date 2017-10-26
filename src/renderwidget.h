@@ -12,6 +12,7 @@ class Renderer;
 
 class RenderWidget : public QGLWidget
 {
+	Q_OBJECT
 public:
 	enum KeyCode {
 		KeyCode_Left = 0,

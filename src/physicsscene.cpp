@@ -110,17 +110,17 @@ void PhysicsScene::update(uint32_t dt)
 
 void PhysicsScene::simulationStep(uint32_t dt)
 {
-	std::for_each(m_bodies.begin(), m_bodies.end(), [dt, this](PhysicsBody *p) {
-		p->addForce(m_gravity);
-		p->update(dt);
-	});
+	for (auto pBody: m_bodies) {
+		pBody->addForce(m_gravity);
+		pBody->update(dt);
+	}
 
 	static const float dampVel = 0.8f;
 
 	glm::vec2 normal;
 	float depth;
-	for (GeometriesList::iterator it1 = m_geoms.begin(); it1 != m_geoms.end(); ++it1)
-		for (GeometriesList::iterator it2 = ++(GeometriesList::iterator(it1)); it2 != m_geoms.end(); ++it2) {
+	for (auto it1 = m_geoms.begin(); it1 != m_geoms.end(); ++it1)
+		for (auto it2 = ++(GeometriesList::iterator(it1)); it2 != m_geoms.end(); ++it2) {
 			if ((*it1)->body() == (*it2)->body()) // в том числе nullptr == nullptr, то есть оба статичны
 				continue;
 

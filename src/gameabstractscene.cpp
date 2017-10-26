@@ -38,30 +38,27 @@ GameAbstractScene::GameAbstractScene() :
 GameAbstractScene::~GameAbstractScene()
 {
 	while (!m_objects.empty())
-		delObject(m_objects.front());
+		delGameObject(m_objects.front());
 
 	Core::getController<GraphicsController>()->delScene(m_pGraphicsScene);
 	Core::getController<PhysicsController>()->delScene(m_pPhysicsScene);
 }
 
-void GameAbstractScene::delObject(GameObject* pObject)
+void GameAbstractScene::delGameObject(GameObject* pObject)
 {
 	assert(pObject->scene() == this);
 
 	auto it = std::find(m_objects.begin(), m_objects.end(), pObject);
 	assert(it != m_objects.end());
 
-	std::for_each(pObject->m_graphicsObjects.begin(), pObject->m_graphicsObjects.end(), [this](GraphicsObject *p){
-		this->m_pGraphicsScene->delObject(p);
-	});
+	for (auto p: pObject->m_graphicsObjects)
+		m_pGraphicsScene->delObject(p);
 
-	std::for_each(pObject->m_physicsBodies.begin(), pObject->m_physicsBodies.end(), [this](PhysicsBody *p){
-		this->m_pPhysicsScene->delBody(p);
-	});
+	for (auto p: pObject->m_physicsBodies)
+		m_pPhysicsScene->delBody(p);
 
-	std::for_each(pObject->m_physicsGeoms.begin(), pObject->m_physicsGeoms.end(), [this](PhysicsGeometry *p){
-		this->m_pPhysicsScene->delGeometry(p);
-	});
+	for (auto p: pObject->m_physicsGeoms)
+		m_pPhysicsScene->delGeometry(p);
 
 	m_objects.erase(it);
 	delete pObject;
@@ -69,7 +66,7 @@ void GameAbstractScene::delObject(GameObject* pObject)
 
 GameAbstractScene::ObjectsList GameAbstractScene::selectObjects(int32_t x, int32_t y)
 {
-	Renderer *pRenderer = Core::getController()->renderWidget()->renderer();
+	auto pRenderer = Core::getController()->renderWidget()->renderer();
 	ObjectsList result;
 	for (auto pObject: m_objects) {
 		for (auto pGraphicsObject: pObject->m_graphicsObjects) {

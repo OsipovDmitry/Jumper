@@ -85,4 +85,11 @@ LIBS += -lGLESv2
 #DEFINES += JUMPER_DEBUG
 
 RESOURCES += \
-    jumper.qrc
+	jumper.qrc
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/res/values/libs.xml \
+    android/build.gradle
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

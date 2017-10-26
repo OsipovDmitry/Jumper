@@ -1,6 +1,7 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QMouseEvent>
+#include <QDebug>
 #ifdef Q_OS_ANDROID
 #include <QTiltSensor>
 #endif
@@ -11,7 +12,6 @@
 
 RenderWidget::RenderWidget(QWidget* pParentWidget) :
 	QGLWidget(pParentWidget),
-	m_pTimer(new QTimer()),
 	m_pRenderer(nullptr),
 	m_startTime(QDateTime::currentMSecsSinceEpoch()),
 	m_lastUpdateTime(0),
@@ -22,11 +22,14 @@ RenderWidget::RenderWidget(QWidget* pParentWidget) :
 
 #ifdef Q_OS_ANDROID
 	m_pTiltSensor = new QTiltSensor(this);
-	connect(m_pTiltSensor, SIGNAL(readingChanged()), SLOT(sTiltSensorReading()));
-	m_pTiltSensor->calibrate();
+	if (!m_pTiltSensor->connectToBackend())
+		qDebug() << "Error: pTiltSensor->connectToBackend() return false!";
+	bool b = connect(m_pTiltSensor, SIGNAL(readingChanged()), SLOT(sTiltSensorReading()));
 	m_pTiltSensor->start();
+	m_pTiltSensor->calibrate();
 #endif
 
+	m_pTimer = new QTimer(this);
 	connect(m_pTimer, SIGNAL(timeout()), SLOT(update()));
 	m_pTimer->start(16);
 }
@@ -125,11 +128,9 @@ void RenderWidget::keyReleaseEvent(QKeyEvent* pEvent)
 #ifdef Q_OS_ANDROID
 void RenderWidget::sTiltSensorReading()
 {
-	auto pSensor = qobject_cast<QTiltSensor*>(sender());
-	if (!pSensor)
+	auto pReading = m_pTiltSensor->reading();
+	if (!pReading)
 		return;
-	auto pReading = pSensor->reading();
-
 	static const float s_angleValue = 7.0f;
 	if (pReading->yRotation() > s_angleValue) {
 		m_keys[KeyCode_Right] = true;
