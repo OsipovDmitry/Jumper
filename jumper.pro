@@ -82,7 +82,7 @@ HEADERS += \
 
 LIBS += -lGLESv2
 
-#DEFINES += JUMPER_DEBUG
+DEFINES += JUMPER_DEBUG
 
 RESOURCES += \
 	jumper.qrc

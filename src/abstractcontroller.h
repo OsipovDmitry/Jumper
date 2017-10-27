@@ -26,6 +26,9 @@ enum ControllerMessageType {
 	CMT_ControllerUpdate,
 
 	CMT_GameMouseClick,
+	CMT_GameTilt,
+	CMT_GameKeyPress,
+	CMT_GameKeyRelease,
 	CMT_GameObjectUse,
 	CMT_GameChangeScene,
 	CMT_GameLoadLevel,

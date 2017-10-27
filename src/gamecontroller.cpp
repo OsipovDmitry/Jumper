@@ -33,6 +33,24 @@ bool GameController::process(AbstractControllerMessage* pMessage)
 			mouseClick(pMsg->x, pMsg->y);
 		return true;
 	}
+	case CMT_GameTilt: {
+		auto pMsg = msg_cast<GameTiltMessage>(pMessage);
+		if (pMsg)
+			tilt(pMsg->x, pMsg->y);
+		return true;
+	}
+	case CMT_GameKeyPress: {
+		auto pMsg = msg_cast<GameKeyPressMessage>(pMessage);
+		if (pMsg)
+			keyPress(pMsg->keyCode);
+		return true;
+	}
+	case CMT_GameKeyRelease: {
+		auto pMsg = msg_cast<GameKeyReleaseMessage>(pMessage);
+		if (pMsg)
+			keyRelease(pMsg->keyCode);
+		return true;
+	}
 	case CMT_GameObjectUse: {
 		auto pMsg = msg_cast<GameObjectUseMessage>(pMessage);
 		if (pMsg)
@@ -89,6 +107,21 @@ void GameController::update(uint64_t time, uint32_t dt)
 void GameController::mouseClick(int32_t x, int32_t y)
 {
 	m_scenes[m_currentSceneId]->mouseClick(x, y);
+}
+
+void GameController::tilt(float x, float y)
+{
+	//
+}
+
+void GameController::keyPress(KeyCode code)
+{
+	//
+}
+
+void GameController::keyRelease(KeyCode code)
+{
+	//
 }
 
 void GameController::changeLevel(GameSceneId id, GameAbstractScene::AbstractActivateData* pActivateData)

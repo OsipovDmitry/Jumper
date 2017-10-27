@@ -24,6 +24,9 @@ private:
 	void init();
 	void update(uint64_t time, uint32_t dt);
 	void mouseClick(int32_t x, int32_t y);
+	void tilt(float x, float y);
+	void keyPress(KeyCode code);
+	void keyRelease(KeyCode code);
 
 	void changeLevel(GameSceneId id, GameAbstractScene::AbstractActivateData *pActivateData);
 
@@ -39,6 +42,30 @@ public:
 	static ControllerMessageType typeOfClass() { return CMT_GameMouseClick; }
 
 	int32_t x, y;
+};
+
+class GameTiltMessage : public AbstractControllerMessage {
+public:
+	GameTiltMessage(float xVal, float yVal) : AbstractControllerMessage(CMT_GameTilt), x(xVal), y(yVal) {}
+	static ControllerMessageType typeOfClass() { return CMT_GameTilt; }
+
+	float x, y;
+};
+
+class GameKeyPressMessage : public AbstractControllerMessage {
+public:
+	GameKeyPressMessage(KeyCode code) : AbstractControllerMessage(CMT_GameKeyPress), keyCode(code) {}
+	static ControllerMessageType typeOfClass() { return CMT_GameKeyPress; }
+
+	KeyCode keyCode;
+};
+
+class GameKeyReleaseMessage : public AbstractControllerMessage {
+public:
+	GameKeyReleaseMessage(KeyCode code) : AbstractControllerMessage(CMT_GameKeyRelease), keyCode(code) {}
+	static ControllerMessageType typeOfClass() { return CMT_GameKeyRelease; }
+
+	KeyCode keyCode;
 };
 
 class GameObjectUseMessage : public AbstractControllerMessage {

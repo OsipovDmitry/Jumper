@@ -1,8 +1,6 @@
 #ifndef GAMESCENELEVEL_H
 #define GAMESCENELEVEL_H
 
-#include <string>
-
 #include "gameabstractscene.h"
 #include "types.h"
 

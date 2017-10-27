@@ -1,9 +1,11 @@
 #ifndef RENDERWIDGET_H
 #define RENDERWIDGET_H
 
-#include <bitset>
+#include <list>
 
 #include <QGLWidget>
+
+#include "types.h"
 
 class QTimer;
 class QTiltSensor;
@@ -14,43 +16,44 @@ class RenderWidget : public QGLWidget
 {
 	Q_OBJECT
 public:
-	enum KeyCode {
-		KeyCode_Left = 0,
-		KeyCode_Right,
-		KeyCode_Up,
-		KeyCode_Down,
-		KeyCode_Count
-	};
-
 	explicit RenderWidget(QWidget *pParentWidget = nullptr);
 	~RenderWidget();
 
-	bool testKey(KeyCode keyCode) const;
-
 	Renderer *renderer() const;
+
+#if defined(Q_OS_ANDROID)
+	void calibrateTiltSensor();
+#elif defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+#else
+#endif
 
 protected:
 	void initializeGL();
 	void resizeGL(int w, int h);
 	void paintGL();
-
 	void mousePressEvent(QMouseEvent *pEvent);
+
+#if defined(Q_OS_ANDROID)
+private slots:
+	void sTiltSensorReading();
+#elif defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+protected:
 	void keyPressEvent(QKeyEvent *pEvent);
 	void keyReleaseEvent(QKeyEvent *pEvent);
-
-private slots:
-#ifdef Q_OS_ANDROID
-	void sTiltSensorReading();
+#else
 #endif
 
 private:
 	QTimer *m_pTimer;
-#ifdef Q_OS_ANDROID
-	QTiltSensor *m_pTiltSensor;
-#endif
 	Renderer *m_pRenderer;
 	qint64 m_startTime, m_lastUpdateTime;
-	std::bitset<KeyCode_Count> m_keys;
+
+#if defined(Q_OS_ANDROID)
+	QTiltSensor *m_pTiltSensor;
+#elif defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+	static KeyCode qtKeyToKeyCode(int qtKey);
+#else
+#endif
 };
 
 #endif // RENDERWIDGET_H

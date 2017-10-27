@@ -215,6 +215,15 @@ enum GameLevelId {
 	GameLevelId_Count
 };
 
+enum KeyCode {
+	KeyCode_None = -1,
+	KeyCode_Left = 0,
+	KeyCode_Right,
+	KeyCode_Up,
+	KeyCode_Down,
+	KeyCode_Count
+};
+
 const float GLOBAL_DOWN = -5.0f;
 
 #endif // TYPES_H
