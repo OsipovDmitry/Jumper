@@ -7,10 +7,21 @@
 
 #include "gamescenemainmenu.h"
 #include "gamesceneauthorsmenu.h"
-#include "gamesceneselectlevelmenu.h"
+#include "gamesceneselectlevel.h"
 #include "gamescenelevel.h"
 #include "gamescenegameover.h"
 #include "gamescenelevelpassed.h"
+#include "gamescenepause.h"
+
+bool GameController::keyState(KeyCode keyCode) const
+{
+	return m_keys.test(keyCode);
+}
+
+glm::vec2 GameController::tiltState() const
+{
+	return m_tilt;
+}
 
 bool GameController::process(AbstractControllerMessage* pMessage)
 {
@@ -24,7 +35,7 @@ bool GameController::process(AbstractControllerMessage* pMessage)
 	case CMT_ControllerUpdate: {
 		auto pMsg = msg_cast<ControllerUpdateMessage>(pMessage);
 		if (pMsg)
-			update(pMsg->time, pMsg->dt);
+			update(pMsg->dt);
 		return true;
 	}
 	case CMT_GameMouseClick: {
@@ -78,7 +89,9 @@ bool GameController::process(AbstractControllerMessage* pMessage)
 
 GameController::GameController() :
 	m_scenes(),
-	m_currentSceneId(GameSceneId_None)
+	m_currentSceneId(GameSceneId_None),
+	m_keys(),
+	m_tilt()
 {
 }
 
@@ -90,18 +103,19 @@ void GameController::init()
 {
 	m_scenes[GameSceneId_MainMenu] = new GameSceneMainMenu();
 	m_scenes[GameSceneId_Authors] = new GameSceneAuthorsMenu();
-	m_scenes[GameSceneId_SelectLevel] = new GameSceneSelectLevelMenu();
+	m_scenes[GameSceneId_SelectLevel] = new GameSceneSelectLevel();
 	m_scenes[GameSceneId_Level] = new GameSceneLevel();
 	m_scenes[GameSceneId_GameOver] = new GameSceneGameOver();
 	m_scenes[GameSceneId_LevelPassed] = new GameSceneLevelPassed();
+	m_scenes[GameSceneId_Pause] = new GameScenePause();
 
 	changeLevel(GameSceneId_MainMenu, nullptr);
 	Core::getController<AudioController>()->playAmbient(SoundId_Ambient1);
 }
 
-void GameController::update(uint64_t time, uint32_t dt)
+void GameController::update(uint32_t dt)
 {
-	m_scenes[m_currentSceneId]->updateScene(time, dt);
+	m_scenes[m_currentSceneId]->updateScene(dt);
 }
 
 void GameController::mouseClick(int32_t x, int32_t y)
@@ -111,17 +125,20 @@ void GameController::mouseClick(int32_t x, int32_t y)
 
 void GameController::tilt(float x, float y)
 {
-	//
+	m_tilt.x = x;
+	m_tilt.y = y;
 }
 
 void GameController::keyPress(KeyCode code)
 {
-	//
+	if (code >= 0 && code < KeyCode_Count)
+		m_keys.set(code, true);
 }
 
 void GameController::keyRelease(KeyCode code)
 {
-	//
+	if (code >= 0 && code < KeyCode_Count)
+		m_keys.set(code, false);
 }
 
 void GameController::changeLevel(GameSceneId id, GameAbstractScene::AbstractActivateData* pActivateData)

@@ -4,11 +4,11 @@
 #include "core.h"
 #include "gamecontroller.h"
 #include "gamescenelevel.h"
-#include "gamesceneselectlevelmenu.h"
+#include "gamesceneselectlevel.h"
 #include "gameobjectbackground.h"
 #include "gameobjectguibutton.h"
 
-void GameSceneSelectLevelMenu::mouseClick(int32_t x, int32_t y)
+void GameSceneSelectLevel::mouseClick(int32_t x, int32_t y)
 {
 	ObjectsList list = selectObjects(x, y);
 
@@ -24,7 +24,7 @@ void GameSceneSelectLevelMenu::mouseClick(int32_t x, int32_t y)
 	}
 }
 
-void GameSceneSelectLevelMenu::activate(AbstractActivateData*)
+void GameSceneSelectLevel::activate(AbstractActivateData*)
 {
 	for (auto id = GameLevelId_1; id < GameLevelId_Count; id = static_cast<GameLevelId>(id+1))
 		m_pLevelButton[id]->show();
@@ -41,7 +41,7 @@ void GameSceneSelectLevelMenu::activate(AbstractActivateData*)
 	}
 }
 
-GameSceneSelectLevelMenu::GameSceneSelectLevelMenu() :
+GameSceneSelectLevel::GameSceneSelectLevel() :
 	GameAbstractScene()
 {
 	m_pBackgroundObject->setBackgroundId(BackgroundId_0);
@@ -54,6 +54,6 @@ GameSceneSelectLevelMenu::GameSceneSelectLevelMenu() :
 	m_pBackButton->setTransform(Transform(glm::vec2(0.0f, -0.6f)));
 }
 
-GameSceneSelectLevelMenu::~GameSceneSelectLevelMenu()
+GameSceneSelectLevel::~GameSceneSelectLevel()
 {
 }

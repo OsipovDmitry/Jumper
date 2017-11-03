@@ -20,6 +20,9 @@ enum ControllerMessageType {
 	CMT_CoreExit,
 	CMT_CoreInit,
 	CMT_CoreMouseClick,
+	CMT_CoreKeyPress,
+	CMT_CoreKeyRelease,
+	CMT_CoreTilt,
 	CMT_CoreUpdate,
 
 	CMT_ControllerInit,
@@ -77,10 +80,9 @@ DECLARE_SIMPLE_MESSAGE(ControllerInitMessage, CMT_ControllerInit)
 
 class ControllerUpdateMessage : public AbstractControllerMessage {
 public:
-	ControllerUpdateMessage(uint64_t timeVal, uint32_t dtVal) : AbstractControllerMessage(CMT_ControllerUpdate), time(timeVal), dt(dtVal) {}
+	ControllerUpdateMessage(uint32_t dtVal) : AbstractControllerMessage(CMT_ControllerUpdate), dt(dtVal) {}
 	static ControllerMessageType typeOfClass() { return CMT_ControllerUpdate; }
 
-	uint64_t time;
 	uint32_t dt;
 };
 

@@ -14,7 +14,6 @@ protected:
 
 private:
 	GameSceneMainMenu();
-	~GameSceneMainMenu();
 
 	GameObjectGuiButton *m_pStartButton, *m_pAuthorsButton, *m_pExitButton;
 

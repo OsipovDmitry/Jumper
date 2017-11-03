@@ -6,7 +6,7 @@
 
 class GameObjectGuiButton;
 
-class GameSceneSelectLevelMenu : public GameAbstractScene
+class GameSceneSelectLevel : public GameAbstractScene
 {
 public:
 
@@ -15,8 +15,8 @@ protected:
 	void activate(AbstractActivateData*);
 
 private:
-	GameSceneSelectLevelMenu();
-	~GameSceneSelectLevelMenu();
+	GameSceneSelectLevel();
+	~GameSceneSelectLevel();
 
 	GameObjectGuiButton *m_pLevelButton[GameLevelId_Count], *m_pBackButton;
 

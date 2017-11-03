@@ -36,11 +36,12 @@ SOURCES += \
     src/gamescenemainmenu.cpp \
     src/gamesceneauthorsmenu.cpp \
     src/gameobjecttext.cpp \
-    src/gamesceneselectlevelmenu.cpp \
     src/gamescenegameover.cpp \
     src/gameobjectlevelpassed.cpp \
     src/gamescenelevelpassed.cpp \
-    src/audiocontroller.cpp
+    src/audiocontroller.cpp \
+    src/gamescenepause.cpp \
+    src/gamesceneselectlevel.cpp
 
 HEADERS += \
     src/renderwidget.h \
@@ -74,11 +75,12 @@ HEADERS += \
     src/gamescenemainmenu.h \
     src/gamesceneauthorsmenu.h \
     src/gameobjecttext.h \
-    src/gamesceneselectlevelmenu.h \
     src/gamescenegameover.h \
     src/gameobjectlevelpassed.h \
     src/gamescenelevelpassed.h \
-    src/audiocontroller.h
+    src/audiocontroller.h \
+    src/gamescenepause.h \
+    src/gamesceneselectlevel.h
 
 LIBS += -lGLESv2
 

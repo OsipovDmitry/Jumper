@@ -22,7 +22,8 @@ void GameSceneMainMenu::mouseClick(int32_t x, int32_t y)
 	}
 }
 
-GameSceneMainMenu::GameSceneMainMenu()
+GameSceneMainMenu::GameSceneMainMenu() :
+	GameAbstractScene()
 {
 	m_pStartButton = createGameObject<GameObjectGuiButton>(GuiButtonId_Start);
 	m_pStartButton->setTransform(Transform(glm::vec2(0.0f, 0.3f)));
@@ -32,8 +33,4 @@ GameSceneMainMenu::GameSceneMainMenu()
 
 	m_pExitButton = createGameObject<GameObjectGuiButton>(GuiButtonId_Exit);
 	m_pExitButton->setTransform(Transform(glm::vec2(0.0f, -0.3f)));
-}
-
-GameSceneMainMenu::~GameSceneMainMenu()
-{
 }

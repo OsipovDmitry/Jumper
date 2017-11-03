@@ -43,15 +43,33 @@ bool Core::process(AbstractControllerMessage* pMessage)
 		return true;
 	}
 	case CMT_CoreUpdate: {
-		CoreUpdateMessage *pMsg = msg_cast<CoreUpdateMessage>(pMessage);
+		auto pMsg = msg_cast<CoreUpdateMessage>(pMessage);
 		if (pMsg)
-			update(pMsg->time, pMsg->dt);
+			update(pMsg->dt);
 		return true;
 	}
 	case CMT_CoreMouseClick: {
-		CoreMouseClickMessage *pMsg = msg_cast<CoreMouseClickMessage>(pMessage);
+		auto pMsg = msg_cast<CoreMouseClickMessage>(pMessage);
 		if (pMsg)
 			mouseClick(pMsg->x, pMsg->y);
+		return true;
+	}
+	case CMT_CoreKeyPress: {
+		auto pMsg = msg_cast<CoreKeyPressMessage>(pMessage);
+		if (pMsg)
+			keyPress(pMsg->keyCode);
+		return true;
+	}
+	case CMT_CoreKeyRelease: {
+		auto pMsg = msg_cast<CoreKeyReleaseMessage>(pMessage);
+		if (pMsg)
+			keyRelease(pMsg->keyCode);
+		return true;
+	}
+	case CMT_CoreTilt: {
+		auto pMsg = msg_cast<CoreTiltMessage>(pMessage);
+		if (pMsg)
+			tilt(pMsg->x, pMsg->y);
 		return true;
 	}
 	default: break;
@@ -61,7 +79,6 @@ bool Core::process(AbstractControllerMessage* pMessage)
 
 Core::Core() :
 	AbstractController(),
-	m_controllers(),
 	m_pRenderWidget(new RenderWidget())
 {
 	m_controllers[ControllerType_Core] = this;
@@ -77,6 +94,8 @@ Core::~Core()
 	delete m_controllers[ControllerType_Audio];
 	delete m_controllers[ControllerType_Physics];
 	delete m_controllers[ControllerType_Graphics];
+
+	delete m_pRenderWidget;
 }
 
 void Core::exit()
@@ -93,12 +112,12 @@ void Core::init()
 	}
 }
 
-void Core::update(uint64_t time, uint32_t dt)
+void Core::update(uint32_t dt)
 {
 	for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it) {
 		if (*it == static_cast<AbstractController*>(this)) // Пропускаем компонент Core
 			continue;
-		(*it)->sendMessage(new ControllerUpdateMessage(time, dt));
+		(*it)->sendMessage(new ControllerUpdateMessage(dt));
 		(*it)->readMessages();
 	}
 }
@@ -106,4 +125,19 @@ void Core::update(uint64_t time, uint32_t dt)
 void Core::mouseClick(int32_t x, int32_t y)
 {
 	m_controllers[ControllerType_Game]->sendMessage(new GameMouseClickMessage(x, y));
+}
+
+void Core::keyPress(KeyCode keyCode)
+{
+	m_controllers[ControllerType_Game]->sendMessage(new GameKeyPressMessage(keyCode));
+}
+
+void Core::keyRelease(KeyCode keyCode)
+{
+	m_controllers[ControllerType_Game]->sendMessage(new GameKeyReleaseMessage(keyCode));
+}
+
+void Core::tilt(float x, float y)
+{
+	m_controllers[ControllerType_Game]->sendMessage(new GameTiltMessage(x, y));
 }

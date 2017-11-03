@@ -2,6 +2,7 @@
 #define GAMECONTROLLER_H
 
 #include <array>
+#include <bitset>
 
 #include "abstractcontroller.h"
 #include "gameabstractscene.h"
@@ -14,6 +15,9 @@ class GameController : public AbstractController
 public:
 	static ControllerType controllerType() { return ControllerType_Game; }
 
+	bool keyState(KeyCode keyCode) const;
+	glm::vec2 tiltState() const;
+
 protected:
 	virtual bool process(AbstractControllerMessage *pMessage);
 
@@ -22,7 +26,7 @@ private:
 	~GameController();
 
 	void init();
-	void update(uint64_t time, uint32_t dt);
+	void update(uint32_t dt);
 	void mouseClick(int32_t x, int32_t y);
 	void tilt(float x, float y);
 	void keyPress(KeyCode code);
@@ -32,6 +36,8 @@ private:
 
 	std::array<GameAbstractScene*, GameSceneId_Count> m_scenes;
 	GameSceneId m_currentSceneId;
+	std::bitset<KeyCode_Count> m_keys;
+	glm::vec2 m_tilt;
 
 	friend class Core;
 };

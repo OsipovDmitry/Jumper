@@ -84,12 +84,12 @@ GameAbstractScene::ObjectsList GameAbstractScene::selectObjects(int32_t x, int32
 	return result;
 }
 
-void GameAbstractScene::updateScene(uint64_t time, uint32_t dt)
+void GameAbstractScene::updateScene(uint32_t dt)
 {
 	for (auto p: m_objects)
 		p->updateObject(dt);
 
-	update(time, dt);
+	update(dt);
 }
 
 void GameAbstractScene::collisionDetection(PhysicsGeometry* p1, PhysicsGeometry* p2)

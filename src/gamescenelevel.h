@@ -5,6 +5,7 @@
 #include "types.h"
 
 class GameObjectPlayer;
+class GameObjectGuiButton;
 
 class GameSceneLevel : public GameAbstractScene
 {
@@ -18,7 +19,7 @@ public:
 	static void setMaxOpenedLevel(GameLevelId levelId);
 
 protected:
-	void update(uint64_t time, uint32_t dt);
+	void update(uint32_t dt);
 	void mouseClick(int32_t x, int32_t y);
 	void activate(AbstractActivateData*);
 
@@ -29,6 +30,7 @@ private:
 	static std::string levelIdToFilename(GameLevelId levelId);
 
 	GameObjectPlayer *m_pPlayer;
+	GameObjectGuiButton *m_pPauseButton;
 	ObjectsList m_gameObjects;
 	GameLevelId m_currentLevelId;
 

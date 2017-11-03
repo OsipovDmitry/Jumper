@@ -1,3 +1,4 @@
+#include <QApplication>
 #include <QTimer>
 #include <QDateTime>
 #include <QMouseEvent>
@@ -23,9 +24,13 @@ RenderWidget::RenderWidget(QWidget* pParentWidget) :
 	m_pTiltSensor = new QTiltSensor(this);
 	if (!m_pTiltSensor->connectToBackend())
 		qDebug() << "Error: pTiltSensor->connectToBackend() return false!";
-	bool b = connect(m_pTiltSensor, SIGNAL(readingChanged()), SLOT(sTiltSensorReading()));
+	connect(m_pTiltSensor, SIGNAL(readingChanged()), SLOT(sTiltSensorReading()));
 	m_pTiltSensor->start();
 	m_pTiltSensor->calibrate();
+
+	connect(QApplication::instance(),
+			SIGNAL(applicationStateChanged(Qt::ApplicationState)),
+			SLOT(sAppStateChanged(Qt::ApplicationState)));
 #elif defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 	;
 #else
@@ -81,7 +86,7 @@ void RenderWidget::paintGL()
 	uint32_t dt = time - m_lastUpdateTime;
 	m_lastUpdateTime = time;
 
-	Core::getController()->sendMessage(new CoreUpdateMessage(time, dt));
+	Core::getController()->sendMessage(new CoreUpdateMessage(dt));
 	Core::getController()->readMessages();
 
 	m_pRenderer->render();
@@ -92,47 +97,46 @@ void RenderWidget::mousePressEvent(QMouseEvent* pEvent)
 	Core::getController()->sendMessage(new CoreMouseClickMessage(pEvent->x(), pEvent->y()));
 }
 
+void RenderWidget::showEvent(QShowEvent*)
+{
+	int i = 123;
+	i++;
+}
+
+void RenderWidget::hideEvent(QHideEvent*)
+{
+	int i = 123;
+	i++;
+}
+
 #if defined(Q_OS_ANDROID)
 void RenderWidget::sTiltSensorReading()
 {
 	auto pReading = m_pTiltSensor->reading();
 	if (!pReading)
 		return;
-	static const float s_angleValue = 7.0f;
-	if (pReading->yRotation() > s_angleValue) {
-		m_keys[KeyCode_Right] = true;
-		m_keys[KeyCode_Left] = false;
-	}
-	else if (pReading->yRotation() < -s_angleValue) {
-		m_keys[KeyCode_Right] = false;
-		m_keys[KeyCode_Left] = true;
-	}
-	else {
-		m_keys[KeyCode_Right] = false;
-		m_keys[KeyCode_Left] = false;
-	}
+	Core::getController()->sendMessage(new CoreTiltMessage(pReading->xRotation(), pReading->yRotation()));
+}
 
-	for (auto& f: m_tiltSensorCallbacks)
-		f.second(f.first, pReading->xRotation(), pReading->yRotation());
+void RenderWidget::sAppStateChanged(Qt::ApplicationState state)
+{
+	int i = 123;
+	i++;
 }
 #elif defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 void RenderWidget::keyPressEvent(QKeyEvent* pEvent)
 {
 	auto code = qtKeyToKeyCode(pEvent->key());
-
-	for (auto& f: m_keyPressCallbacks)
-		f.second(f.first, code);
+	Core::getController()->sendMessage(new CoreKeyPressMessage(code));
 }
 
 void RenderWidget::keyReleaseEvent(QKeyEvent* pEvent)
 {
 	auto code = qtKeyToKeyCode(pEvent->key());
-
-	for (auto& f: m_keyReleaseCallbacks)
-		f.second(f.first, code);
+	Core::getController()->sendMessage(new CoreKeyReleaseMessage(code));
 }
 
-RenderWidget::KeyCode RenderWidget::qtKeyToKeyCode(int qtKey)
+KeyCode RenderWidget::qtKeyToKeyCode(int qtKey)
 {
 	KeyCode code = KeyCode_None;
 	switch (qtKey) {

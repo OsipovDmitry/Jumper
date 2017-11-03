@@ -82,6 +82,8 @@ const std::tuple<int, glm::ivec2, glm::ivec2> Renderer::s_textureCoords[TextureI
 	std::make_tuple(0, glm::ivec2(0+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Restart,
 	std::make_tuple(0, glm::ivec2(128+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_ToMenu,
 	std::make_tuple(0, glm::ivec2(256+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_NextLevel,
+	std::make_tuple(0, glm::ivec2(384+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Pause,
+	std::make_tuple(0, glm::ivec2(512+1,96+1), glm::ivec2(128-2, 64-2)), // TextureId_Resume,
 
 	std::make_tuple(0, glm::ivec2(0+1,160+1), glm::ivec2(128-2, 64-2)), // TextureId_Gun,
 	std::make_tuple(0, glm::ivec2(128+1,160+1), glm::ivec2(96-2, 64-2)), // TextureId_LevelPassed,

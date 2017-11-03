@@ -41,8 +41,11 @@ private:
 
 	void exit();
 	void init();
-	void update(uint64_t time, uint32_t dt);
+	void update(uint32_t dt);
 	void mouseClick(int32_t x, int32_t y);
+	void keyPress(KeyCode keyCode);
+	void keyRelease(KeyCode keyCode);
+	void tilt(float x, float y);
 };
 
 DECLARE_SIMPLE_MESSAGE(CoreExitMessage, CMT_CoreExit)
@@ -50,10 +53,9 @@ DECLARE_SIMPLE_MESSAGE(CoreInitMessage, CMT_CoreInit)
 
 class CoreUpdateMessage : public AbstractControllerMessage {
 public:
-	CoreUpdateMessage(uint64_t timeVal, uint32_t dtVal) : AbstractControllerMessage(CMT_CoreUpdate), time(timeVal), dt(dtVal) {}
+	CoreUpdateMessage(uint32_t dtVal) : AbstractControllerMessage(CMT_CoreUpdate), dt(dtVal) {}
 	static ControllerMessageType typeOfClass() { return CMT_CoreUpdate; }
 
-	uint64_t time;
 	uint32_t dt;
 };
 
@@ -63,6 +65,30 @@ public:
 	static ControllerMessageType typeOfClass() { return CMT_CoreMouseClick; }
 
 	int32_t x, y;
+};
+
+class CoreKeyPressMessage : public AbstractControllerMessage {
+public:
+	CoreKeyPressMessage(KeyCode code) : AbstractControllerMessage(CMT_CoreKeyPress), keyCode(code) {}
+	static ControllerMessageType typeOfClass() { return CMT_CoreKeyPress; }
+
+	KeyCode keyCode;
+};
+
+class CoreKeyReleaseMessage : public AbstractControllerMessage {
+public:
+	CoreKeyReleaseMessage(KeyCode code) : AbstractControllerMessage(CMT_CoreKeyRelease), keyCode(code) {}
+	static ControllerMessageType typeOfClass() { return CMT_CoreKeyRelease; }
+
+	KeyCode keyCode;
+};
+
+class CoreTiltMessage : public AbstractControllerMessage {
+public:
+	CoreTiltMessage(float xVal, float yVal) : AbstractControllerMessage(CMT_CoreTilt), x(xVal), y(yVal) {}
+	static ControllerMessageType typeOfClass() { return CMT_CoreTilt; }
+
+	float x, y;
 };
 
 #endif // CORE_H

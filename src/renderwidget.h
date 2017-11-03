@@ -32,10 +32,13 @@ protected:
 	void resizeGL(int w, int h);
 	void paintGL();
 	void mousePressEvent(QMouseEvent *pEvent);
+	void showEvent(QShowEvent*);
+	void hideEvent(QHideEvent*);
 
 #if defined(Q_OS_ANDROID)
 private slots:
 	void sTiltSensorReading();
+	void sAppStateChanged(Qt::ApplicationState state);
 #elif defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 protected:
 	void keyPressEvent(QKeyEvent *pEvent);

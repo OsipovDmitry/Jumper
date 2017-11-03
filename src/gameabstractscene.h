@@ -32,23 +32,22 @@ protected:
 	GameAbstractScene();
 	virtual ~GameAbstractScene();
 
-	void delGameObject(GameObject *pObject);
-
 	template <typename ObjectType, typename... Ts>
 	ObjectType *createGameObject(Ts&&... params) {
 		ObjectType *pObject = new ObjectType(this, std::forward<Ts>(params)...);
 		m_objects.push_back(static_cast<GameObject*>(pObject));
 		return pObject;
 	}
+	void delGameObject(GameObject *pObject);
 
-	virtual void update(uint64_t, uint32_t) {}
+	virtual void update(uint32_t) {}
 	virtual void mouseClick(int32_t, int32_t) {}
 	virtual void activate(AbstractActivateData*) {}
 
 	ObjectsList selectObjects(int32_t x, int32_t y);
 
 private:
-	void updateScene(uint64_t time, uint32_t dt);
+	void updateScene(uint32_t dt);
 	void collisionDetection(PhysicsGeometry *p1, PhysicsGeometry *p2);
 
 	static void collisionDetection(void *pSceneData, PhysicsGeometry *p1, PhysicsGeometry *p2);
