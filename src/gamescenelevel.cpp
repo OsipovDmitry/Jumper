@@ -1,33 +1,20 @@
-#include <array>
-
 #include <QFile>
 
-#include "rapidxml/rapidxml.hpp"
+#include "glm/geometric.hpp"
 
+#include "gamescenelevel.h"
 #include "types.h"
 #include "core.h"
-#include "renderwidget.h"
-#include "renderer.h"
-#include "renderwidget.h"
 #include "graphicsscene.h"
 #include "graphicscamera.h"
 #include "physicsscene.h"
-#include "physicsbody.h"
 #include "audiocontroller.h"
 #include "gamecontroller.h"
-#include "gameobjectbackground.h"
-#include "gameobjectbrick.h"
-#include "gameobjectbrokenbrick.h"
-#include "gameobjectplayer.h"
 #include "gameobjectguibutton.h"
-#include "gameobjectgun.h"
-#include "gameobjectlevelpassed.h"
-#include "gamescenelevel.h"
+#include "gameobjectplayer.h"
 #include "gamescenegameover.h"
 #include "gamescenepause.h"
-#include "gameobjectmodifierrotate.h"
-#include "gameobjectmodifieroffset.h"
-#include "gameobjectmodifiertrain.h"
+#include "gamelevelloader.h"
 
 namespace {
 	static const std::string s_maxOpenedlevelFilename = "savefile";
@@ -52,7 +39,7 @@ void GameSceneLevel::update(uint32_t dt)
 
 	static const float minTilt = 5.0f;
 	static const float maxTilt = 20.0f;
-	float tilt = pGameController->tiltState().y;
+	float tilt = pGameController->tiltState().x;
 	int tiltSign = glm::sign(tilt);
 	tilt = glm::clamp(glm::abs(tilt), minTilt, maxTilt);
 	tilt = (tilt - minTilt) / (maxTilt - minTilt);
@@ -110,106 +97,14 @@ GameSceneLevel::~GameSceneLevel()
 
 bool GameSceneLevel::load(GameLevelId levelId)
 {
-	static const auto s_rootNodeName = "level";
-
-	static const auto s_backgroundNodeName = "background";
-	static const auto s_playerNodeName = "player";
-	static const auto s_objectNodeName = "object";
-
-	static const auto s_objectTypeAttr = "type";
-
-	static const auto s_objectTypeBrick = "brick";
-	static const auto s_objectTypeBrokenBrick = "broken_brick";
-	static const auto s_objectTypeLevelPassed = "level_passed";
-	static const auto s_objectTypeGun = "gun";
-
-	static const auto s_objectModifierNodeName = "mod";
-	static const auto s_objectModifierTypeAttr = "type";
-
-	static const auto s_objectModifierTypeOffset = "offset";
-
-	unload();
-	std::string filename = levelIdToFilename(levelId);
-	std::string buffer;
-
-	QFile file(QString::fromStdString(filename));
-	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-		return false;
-	buffer = file.readAll().toStdString();
-	file.close();
-	buffer.push_back('\0');
-
-	rapidxml::xml_document<> doc;
-	try {
-		doc.parse<0>(&(buffer[0]));
-	} catch (const rapidxml::parse_error&) {
-		return false;
-	}
-	auto pRootNode = doc.first_node();
-	if (!pRootNode)
-		return false;
-	if (strcmp(pRootNode->name(), s_rootNodeName))
-		return false;
-
-	m_currentLevelId = levelId;
-
-	auto pNode = pRootNode->first_node();
-	while (pNode) {
-		GameObject *pGameObject = nullptr;
-		if (!strcmp(pNode->name(), s_backgroundNodeName)) {
-			pGameObject = m_pBackgroundObject;
-		}
-		else if (!strcmp(pNode->name(), s_playerNodeName)) {
-			pGameObject = m_pPlayer;
-		}
-		else if (!strcmp(pNode->name(), s_objectNodeName)) {
-			auto pType = pNode->first_attribute(s_objectTypeAttr);
-			if (pType) {
-				if (!strcmp(pType->value(), s_objectTypeBrick))
-					pGameObject = createGameObject<GameObjectBrick>();
-				else if (!strcmp(pType->value(), s_objectTypeBrokenBrick))
-					pGameObject = createGameObject<GameObjectBrokenBrick>();
-				else if (!strcmp(pType->value(), s_objectTypeLevelPassed))
-					pGameObject = createGameObject<GameObjectLevelPassed>(m_currentLevelId);
-				else if (!strcmp(pType->value(), s_objectTypeGun))
-					pGameObject = createGameObject<GameObjectGun>();
-
-				m_gameObjects.push_back(pGameObject);
-			}
-		}
-
-		if (pGameObject) {
-			for (auto attr = pNode->first_attribute(); attr; attr = attr->next_attribute())
-				pGameObject->setParam(attr->name(), attr->value());
-
-			for (auto pObjMod = pNode->first_node(); pObjMod; pObjMod = pObjMod->next_sibling()) {
-				if (!strcmp(pObjMod->name(), s_objectModifierNodeName)) {
-					auto pType = pObjMod->first_attribute(s_objectModifierTypeAttr);
-					GameObjectAbstractModifier *pModifier;
-					if (pType) {
-						if (!strcmp(pType->value(), s_objectModifierTypeOffset))
-							pModifier = pGameObject->addModifier<GameObjectModifierOffset>();
-					}
-					if (pModifier) {
-						for (auto attr = pObjMod->first_attribute(); attr; attr = attr->next_attribute())
-							pModifier->setParam(attr->name(), attr->value());
-					}
-				}
-			}
-		}
-
-		pNode = pNode->next_sibling();
-	}
-	return true;
+	GameLevelLoader loader(this);
+	return loader.load(levelId);
 }
 
 void GameSceneLevel::unload()
 {
-	m_pPlayer->physicsBody()->setVelocity(glm::vec2());
-	for (auto pObject: m_gameObjects)
-		delGameObject(pObject);
-	m_gameObjects.clear();
-	m_currentLevelId = GameLevelId_None;
+	GameLevelLoader loader(this);
+	loader.unload();
 }
 
 GameLevelId GameSceneLevel::currentLevel() const
@@ -237,15 +132,4 @@ void GameSceneLevel::setMaxOpenedLevel(GameLevelId levelId)
 		file.write(reinterpret_cast<const char*>(&levelId), sizeof(GameLevelId));
 		file.close();
 	}
-}
-
-std::string GameSceneLevel::levelIdToFilename(GameLevelId levelId)
-{
-	static const std::array<std::string, GameLevelId_Count> table = {
-		":/res/level1.xml",
-		":/res/level2.xml",
-		":/res/level3.xml"
-	};
-
-	return table[levelId];
 }

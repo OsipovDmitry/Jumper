@@ -41,7 +41,8 @@ SOURCES += \
     src/gamescenelevelpassed.cpp \
     src/audiocontroller.cpp \
     src/gamescenepause.cpp \
-    src/gamesceneselectlevel.cpp
+    src/gamesceneselectlevel.cpp \
+    src/gamelevelloader.cpp
 
 HEADERS += \
     src/renderwidget.h \
@@ -80,7 +81,8 @@ HEADERS += \
     src/gamescenelevelpassed.h \
     src/audiocontroller.h \
     src/gamescenepause.h \
-    src/gamesceneselectlevel.h
+    src/gamesceneselectlevel.h \
+    src/gamelevelloader.h
 
 LIBS += -lGLESv2
 
@@ -92,6 +94,7 @@ RESOURCES += \
 DISTFILES += \
     android/AndroidManifest.xml \
     android/res/values/libs.xml \
-    android/build.gradle
+    android/build.gradle \
+    res/icon.png
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

@@ -18,9 +18,9 @@ void GameObjectPlayer::use()
 	pPhysicsBody->setVelocity(glm::normalize(vel) * 2.5f);
 }
 
-PhysicsBody *GameObjectPlayer::physicsBody() const
+void GameObjectPlayer::resetVelocity()
 {
-	return m_physicsBodies.front();
+	m_physicsBodies.front()->setVelocity(glm::vec2());
 }
 
 GameObjectPlayer::GameObjectPlayer(GameAbstractScene* pScene) :

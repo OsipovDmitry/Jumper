@@ -27,14 +27,13 @@ private:
 	GameSceneLevel();
 	~GameSceneLevel();
 
-	static std::string levelIdToFilename(GameLevelId levelId);
-
 	GameObjectPlayer *m_pPlayer;
 	GameObjectGuiButton *m_pPauseButton;
 	ObjectsList m_gameObjects;
 	GameLevelId m_currentLevelId;
 
 	friend class GameController;
+	friend class GameLevelLoader;
 };
 
 #endif // GAMESCENELEVEL_H

@@ -8,7 +8,7 @@ class PhysicsBody;
 class GameObjectPlayer : public GameObject
 {
 public:
-	PhysicsBody *physicsBody() const;
+	void resetVelocity();
 
 protected:
 	void update(uint32_t dt);
