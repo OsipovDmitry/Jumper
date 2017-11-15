@@ -18,7 +18,7 @@ RenderWidget::RenderWidget(QWidget* pParentWidget) :
 	m_lastUpdateTime(0)
 {
 	const int height = 20;
-	resize(height * Renderer::s_viewportAspect, height);
+	resize(height * 1.66f, height);
 
 #if defined(Q_OS_ANDROID)
 	m_pTiltSensor = new QTiltSensor(this);

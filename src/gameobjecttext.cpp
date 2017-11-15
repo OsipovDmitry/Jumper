@@ -1,4 +1,6 @@
 #include "mathutils.h"
+#include "core.h"
+#include "renderwidget.h"
 #include "renderer.h"
 #include "graphicsscene.h"
 #include "graphicsobject.h"
@@ -113,7 +115,7 @@ void GameObjectText::rebuild()
         }
         default: {
             auto textureId = symbolToTextureId(c);
-            auto textureSize = Renderer::textureSizeInfo(textureId);
+			auto textureSize = Core::getController()->renderWidget()->renderer()->textureSizeInfo(textureId);
             float symWidth = m_size * (float)textureSize.x / (float)textureSize.y;
 
             symPos.x += 0.5f * symWidth;

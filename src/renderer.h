@@ -1,16 +1,9 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include <list>
-#include <vector>
-#include <string>
-#include <tuple>
-
-#include <GLES2/gl2.h>
-
 #include "types.h"
-#include "glm/mat4x4.hpp"
 
+struct RendererPrivate;
 class Renderer
 {
 public:
@@ -33,51 +26,17 @@ public:
     glm::vec2 windowToClipSpace(const glm::ivec2& windowCoords) const;
     glm::vec2 windowToWorldSpace(const glm::ivec2& windowCoords, LayerId layerId) const;
 
-    static const glm::ivec2& texturePosInfo(TextureId textureId);
-	static const glm::ivec2& textureSizeInfo(TextureId textureId);
+	const glm::ivec2& texturePosInfo(TextureId textureId) const;
+	const glm::ivec2& textureSizeInfo(TextureId textureId) const;
 
 private:
-	using SpriteList = std::list<Sprite*>;
-	using RenderMethod = void (Renderer::*)(const SpriteList&) const;
-
 	Renderer();
 	~Renderer();
 
 	void resize(int w, int h);
 	void render() const;
 
-	void renderBackground(const SpriteList& list) const;
-	void renderObjects(const SpriteList& list) const;
-	void renderTransparentObjects(const SpriteList& list) const;
-	void renderGui(const SpriteList& list) const;
-
-	static GLuint loadShader(GLenum type, const char *shaderStr, std::string& log);
-	static GLuint loadProgram(GLuint vShader, GLuint fShader, std::string& log);
-	static glm::mat4x4 calcTextureMatrix(TextureId textureId);
-
-	SpriteList m_sprites, m_drawSprites;
-	mutable glm::mat4x4 m_cachedPMatrix, m_cachedPMatrixInv, m_cachedVPMatrix, m_cachedVPMatrixInv;
-	mutable glm::ivec4 m_cachedViewport;
-	mutable glm::ivec2 m_cachedWindowSize;
-	const Transform *m_pCameraTransform;
-
-	static const float s_viewportAspect;
-	static const RenderMethod s_renderMethods[LayerId_Count];
-
-	static const float s_quadAttributes[];
-	static const unsigned int s_quadIndices[];
-	static GLuint s_vertexBuffer, s_indexBuffer;
-
-	static const char s_vertexShaderString[];
-	static const char s_fragmentShaderString[];
-	static GLuint s_program, s_vertexShader, s_fragmentShader;
-	static GLint s_attribPosLoc, s_attribTexCoordLoc;
-	static GLint s_uniformMVPMatrixLoc, s_uniformTexMatrixLoc, s_uniformTextureLoc, s_uniformColorLoc;
-
-	static const std::vector<std::string> s_textureFilenames;
-	static const std::tuple<int, glm::ivec2, glm::ivec2> s_textureCoords[TextureId_Count];
-	static std::vector<glm::ivec2> s_textureSizes;
-	static std::vector<GLuint> s_textureIds;
+	RendererPrivate *m;
 
 	friend class RenderWidget;
 };

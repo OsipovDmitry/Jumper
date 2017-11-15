@@ -1,3 +1,5 @@
+#include "glm/geometric.hpp"
+
 #include "graphicsscene.h"
 #include "graphicsobject.h"
 #include "physicsscene.h"
