@@ -4,7 +4,6 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
-#include <utility>
 #include <GLES2/gl2.h>
 
 #include <QImage>
