@@ -13,7 +13,7 @@ void GameObjectBrick::use()
 }
 
 GameObjectBrick::GameObjectBrick(GameAbstractScene* pScene) :
-	GameObject(pScene)
+	GameObject(pScene, typeOfClass())
 {
 	static const float height = 0.15f;
 	static const float width = 3 * height;

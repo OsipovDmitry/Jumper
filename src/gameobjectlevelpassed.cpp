@@ -16,7 +16,7 @@ void GameObjectLevelPassed::use()
 }
 
 GameObjectLevelPassed::GameObjectLevelPassed(GameAbstractScene* pScene, GameLevelId id) :
-	GameObject(pScene),
+	GameObject(pScene, typeOfClass()),
 	m_levelId(id)
 {
 	static const float height = 0.4f;

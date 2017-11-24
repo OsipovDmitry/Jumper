@@ -3,10 +3,9 @@
 
 #include "gameobject.h"
 
-class PhysicsBody;
-
 class GameObjectPlayer : public GameObject
 {
+GAME_OBJECT_META(Type_Player)
 public:
 	void resetVelocity();
 

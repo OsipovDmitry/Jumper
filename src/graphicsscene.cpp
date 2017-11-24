@@ -44,6 +44,12 @@ GraphicsScene::~GraphicsScene()
 	delete m_pCamera;
 }
 
+void GraphicsScene::update(uint32_t dt)
+{
+	if (m_pCamera)
+		m_pCamera->update(dt);
+}
+
 void GraphicsScene::show()
 {
 	Renderer *pRenderer = Core::getController()->renderWidget()->renderer();

@@ -76,10 +76,10 @@ public:
 
 class GameObjectUseMessage : public AbstractControllerMessage {
 public:
-	GameObjectUseMessage(GameObject *pObject) : AbstractControllerMessage(CMT_GameObjectUse), pGameObject(pObject) {}
+	GameObjectUseMessage(GameObject *pObject, GameObject *pOtherObject) : AbstractControllerMessage(CMT_GameObjectUse), pGameObject(pObject), pOtherGameObject(pOtherObject) {}
 	static ControllerMessageType typeOfClass() { return CMT_GameObjectUse; }
 
-	GameObject *pGameObject;
+	GameObject *pGameObject, *pOtherGameObject;
 };
 
 class GameChangeSceneMessage : public AbstractControllerMessage {

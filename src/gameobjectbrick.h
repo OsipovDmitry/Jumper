@@ -5,6 +5,7 @@
 
 class GameObjectBrick : public GameObject
 {
+GAME_OBJECT_META(Type_Brick)
 public:
 protected:
 	void use();

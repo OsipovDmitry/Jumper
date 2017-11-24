@@ -68,12 +68,14 @@ GraphicsController::GraphicsController() :
 
 GraphicsController::~GraphicsController()
 {
-	for (ScenesList::iterator it = m_scenes.begin(); it != m_scenes.end(); ++it)
-		delete (*it);
+	for (auto p: m_scenes)
+		delete p;
+
 	m_scenes.clear();
 }
 
 void GraphicsController::update(uint32_t dt)
 {
-	(void)dt;
+	if (m_pCurrentScene)
+		m_pCurrentScene->update(dt);
 }

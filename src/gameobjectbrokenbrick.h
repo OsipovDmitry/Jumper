@@ -8,17 +8,18 @@ class PhysicsBody;
 
 class GameObjectBrokenBrick : public GameObject
 {
+GAME_OBJECT_META(Type_BrokenBrick)
 public:
 	void breakDown();
 
 protected:
-	GameObjectBrokenBrick(GameAbstractScene *pScene);
-	~GameObjectBrokenBrick();
-
 	void update(uint32_t dt);
 	void use();
 
 private:
+	GameObjectBrokenBrick(GameAbstractScene *pScene);
+	~GameObjectBrokenBrick();
+
 	struct Part {
 		Transform *pTransform;
 		GraphicsObject *pGraphicsObject;

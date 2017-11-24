@@ -64,7 +64,7 @@ float GameObjectText::centeringY() const
 }
 
 GameObjectText::GameObjectText(GameAbstractScene* pScene, const std::string& str) :
-    GameObject(pScene),
+	GameObject(pScene, typeOfClass()),
     m_text(str),
 	m_size(0.2f),
 	m_centeringX(0.0f),

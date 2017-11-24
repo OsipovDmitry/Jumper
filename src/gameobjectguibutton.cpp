@@ -26,7 +26,7 @@ bool GameObjectGuiButton::setParam(const std::string& key, const std::string& va
 }
 
 GameObjectGuiButton::GameObjectGuiButton(GameAbstractScene *pScene, GuiButtonId id) :
-	GameObject(pScene)
+	GameObject(pScene, typeOfClass())
 {
 	static const float height = 0.25f;
 	static const float width = 2 * height;

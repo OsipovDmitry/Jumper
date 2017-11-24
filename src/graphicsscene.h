@@ -22,6 +22,8 @@ private:
 	GraphicsScene();
 	~GraphicsScene();
 
+	void update(uint32_t dt);
+
 	ObjectsList m_objects;
 
 	GraphicsCamera *m_pCamera;

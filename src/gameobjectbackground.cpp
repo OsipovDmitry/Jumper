@@ -31,7 +31,7 @@ bool GameObjectBackground::setParam(const std::string& key, const std::string& v
 }
 
 GameObjectBackground::GameObjectBackground(GameAbstractScene *pScene, BackgroundId id) :
-	GameObject(pScene)
+	GameObject(pScene, typeOfClass())
 {
 	m_pGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
 	m_pGraphicsObject->setLayer(LayerId_Background);

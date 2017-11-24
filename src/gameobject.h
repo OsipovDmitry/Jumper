@@ -7,6 +7,11 @@
 
 class GameAbstractScene;
 
+#define GAME_OBJECT_META(TYPE) \
+	public: \
+	static Type typeOfClass() { return TYPE; }
+
+
 class PhysicsBody;
 class PhysicsGeometry;
 class GraphicsObject;
@@ -17,12 +22,28 @@ struct Transform;
 class GameObject
 {
 public:
+	enum Type {
+		Type_None = -1,
+
+		Type_Background = 0,
+		Type_Brick,
+		Type_BrokenBrick,
+		Type_Player,
+		Type_Gun,
+		Type_Text,
+		Type_LevelPassed,
+		Type_Spike,
+
+		Type_GuiButton
+	};
+
 	using GraphicsObjectsList = std::list<GraphicsObject*> ;
 	using PhysicsBodiesList = std::list<PhysicsBody*>;
 	using PhysicsGeometriesList = std::list<PhysicsGeometry*>;
 	using ObjectModifiers = std::list<GameObjectAbstractModifier*>;
 
 	GameAbstractScene *scene() const;
+	Type type() const;
 
 	virtual const Transform& transform() const;
 	virtual void setTransform(const Transform& value);
@@ -45,12 +66,13 @@ public:
 
 protected:
 	GameAbstractScene *m_pScene;
+	Type m_type;
 	Transform *m_pTransform;
 	GraphicsObjectsList m_graphicsObjects;
 	PhysicsBodiesList m_physicsBodies;
 	PhysicsGeometriesList m_physicsGeoms;
 
-	GameObject(GameAbstractScene *pScene);
+	GameObject(GameAbstractScene *pScene, Type type);
 	virtual ~GameObject();
 
 	virtual void update(uint32_t dt) { (void)dt; }
@@ -64,5 +86,10 @@ private:
 	friend class GameAbstractScene;
 	friend class GameController;
 };
+
+template<typename GameObjectClass>
+inline GameObjectClass *game_object_cast(GameObject *pGameObject) {
+	return (pGameObject->type() == GameObjectClass::typeOfClass()) ? static_cast<GameObjectClass*>(pGameObject) : nullptr;
+}
 
 #endif // GAMEOBJECT_H

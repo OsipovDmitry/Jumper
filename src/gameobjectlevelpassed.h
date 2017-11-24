@@ -6,6 +6,7 @@
 
 class GameObjectLevelPassed : public GameObject
 {
+GAME_OBJECT_META(Type_LevelPassed)
 public:
 protected:
 	void use();

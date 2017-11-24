@@ -31,11 +31,12 @@ void GameSceneLevel::update(uint32_t dt)
 		return;
 
 	Transform transform = m_pPlayer->transform();
+	static const float playerVel = 3.0f;
 
 	if (pGameController->keyState(KeyCode_Left))
-		transform.pos.x -= 3.0f * 0.001f * dt;
+		transform.pos.x -= playerVel * 0.001f * dt;
 	if (pGameController->keyState(KeyCode_Right))
-		transform.pos.x += 3.0f * 0.001f * dt;
+		transform.pos.x += playerVel * 0.001f * dt;
 
 	static const float minTilt = 5.0f;
 	static const float maxTilt = 20.0f;
@@ -43,11 +44,11 @@ void GameSceneLevel::update(uint32_t dt)
 	int tiltSign = glm::sign(tilt);
 	tilt = glm::clamp(glm::abs(tilt), minTilt, maxTilt);
 	tilt = (tilt - minTilt) / (maxTilt - minTilt);
-	transform.pos.x += 3.0f * 0.001f * dt * tiltSign * tilt;
+	transform.pos.x += playerVel * 0.001f * dt * tiltSign * tilt;
 
 	m_pPlayer->setTransform(transform);
 
-	graphicsScene()->camera()->transform()->pos.x = transform.pos.x;
+	graphicsScene()->camera()->transform()->pos.x =	transform.pos.x;
 	pAudioController->setListenerPosition(transform.pos);
 
 	if (m_pPlayer->transform().pos.y < GLOBAL_DOWN) {

@@ -26,7 +26,7 @@ void GameObjectPlayer::resetVelocity()
 }
 
 GameObjectPlayer::GameObjectPlayer(GameAbstractScene* pScene) :
-	GameObject(pScene)
+	GameObject(pScene, typeOfClass())
 {
 	static const float ballRadius = 0.07f;
 

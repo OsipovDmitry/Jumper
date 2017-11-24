@@ -7,6 +7,7 @@
 
 class GameObjectGun : public GameObject
 {
+GAME_OBJECT_META(Type_Gun)
 public:
 	bool setParam(const std::string& key, const std::string& value) override;
 

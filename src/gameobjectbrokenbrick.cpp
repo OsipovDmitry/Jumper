@@ -65,33 +65,6 @@ void GameObjectBrokenBrick::breakDown()
 	Core::getController<AudioController>()->playSound(SoundId_BrokenJump, m_pTransform);
 }
 
-GameObjectBrokenBrick::GameObjectBrokenBrick(GameAbstractScene *pScene) :
-	GameObject(pScene),
-	m_parts(),
-	m_isWhole(true)
-{
-	auto pGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
-	pGraphicsObject->setLayer(LayerId_Objects);
-	pGraphicsObject->setSize(glm::vec2(s_brickWidth, s_brickHeight));
-	pGraphicsObject->setTexture(TextureId_BrokenBrick);
-	m_graphicsObjects.push_back(pGraphicsObject);
-
-	auto pPhysicsGeom = pScene->physicsScene()->addStaticBox(m_pTransform, s_brickWidth, s_brickHeight);
-	pPhysicsGeom->setData(static_cast<void*>(this));
-	m_physicsGeoms.push_back(pPhysicsGeom);
-}
-
-GameObjectBrokenBrick::~GameObjectBrokenBrick()
-{
-	for (auto pPart: m_parts) {
-		m_pScene->graphicsScene()->delObject(pPart->pGraphicsObject);
-		m_pScene->physicsScene()->delBody(pPart->pPhysicsBody);
-		delete pPart->pTransform;
-		delete pPart;
-	}
-	m_parts.clear();
-}
-
 void GameObjectBrokenBrick::update(uint32_t dt)
 {
 	(void)dt;
@@ -115,4 +88,31 @@ void GameObjectBrokenBrick::update(uint32_t dt)
 void GameObjectBrokenBrick::use()
 {
 	breakDown();
+}
+
+GameObjectBrokenBrick::GameObjectBrokenBrick(GameAbstractScene *pScene) :
+	GameObject(pScene, typeOfClass()),
+	m_parts(),
+	m_isWhole(true)
+{
+	auto pGraphicsObject = pScene->graphicsScene()->addObject(m_pTransform);
+	pGraphicsObject->setLayer(LayerId_Objects);
+	pGraphicsObject->setSize(glm::vec2(s_brickWidth, s_brickHeight));
+	pGraphicsObject->setTexture(TextureId_BrokenBrick);
+	m_graphicsObjects.push_back(pGraphicsObject);
+
+	auto pPhysicsGeom = pScene->physicsScene()->addStaticBox(m_pTransform, s_brickWidth, s_brickHeight);
+	pPhysicsGeom->setData(static_cast<void*>(this));
+	m_physicsGeoms.push_back(pPhysicsGeom);
+}
+
+GameObjectBrokenBrick::~GameObjectBrokenBrick()
+{
+	for (auto pPart: m_parts) {
+		m_pScene->graphicsScene()->delObject(pPart->pGraphicsObject);
+		m_pScene->physicsScene()->delBody(pPart->pPhysicsBody);
+		delete pPart->pTransform;
+		delete pPart;
+	}
+	m_parts.clear();
 }

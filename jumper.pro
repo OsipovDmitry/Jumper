@@ -42,7 +42,8 @@ SOURCES += \
     src/audiocontroller.cpp \
     src/gamescenepause.cpp \
     src/gamesceneselectlevel.cpp \
-    src/gamelevelloader.cpp
+    src/gamelevelloader.cpp \
+    src/gameobjectspike.cpp
 
 HEADERS += \
     src/renderwidget.h \
@@ -82,7 +83,8 @@ HEADERS += \
     src/audiocontroller.h \
     src/gamescenepause.h \
     src/gamesceneselectlevel.h \
-    src/gamelevelloader.h
+    src/gamelevelloader.h \
+    src/gameobjectspike.h
 
 LIBS += -lGLESv2
 

@@ -8,8 +8,8 @@
 GameObjectModifierOffset::GameObjectModifierOffset(GameObject *pObject) :
 	GameObjectAbstractModifier(pObject),
 	m_offsetNorm(),
-	m_offsetVel(0.0f),
 	m_offsetAbs(0.0f),
+	m_offsetVel(0.0f),
 	m_offsetCur(0.0f),
 	m_sign(1)
 {

@@ -6,6 +6,7 @@
 
 class GameObjectText : public GameObject
 {
+GAME_OBJECT_META(Type_Text)
 public:	
 	void setTransform(const Transform& value);
 

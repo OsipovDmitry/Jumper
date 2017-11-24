@@ -8,6 +8,7 @@ class GraphicsObject;
 
 class GameObjectBackground : public GameObject
 {
+GAME_OBJECT_META(Type_Background)
 public:
 	bool setParam(const std::string& key, const std::string& value) override;
 

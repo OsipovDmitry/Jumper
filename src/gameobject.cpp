@@ -11,6 +11,11 @@ GameAbstractScene*GameObject::scene() const
 	return m_pScene;
 }
 
+GameObject::Type GameObject::type() const
+{
+	return m_type;
+}
+
 //const GameObject::GraphicsObjectsList& GameObject::graphicsObjects() const
 //{
 //	return m_graphicsObjects;
@@ -45,8 +50,9 @@ void GameObject::setTransform(const Transform& value)
 	*m_pTransform = value;
 }
 
-GameObject::GameObject(GameAbstractScene *pScene) :
+GameObject::GameObject(GameAbstractScene *pScene, Type type) :
 	m_pScene(pScene),
+	m_type(type),
 	m_pTransform(new Transform()),
 	m_graphicsObjects(),
 	m_physicsBodies(),

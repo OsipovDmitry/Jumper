@@ -94,13 +94,14 @@ void GameAbstractScene::updateScene(uint32_t dt)
 
 void GameAbstractScene::collisionDetection(PhysicsGeometry* p1, PhysicsGeometry* p2)
 {
-	auto pGameObject = static_cast<GameObject*>(p1->data());
-	if (pGameObject)
-		Core::getController<GameController>()->sendMessage(new GameObjectUseMessage(pGameObject));
+	auto pGameObject1 = static_cast<GameObject*>(p1->data());
+	auto pGameObject2 = static_cast<GameObject*>(p2->data());
 
-	pGameObject = static_cast<GameObject*>(p2->data());
-	if (pGameObject)
-		Core::getController<GameController>()->sendMessage(new GameObjectUseMessage(pGameObject));
+	if (pGameObject1)
+		Core::getController<GameController>()->sendMessage(new GameObjectUseMessage(pGameObject1, pGameObject2));
+
+	if (pGameObject2)
+		Core::getController<GameController>()->sendMessage(new GameObjectUseMessage(pGameObject2, pGameObject1));
 }
 
 void GameAbstractScene::collisionDetection(void *pSceneData, PhysicsGeometry* p1, PhysicsGeometry* p2)

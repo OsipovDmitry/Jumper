@@ -101,7 +101,7 @@ void GameObjectGun::update(uint32_t dt)
 }
 
 GameObjectGun::GameObjectGun(GameAbstractScene* pScene) :
-	GameObject(pScene),
+	GameObject(pScene, typeOfClass()),
 	m_bullets(),
 	m_restTransform(*m_pTransform),
 	m_nextShotTime(0),
